@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "mapaflutter-288520",
+  "private_key_id": "8fb3e3861b7582a336585bd2d11409508dec92d6",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC5zZRss0YtiLbu\nmMlNNj5wnNvATO0SxDJYWQgr+esp4TThiWUW/b5lyyMlPrK7ewltv675u5SQaDUn\njr6ceKlPwEneZDg3cNyqKMkSifzsznVhmA13HPcbry9Vnq1FQI46ZWQTvxFlTHKo\n3TfZQPxGZqhw/A0Mf54+oHMW7YxH+4+FY8Vkwlacn1pgn0WCjm9cOHnFWLjcCMjY\naza47wcbv2vxK620VdyXWARHC8IeDf4xgkuYhVq3woWyLFkEBb8ii/j5g4rf3SDc\nNzfNGu1CVnlCJCjl0XnVfzzlp5cN8gipfV21eRZdDf5vq4aq9o5tRxJYXDbJtvQH\niHpjfiPlAgMBAAECggEABBQZFjgVigcr0XnNRL00VSyoSToXDnf74phqYha9Z1Za\nyWRGnGDWXAMqbWqef0LgjoYW4pila/Rm+Ew9RGTZ/ewVYwTq/qfi/CGNj7MzjVos\ngEeCF34tXBr2Fx3MJWPuS1CxnUUELielsQMRcwV8FCqJjNiyNkxF2Q+Uvykt5grm\nurnh9yufg6igaQCHNRGhQjZluFXim4+B5dzoAgLec5rODmW51q2cFymaXPZUXZIE\nAeV6imXVGfKNZWDp3GvVcXyR1oDn78yevawWO4CVqHTwEG9wwTufikTTwTEwSa6+\n+PB5UJRx8Zz1kYI1ltVCmcC9OQqfKsRFSJQ9JYFHCQKBgQDu27UEOq7ejeT88lGt\nR9syMQR6tFHpimZmn7QC7G0nfzfgtGjPLS4H1fsgqwI1vkg+5nfF0sQIxPPV/NGE\nsCYdPBMxIo9Lw5AStmK6fBt/+NXJHbTBY+nKulb0zrZJq9Fg4IOK9rorLzpOmgA7\nXHPFPH7ZTGeBD6jtYEmfsJcA+QKBgQDHIyUps8Qg4neAcynNvwWxA7MREozVUdJK\nQCpJY+wxLYe82aaMLrjjlK1VhHQz0N4oTQupKZ/Gse5YZ7ojzFPrR0ppIEWRGG9s\nNAIIYrEwJyfTl6TcMuacuNUVnyknQ9cDwPKo7nNBPQ8iooCzmCaePgYNCttFHgfo\nR58dxfjhTQKBgHADnNpE4uj/xhlRUjhe8E6TajRZB+jrvKX30yVj1rSlFoFMWbJ+\nz41hLgnd6IVnnN3SmuyssL4kDu2VSHRfXyBqod1zBZxUM+Zync4ykXrsKOXOBoyC\n3Irz4/+eSSI3b1NtNoMevaOu3DssQVuVOb2PZzVkfU2rGF9pvl0jJU2RAoGAVkqt\nfO+wKovYOuoskEKZhcZTny9Jpdqp5JD/ggPxwrG3IyexmwdYCQ5ROkCGVjnJOu+A\nARLPcLuDy/1O1Npi9w5SeVGJs8FB70JuKxIRNAuTn4YT43OPKRSTCaaJn8Eu+Cpx\nPLDvcrKxz1FZsflZqrK3zokI0V+dD5ORqMYz/fUCgYEA3PWj0A6WXApwLF2qwDjn\nHKJMuCxwhOr4LbCxuSzpG7O8jqiQXNjLRZ40fqF37s9+BS1xCO8UjYBWY9O1lbSH\nuliVdpSK0E2i+hLKvpBNAS1OnLBbM/Ttu0RbObZuAUJuJlfWvGn69waWSju2C8eW\noakodJBQ7hOdbt7PsiS8kdw=\n-----END PRIVATE KEY-----\n",
+  "client_email": "cuenta-servicio-flutter@mapaflutter-288520.iam.gserviceaccount.com",
+  "client_id": "114878511121647393028",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/cuenta-servicio-flutter%40mapaflutter-288520.iam.gserviceaccount.com"
+}
