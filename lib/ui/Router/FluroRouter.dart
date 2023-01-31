@@ -16,6 +16,11 @@ class Flurorouter {
   static String enfermeraMant = "/EfermeraMant";
   static String tablaReporte = "/TablaReporte";
   static String chat = "/ChatBot";
+  static String formulario1 = "/formulario1";
+  static String formulario2 = "/formulario2";
+  static String formulario3 = "/formulario3";
+  static String formulario4 = "/formulario4";
+  static String formulario5 = "/formulario5";
   // los nombres de las rutas no se pueden repetir
   // no van espacio
 
@@ -58,6 +63,16 @@ class Flurorouter {
 
     router.define(chat,
         handler: Handlers.chat, transitionType: TransitionType.fadeIn);
+    router.define(formulario1,
+        handler: Handlers.formulario1, transitionType: TransitionType.fadeIn);
+    router.define(formulario2,
+        handler: Handlers.formulario2, transitionType: TransitionType.fadeIn);
+    router.define(formulario3,
+        handler: Handlers.formulario3, transitionType: TransitionType.fadeIn);
+    router.define(formulario4,
+        handler: Handlers.formulario4, transitionType: TransitionType.fadeIn);
+    router.define(formulario5,
+        handler: Handlers.formulario5, transitionType: TransitionType.fadeIn);
 
     router.notFoundHandler = Handlers.noFound;
   }

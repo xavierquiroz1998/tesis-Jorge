@@ -8,6 +8,11 @@ import 'package:tesis/ui/Router/FluroRouter.dart';
 import 'package:tesis/ui/chat/chatBot.dart';
 import 'package:tesis/ui/pages/404/noFound.dart';
 import 'package:tesis/ui/pages/ConsultaReporte/ConsultaReporte.dart';
+import 'package:tesis/ui/pages/Formularios/formulario1.dart';
+import 'package:tesis/ui/pages/Formularios/formulario2.dart';
+import 'package:tesis/ui/pages/Formularios/formulario3.dart';
+import 'package:tesis/ui/pages/Formularios/formulario4.dart';
+import 'package:tesis/ui/pages/Formularios/formulario5.dart';
 import 'package:tesis/ui/pages/enfermera/enfermera.dart';
 import 'package:tesis/ui/pages/enfermera/enfermeras.dart';
 import 'package:tesis/ui/pages/home/Cita%20medica.dart';
@@ -155,9 +160,65 @@ class Handlers {
       return LoginView();
     }
   });
+
+  static Handler formulario1 = Handler(handlerFunc: (context, param) {
+    // validacion de sesion
+    final logeo = Provider.of<LoginProvider>(context!);
+    Provider.of<SideMenuProvider>(context, listen: false)
+        .setCurrentPageUrl(Flurorouter.formulario1);
+    if (logeo.authStatus == AuthStatus.authenticated) {
+      return const Formulario1();
+    } else {
+      return const LoginView();
+    }
+  });
+  static Handler formulario2 = Handler(handlerFunc: (context, param) {
+    // validacion de sesion
+    final logeo = Provider.of<LoginProvider>(context!);
+    Provider.of<SideMenuProvider>(context, listen: false)
+        .setCurrentPageUrl(Flurorouter.formulario2);
+    if (logeo.authStatus == AuthStatus.authenticated) {
+      return const Formulario2();
+    } else {
+      return const LoginView();
+    }
+  });
+  static Handler formulario3 = Handler(handlerFunc: (context, param) {
+    // validacion de sesion
+    final logeo = Provider.of<LoginProvider>(context!);
+    Provider.of<SideMenuProvider>(context, listen: false)
+        .setCurrentPageUrl(Flurorouter.formulario3);
+    if (logeo.authStatus == AuthStatus.authenticated) {
+      return const Formulario3();
+    } else {
+      return const LoginView();
+    }
+  });
+  static Handler formulario4 = Handler(handlerFunc: (context, param) {
+    // validacion de sesion
+    final logeo = Provider.of<LoginProvider>(context!);
+    Provider.of<SideMenuProvider>(context, listen: false)
+        .setCurrentPageUrl(Flurorouter.formulario4);
+    if (logeo.authStatus == AuthStatus.authenticated) {
+      return const Formulario4();
+    } else {
+      return const LoginView();
+    }
+  });
+  static Handler formulario5 = Handler(handlerFunc: (context, param) {
+    // validacion de sesion
+    final logeo = Provider.of<LoginProvider>(context!);
+    Provider.of<SideMenuProvider>(context, listen: false)
+        .setCurrentPageUrl(Flurorouter.formulario5);
+    if (logeo.authStatus == AuthStatus.authenticated) {
+      return const Formulario5();
+    } else {
+      return const LoginView();
+    }
+  });
+
   static Handler noFound = Handler(handlerFunc: (context, param) {
     // validacion de sesion
-
     return NoPageFoundView();
   });
 }

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:tesis/data/datasource/reference/local_storage.dart';
 import 'package:tesis/domain/Navigation/NavigationService.dart';
@@ -46,6 +48,10 @@ class LoginProvider extends ChangeNotifier {
     try {
       authStatus = AuthStatus.authenticated;
       authenticated = true;
+
+      LocalStorage.prefs.setString('token', "asdddsswwee");
+      LocalStorage.prefs.setString('usuario', json.encode("usuario"));
+      NavigationService.replaceTo(Flurorouter.inicio);
       notifyListeners();
       NavigationService.replaceTo(Flurorouter.inicio);
     } catch (e) {}

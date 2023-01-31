@@ -170,36 +170,36 @@ class _SideBarState extends State<SideBar> {
             text: 'Formulario 1',
             icon: Icons.home,
             onPressed: () =>
-                NavigationService.navigateTo(Flurorouter.citamedica),
-            isActive: sideMenuProvider.currentPage == Flurorouter.citamedica,
+                NavigationService.navigateTo(Flurorouter.formulario1),
+            isActive: sideMenuProvider.currentPage == Flurorouter.formulario1,
           ),
           MenuItemP(
             text: 'Formulario 2',
             icon: Icons.home,
             onPressed: () =>
-                NavigationService.navigateTo(Flurorouter.citamedica),
-            isActive: sideMenuProvider.currentPage == Flurorouter.citamedica,
+                NavigationService.navigateTo(Flurorouter.formulario2),
+            isActive: sideMenuProvider.currentPage == Flurorouter.formulario2,
           ),
           MenuItemP(
             text: 'Formulario 3',
             icon: Icons.home,
             onPressed: () =>
-                NavigationService.navigateTo(Flurorouter.citamedica),
-            isActive: sideMenuProvider.currentPage == Flurorouter.citamedica,
+                NavigationService.navigateTo(Flurorouter.formulario3),
+            isActive: sideMenuProvider.currentPage == Flurorouter.formulario3,
           ),
           MenuItemP(
             text: 'Formulario 4',
             icon: Icons.home,
             onPressed: () =>
-                NavigationService.navigateTo(Flurorouter.citamedica),
-            isActive: sideMenuProvider.currentPage == Flurorouter.citamedica,
+                NavigationService.navigateTo(Flurorouter.formulario4),
+            isActive: sideMenuProvider.currentPage == Flurorouter.formulario4,
           ),
           MenuItemP(
             text: 'Formulario 5',
             icon: Icons.home,
             onPressed: () =>
-                NavigationService.navigateTo(Flurorouter.citamedica),
-            isActive: sideMenuProvider.currentPage == Flurorouter.citamedica,
+                NavigationService.navigateTo(Flurorouter.formulario5),
+            isActive: sideMenuProvider.currentPage == Flurorouter.formulario5,
           ),
           MenuItemP(
             text: 'Chat',
