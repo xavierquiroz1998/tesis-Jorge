@@ -21,6 +21,12 @@ class Flurorouter {
   static String formulario3 = "/formulario3";
   static String formulario4 = "/formulario4";
   static String formulario5 = "/formulario5";
+
+  static String disciplinaMantenimiento = "/disciplinaMant";
+  static String horarioMantenimiento = "/horarioMant";
+  static String profesorMantenimiento = "/profesorMant";
+  static String familiarMantenimiento = "/familiarMant";
+  static String inscripcionMantenimiento = "/inscripcionMant";
   // los nombres de las rutas no se pueden repetir
   // no van espacio
 
@@ -73,6 +79,19 @@ class Flurorouter {
         handler: Handlers.formulario4, transitionType: TransitionType.fadeIn);
     router.define(formulario5,
         handler: Handlers.formulario5, transitionType: TransitionType.fadeIn);
+
+    router.define(disciplinaMantenimiento,
+        handler: Handlers.disciplinaMant,
+        transitionType: TransitionType.fadeIn);
+    router.define(horarioMantenimiento,
+        handler: Handlers.horarioMant, transitionType: TransitionType.fadeIn);
+    router.define(profesorMantenimiento,
+        handler: Handlers.profesorMant, transitionType: TransitionType.fadeIn);
+    router.define(familiarMantenimiento,
+        handler: Handlers.familiarMant, transitionType: TransitionType.fadeIn);
+    router.define(inscripcionMantenimiento,
+        handler: Handlers.inscripcioinesMant,
+        transitionType: TransitionType.fadeIn);
 
     router.notFoundHandler = Handlers.noFound;
   }

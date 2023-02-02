@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:tesis/domain/Navigation/NavigationService.dart';
+import 'package:tesis/ui/Router/FluroRouter.dart';
 import 'package:tesis/ui/pages/widget/whiteCard.dart';
 
 class Formulario5 extends StatefulWidget {
@@ -12,9 +14,31 @@ class _Formulario5State extends State<Formulario5> {
   @override
   Widget build(BuildContext context) {
     return WhiteCard(
-      title: "Formulario 5",
+      title: "Inscripciones",
       child: Column(
-        children: [],
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              TextButton(
+                onPressed: () {
+                  NavigationService.navigateTo(
+                      Flurorouter.inscripcionMantenimiento);
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    "Nuevo",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+                style: TextButton.styleFrom(
+                  backgroundColor: Colors.blue,
+                ),
+              ),
+            ],
+          )
+        ],
       ),
     );
   }

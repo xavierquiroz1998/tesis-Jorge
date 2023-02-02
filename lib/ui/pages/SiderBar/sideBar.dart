@@ -167,35 +167,42 @@ class _SideBarState extends State<SideBar> {
             //isActive: NavigationService.currentPage == Flurorouter.inicio,
           ),
           MenuItemP(
-            text: 'Formulario 1',
+            text: 'Disciplina',
             icon: Icons.home,
             onPressed: () =>
                 NavigationService.navigateTo(Flurorouter.formulario1),
             isActive: sideMenuProvider.currentPage == Flurorouter.formulario1,
           ),
           MenuItemP(
-            text: 'Formulario 2',
+            text: 'Horarios',
             icon: Icons.home,
             onPressed: () =>
                 NavigationService.navigateTo(Flurorouter.formulario2),
             isActive: sideMenuProvider.currentPage == Flurorouter.formulario2,
           ),
           MenuItemP(
-            text: 'Formulario 3',
+            text: 'Profesores',
             icon: Icons.home,
             onPressed: () =>
                 NavigationService.navigateTo(Flurorouter.formulario3),
             isActive: sideMenuProvider.currentPage == Flurorouter.formulario3,
           ),
           MenuItemP(
-            text: 'Formulario 4',
+            text: 'Familiar o Invitado',
             icon: Icons.home,
             onPressed: () =>
                 NavigationService.navigateTo(Flurorouter.formulario4),
             isActive: sideMenuProvider.currentPage == Flurorouter.formulario4,
           ),
           MenuItemP(
-            text: 'Formulario 5',
+            text: 'Inscripciones',
+            icon: Icons.home,
+            onPressed: () =>
+                NavigationService.navigateTo(Flurorouter.formulario5),
+            isActive: sideMenuProvider.currentPage == Flurorouter.formulario5,
+          ),
+          MenuItemP(
+            text: 'Asistencias',
             icon: Icons.home,
             onPressed: () =>
                 NavigationService.navigateTo(Flurorouter.formulario5),
