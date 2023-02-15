@@ -16,6 +16,7 @@ import 'package:tesis/ui/pages/Formularios/formulario4.dart';
 import 'package:tesis/ui/pages/Formularios/formulario5.dart';
 import 'package:tesis/ui/pages/HorarioMant/Horario_Mant.dart';
 import 'package:tesis/ui/pages/ProfesorMant/Profesor_Mant.dart';
+import 'package:tesis/ui/pages/ProfesorMant/profe_x_horario.dart';
 import 'package:tesis/ui/pages/enfermera/enfermera.dart';
 import 'package:tesis/ui/pages/enfermera/enfermeras.dart';
 import 'package:tesis/ui/pages/familiaresMant/Familiares_Mant.dart';
@@ -233,7 +234,7 @@ class Handlers {
       return const LoginView();
     }
   });
- 
+
   static Handler horarioMant = Handler(handlerFunc: (context, param) {
     // validacion de sesion
     final logeo = Provider.of<LoginProvider>(context!);
@@ -245,7 +246,7 @@ class Handlers {
       return const LoginView();
     }
   });
-  
+
   static Handler profesorMant = Handler(handlerFunc: (context, param) {
     // validacion de sesion
     final logeo = Provider.of<LoginProvider>(context!);
@@ -257,7 +258,7 @@ class Handlers {
       return const LoginView();
     }
   });
-  
+
   static Handler familiarMant = Handler(handlerFunc: (context, param) {
     // validacion de sesion
     final logeo = Provider.of<LoginProvider>(context!);
@@ -269,7 +270,7 @@ class Handlers {
       return const LoginView();
     }
   });
- 
+
   static Handler inscripcioinesMant = Handler(handlerFunc: (context, param) {
     // validacion de sesion
     final logeo = Provider.of<LoginProvider>(context!);
@@ -277,6 +278,18 @@ class Handlers {
         .setCurrentPageUrl(Flurorouter.formulario5);
     if (logeo.authStatus == AuthStatus.authenticated) {
       return const InscripcionesMantenimiento();
+    } else {
+      return const LoginView();
+    }
+  });
+
+  static Handler profesorXhorario = Handler(handlerFunc: (context, param) {
+    // validacion de sesion
+    final logeo = Provider.of<LoginProvider>(context!);
+    Provider.of<SideMenuProvider>(context, listen: false)
+        .setCurrentPageUrl(Flurorouter.profesorXhorario);
+    if (logeo.authStatus == AuthStatus.authenticated) {
+      return const ProfesorXhorario();
     } else {
       return const LoginView();
     }

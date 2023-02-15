@@ -6,6 +6,7 @@ import 'package:tesis/domain/providers/disciplinas/Disciplina_Provider.dart';
 import 'package:tesis/domain/providers/enfermeras/enfermeraProvider.dart';
 import 'package:tesis/domain/providers/horarios/Horarios_Provider.dart';
 import 'package:tesis/domain/providers/informes/ingresoReporteProvider.dart';
+import 'package:tesis/domain/providers/profesor/profesor_provider.dart';
 import 'package:tesis/domain/providers/reportProvider.dart';
 
 final sl = GetIt.instance;
@@ -18,6 +19,7 @@ Future<void> init() async {
   sl.registerFactory(() => CitaProvider());
   sl.registerFactory(() => DisciplinaProvider());
   sl.registerFactory(() => HorarioProvider());
+  sl.registerFactory(() => ProfesorProvider());
 
   sl.registerLazySingleton(() => http.Client());
 }

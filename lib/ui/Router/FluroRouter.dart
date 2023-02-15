@@ -27,6 +27,7 @@ class Flurorouter {
   static String profesorMantenimiento = "/profesorMant";
   static String familiarMantenimiento = "/familiarMant";
   static String inscripcionMantenimiento = "/inscripcionMant";
+  static String profesorXhorario = "/profesorXhorario";
   // los nombres de las rutas no se pueden repetir
   // no van espacio
 
@@ -91,6 +92,10 @@ class Flurorouter {
         handler: Handlers.familiarMant, transitionType: TransitionType.fadeIn);
     router.define(inscripcionMantenimiento,
         handler: Handlers.inscripcioinesMant,
+        transitionType: TransitionType.fadeIn);
+
+    router.define(profesorXhorario,
+        handler: Handlers.profesorXhorario,
         transitionType: TransitionType.fadeIn);
 
     router.notFoundHandler = Handlers.noFound;
