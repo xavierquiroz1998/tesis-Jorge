@@ -206,7 +206,7 @@ class _SideBarState extends State<SideBar> {
             icon: Icons.home,
             onPressed: () =>
                 NavigationService.navigateTo(Flurorouter.formulario5),
-            isActive: sideMenuProvider.currentPage == Flurorouter.formulario5,
+            //isActive: sideMenuProvider.currentPage == Flurorouter.formulario5,
           ),
           MenuItemP(
             text: 'Chat',

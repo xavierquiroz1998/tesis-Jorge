@@ -50,20 +50,21 @@ class ModelHorarios {
 }
 
 class ModelViewHorarios {
-  ModelViewHorarios({
-    required this.idDisciplina,
-    required this.nomDisciplina,
-    required this.nivel,
-    required this.idCategoria,
-    required this.nomCategoria,
-    required this.idCiclo,
-    required this.nomCiclo,
-    required this.valor,
-    required this.horario,
-    required this.estado,
-    this.check= false
-  });
+  ModelViewHorarios(
+      {required this.idDisciplina,
+      required this.nomDisciplina,
+      required this.nivel,
+      required this.idCategoria,
+      required this.nomCategoria,
+      required this.idCiclo,
+      required this.nomCiclo,
+      required this.valor,
+      required this.horario,
+      required this.estado,
+      this.check = false,
+      this.id = 0});
 
+  int id;
   int idDisciplina;
   String nomDisciplina;
   String nivel;
@@ -93,6 +94,7 @@ class ModelViewHorarios {
         valor: json["valor"]?.toDouble(),
         horario: json["horario"],
         estado: json["estado"],
+        id: json["id"],
       );
 
   Map<String, dynamic> toMap() => {
@@ -106,5 +108,6 @@ class ModelViewHorarios {
         "valor": valor,
         "horario": horario,
         "estado": estado,
+        "id": id,
       };
 }

@@ -46,11 +46,16 @@ class ProfesorProvider extends ChangeNotifier {
           estado: "A",
           identificacion: ctrIdentificacion.text);
 
-      bool result = await _dataSource.postProfesor(profesor);
+      var resultProfe = await _dataSource.postProfesor(profesor);
 
-      if (cursosAsigandos.isNotEmpty) {
-        for (var item in cursosAsigandos) {
-          
+      if (resultProfe.id != 0) {
+        if (cursosAsigandos.isNotEmpty) {
+          for (var item in cursosAsigandos) {
+            ModelProfesorXHorario horarioProfe = ModelProfesorXHorario(
+                id: 0, idProfesor: resultProfe.id, idHorario: item.id);
+
+            await _dataSource.postProfesor_x_horario(horarioProfe);
+          }
         }
       }
     } catch (e) {}

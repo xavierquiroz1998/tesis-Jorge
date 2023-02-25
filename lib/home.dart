@@ -5,7 +5,9 @@ import 'package:tesis/domain/providers/CrearCita/CitaProvider.dart';
 import 'package:tesis/domain/providers/Home/sideMenuProvider.dart';
 import 'package:tesis/domain/providers/Login/LoginProvider.dart';
 import 'package:tesis/domain/providers/enfermeras/enfermeraProvider.dart';
+import 'package:tesis/domain/providers/familiares/familiares_provider.dart';
 import 'package:tesis/domain/providers/horarios/Horarios_Provider.dart';
+import 'package:tesis/domain/providers/incripciones/incripcion_provider.dart';
 import 'package:tesis/domain/providers/informes/ingresoReporteProvider.dart';
 import 'package:tesis/domain/providers/profesor/profesor_provider.dart';
 import 'package:tesis/domain/providers/reportProvider.dart';
@@ -29,6 +31,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => sl<DisciplinaProvider>()),
         ChangeNotifierProvider(create: (_) => sl<HorarioProvider>()),
         ChangeNotifierProvider(create: (_) => sl<ProfesorProvider>()),
+        ChangeNotifierProvider(create: (_) => sl<FamiliaresProvider>()),
+        ChangeNotifierProvider(create: (_) => sl<InscripcionProvider>()),
         ChangeNotifierProvider(lazy: false, create: (_) => SideMenuProvider()),
       ],
       child: MaterialApp(

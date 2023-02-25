@@ -5,8 +5,7 @@ import 'package:tesis/data/datasource/reference/URLbase.dart';
 import 'package:tesis/data/model/profesor.dart';
 
 class ProfesorDataSource {
-
-    Future<List<ModelProfesor>> getProfesor() async {
+  Future<List<ModelProfesor>> getProfesor() async {
     List<ModelProfesor> lisTemp = [];
     try {
       String url = "${Url.urlBse}profesor";
@@ -22,8 +21,27 @@ class ProfesorDataSource {
     }
   }
 
-  Future<bool> postProfesor(ModelProfesor datos) async {
+  Future<ModelProfesor> postProfesor(ModelProfesor datos) async {
     var url = Uri.parse("${Url.urlBse}profesor");
+    var data = datos.toJson();
+
+    final resquet = await http.post(url,
+        body: data,
+        headers: {"Content-type": "application/json;charset=UTF-8"});
+
+    try {
+      if (resquet.statusCode != 200) {
+        throw Exception('${resquet.statusCode}');
+      } else {
+        return ModelProfesor.fromMap(jsonDecode(resquet.body));
+      }
+    } catch (e) {
+      throw ('$e');
+    }
+  }
+
+  Future<bool> postProfesor_x_horario(ModelProfesorXHorario datos) async {
+    var url = Uri.parse("${Url.urlBse}profesor/xHorario");
     var data = datos.toJson();
 
     final resquet = await http.post(url,
@@ -41,7 +59,7 @@ class ProfesorDataSource {
     }
   }
 
-   List<ModelProfesor> decodeProfesor(String respuesta) {
+  List<ModelProfesor> decodeProfesor(String respuesta) {
     var parseo = jsonDecode(respuesta);
     return parseo
         .map<ModelProfesor>((json) => ModelProfesor.fromMap(json))

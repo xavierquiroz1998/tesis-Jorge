@@ -5,7 +5,9 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:provider/provider.dart';
 import 'package:tesis/data/model/catalogoModel.dart';
 import 'package:tesis/data/model/disciplinaModel.dart';
+import 'package:tesis/domain/Navigation/NavigationService.dart';
 import 'package:tesis/domain/providers/horarios/Horarios_Provider.dart';
+import 'package:tesis/ui/Router/FluroRouter.dart';
 import 'package:tesis/ui/pages/widget/whiteCard.dart';
 
 class HorarioMantenimiento extends StatefulWidget {
@@ -222,6 +224,7 @@ class _HorarioMantenimientoState extends State<HorarioMantenimiento> {
               ],
             ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 TextButton(
                   onPressed: () async {
@@ -230,8 +233,8 @@ class _HorarioMantenimientoState extends State<HorarioMantenimiento> {
                   child: Text("Guardar"),
                 ),
                 TextButton(
-                  onPressed: () async {
-                    //await provHorario.guardarHorario();
+                  onPressed: () {
+                    NavigationService.navigateTo(Flurorouter.formulario2);
                   },
                   child: Text("Cancelar"),
                 ),

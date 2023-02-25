@@ -4,7 +4,9 @@ import 'package:tesis/domain/providers/CrearCita/CitaProvider.dart';
 import 'package:tesis/domain/providers/Login/LoginProvider.dart';
 import 'package:tesis/domain/providers/disciplinas/Disciplina_Provider.dart';
 import 'package:tesis/domain/providers/enfermeras/enfermeraProvider.dart';
+import 'package:tesis/domain/providers/familiares/familiares_provider.dart';
 import 'package:tesis/domain/providers/horarios/Horarios_Provider.dart';
+import 'package:tesis/domain/providers/incripciones/incripcion_provider.dart';
 import 'package:tesis/domain/providers/informes/ingresoReporteProvider.dart';
 import 'package:tesis/domain/providers/profesor/profesor_provider.dart';
 import 'package:tesis/domain/providers/reportProvider.dart';
@@ -20,6 +22,8 @@ Future<void> init() async {
   sl.registerFactory(() => DisciplinaProvider());
   sl.registerFactory(() => HorarioProvider());
   sl.registerFactory(() => ProfesorProvider());
+  sl.registerFactory(() => FamiliaresProvider());
+  sl.registerFactory(() => InscripcionProvider());
 
   sl.registerLazySingleton(() => http.Client());
 }

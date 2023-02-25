@@ -48,3 +48,32 @@ class ModelProfesor {
         "estado": estado,
       };
 }
+
+class ModelProfesorXHorario {
+    ModelProfesorXHorario({
+        required this.id,
+        required this.idProfesor,
+        required this.idHorario,
+    });
+
+    int id;
+    int idProfesor;
+    int idHorario;
+
+    factory ModelProfesorXHorario.fromJson(String str) => ModelProfesorXHorario.fromMap(json.decode(str));
+
+    String toJson() => json.encode(toMap());
+
+    factory ModelProfesorXHorario.fromMap(Map<String, dynamic> json) => ModelProfesorXHorario(
+        id: json["id"],
+        idProfesor: json["id_profesor"],
+        idHorario: json["id_horario"],
+    );
+
+    Map<String, dynamic> toMap() => {
+        "id": id,
+        "id_profesor": idProfesor,
+        "id_horario": idHorario,
+    };
+}
+
