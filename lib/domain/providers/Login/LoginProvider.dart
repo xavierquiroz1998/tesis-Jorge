@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:tesis/data/datasource/reference/local_storage.dart';
+import 'package:tesis/data/datasource/usuarios.dart';
 import 'package:tesis/domain/Navigation/NavigationService.dart';
 import 'package:tesis/ui/Router/FluroRouter.dart';
 
@@ -10,6 +11,7 @@ enum AuthStatus { checking, authenticated, notAuthenticated }
 class LoginProvider extends ChangeNotifier {
   String _cedula = "";
   AuthStatus authStatus = AuthStatus.checking;
+  final UsuariosDatasurce _dataSourceUsuario = UsuariosDatasurce();
 
   LoginProvider() {
     isAuthenticated();
@@ -49,11 +51,14 @@ class LoginProvider extends ChangeNotifier {
       authStatus = AuthStatus.authenticated;
       authenticated = true;
 
-      LocalStorage.prefs.setString('token', "asdddsswwee");
-      LocalStorage.prefs.setString('usuario', json.encode("usuario"));
-      NavigationService.replaceTo(Flurorouter.inicio);
-      notifyListeners();
-      NavigationService.replaceTo(Flurorouter.inicio);
+      var result = await _dataSourceUsuario.logeoUsuario(cedula, contrasenia);
+      if (result.id != 0) {
+        LocalStorage.prefs.setString('token', "asdddsswwee");
+        LocalStorage.prefs.setString('usuario', json.encode("usuario"));
+        NavigationService.replaceTo(Flurorouter.inicio);
+        notifyListeners();
+        NavigationService.replaceTo(Flurorouter.inicio);
+      }
     } catch (e) {}
   }
 

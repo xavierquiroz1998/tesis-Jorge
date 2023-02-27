@@ -12,23 +12,23 @@ class BackgroundRigth extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 30),
             child: Column(
               mainAxisSize: MainAxisSize.min,
-              children: const [
-                // Container(
-                //   width: 500,
-                //   height: 500,
-                //   child: Image.asset(
-                //     "Ferreteria.png",
-                //     fit: BoxFit.contain,
-                //   ),
-                // ),
+              children: [
+                Container(
+                  width: 500,
+                  height: 500,
+                  child: Image.asset(
+                    "logo.jpeg",
+                    fit: BoxFit.contain,
+                  ),
+                ),
 
-                Text(
-                  "KIARITA",
-                  style: TextStyle(fontStyle: FontStyle.italic),
-                ),
-                Text(
-                  "imagen",
-                ),
+                // Text(
+                //   "KIARITA",
+                //   style: TextStyle(fontStyle: FontStyle.italic),
+                // ),
+                // Text(
+                //   "imagen",
+                // ),
               ],
             ),
           ),

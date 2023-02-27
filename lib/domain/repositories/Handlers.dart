@@ -9,6 +9,8 @@ import 'package:tesis/ui/chat/chatBot.dart';
 import 'package:tesis/ui/pages/404/noFound.dart';
 import 'package:tesis/ui/pages/ConsultaReporte/ConsultaReporte.dart';
 import 'package:tesis/ui/pages/DisciplinaMant/Disciplina_Mant.dart';
+import 'package:tesis/ui/pages/Formularios/aprobaciones.dart';
+import 'package:tesis/ui/pages/Formularios/asistenciaSocios.dart';
 import 'package:tesis/ui/pages/Formularios/formulario1.dart';
 import 'package:tesis/ui/pages/Formularios/formulario2.dart';
 import 'package:tesis/ui/pages/Formularios/formulario3.dart';
@@ -17,6 +19,7 @@ import 'package:tesis/ui/pages/Formularios/formulario5.dart';
 import 'package:tesis/ui/pages/HorarioMant/Horario_Mant.dart';
 import 'package:tesis/ui/pages/ProfesorMant/Profesor_Mant.dart';
 import 'package:tesis/ui/pages/ProfesorMant/profe_x_horario.dart';
+import 'package:tesis/ui/pages/asistencias/asistenciasSocios_Mant.dart';
 import 'package:tesis/ui/pages/enfermera/enfermera.dart';
 import 'package:tesis/ui/pages/enfermera/enfermeras.dart';
 import 'package:tesis/ui/pages/familiaresMant/Familiares_Mant.dart';
@@ -290,6 +293,42 @@ class Handlers {
         .setCurrentPageUrl(Flurorouter.profesorXhorario);
     if (logeo.authStatus == AuthStatus.authenticated) {
       return const ProfesorXhorario();
+    } else {
+      return const LoginView();
+    }
+  });
+
+  static Handler aprobacionSocio = Handler(handlerFunc: (context, param) {
+    // validacion de sesion
+    final logeo = Provider.of<LoginProvider>(context!);
+    Provider.of<SideMenuProvider>(context, listen: false)
+        .setCurrentPageUrl(Flurorouter.aprobacion);
+    if (logeo.authStatus == AuthStatus.authenticated) {
+      return const AprobacionSocio();
+    } else {
+      return const LoginView();
+    }
+  });
+
+  static Handler asistenciasSocios = Handler(handlerFunc: (context, param) {
+    // validacion de sesion
+    final logeo = Provider.of<LoginProvider>(context!);
+    Provider.of<SideMenuProvider>(context, listen: false)
+        .setCurrentPageUrl(Flurorouter.asistencias);
+    if (logeo.authStatus == AuthStatus.authenticated) {
+      return const AsistenciasSocios();
+    } else {
+      return const LoginView();
+    }
+  });
+
+  static Handler asistenciasSociosMant = Handler(handlerFunc: (context, param) {
+    // validacion de sesion
+    final logeo = Provider.of<LoginProvider>(context!);
+    Provider.of<SideMenuProvider>(context, listen: false)
+        .setCurrentPageUrl(Flurorouter.asistenciasMant);
+    if (logeo.authStatus == AuthStatus.authenticated) {
+      return const AsistenciaSociosMant();
     } else {
       return const LoginView();
     }

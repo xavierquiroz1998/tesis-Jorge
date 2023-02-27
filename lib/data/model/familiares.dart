@@ -13,6 +13,7 @@ class ModelFamiliares {
     required this.domicilio,
     required this.fechaNac,
     required this.estado,
+    this.check = false,
   });
 
   int id;
@@ -26,6 +27,7 @@ class ModelFamiliares {
   String domicilio;
   DateTime fechaNac;
   String estado;
+  bool check;
 
   factory ModelFamiliares.fromJson(String str) =>
       ModelFamiliares.fromMap(json.decode(str));

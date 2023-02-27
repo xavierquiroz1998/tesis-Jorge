@@ -202,11 +202,18 @@ class _SideBarState extends State<SideBar> {
             isActive: sideMenuProvider.currentPage == Flurorouter.formulario5,
           ),
           MenuItemP(
+            text: 'Aprobacion de socios',
+            icon: Icons.home,
+            onPressed: () =>
+                NavigationService.navigateTo(Flurorouter.aprobacion),
+            isActive: sideMenuProvider.currentPage == Flurorouter.aprobacion,
+          ),
+          MenuItemP(
             text: 'Asistencias',
             icon: Icons.home,
             onPressed: () =>
-                NavigationService.navigateTo(Flurorouter.formulario5),
-            //isActive: sideMenuProvider.currentPage == Flurorouter.formulario5,
+                NavigationService.navigateTo(Flurorouter.asistencias),
+            isActive: sideMenuProvider.currentPage == Flurorouter.asistencias,
           ),
           MenuItemP(
             text: 'Chat',

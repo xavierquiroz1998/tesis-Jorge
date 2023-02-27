@@ -39,6 +39,25 @@ class FamiliaresDataSource {
       throw ('$e');
     }
   }
+  
+  Future<ModelFamiliares> postActualizarFamiliares(ModelFamiliares datos) async {
+    var url = Uri.parse("${Url.urlBse}familiares/aprobar");
+    var data = datos.toJson();
+
+    final resquet = await http.post(url,
+        body: data,
+        headers: {"Content-type": "application/json;charset=UTF-8"});
+
+    try {
+      if (resquet.statusCode != 200) {
+        throw Exception('${resquet.statusCode}');
+      } else {
+        return ModelFamiliares.fromMap(jsonDecode(resquet.body));
+      }
+    } catch (e) {
+      throw ('$e');
+    }
+  }
 
   List<ModelFamiliares> decodeFamiliar(String respuesta) {
     var parseo = jsonDecode(respuesta);

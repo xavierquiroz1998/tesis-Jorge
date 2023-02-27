@@ -58,4 +58,15 @@ class FamiliaresProvider extends ChangeNotifier {
       await _dataSource.postFamiliares(familiar);
     } catch (e) {}
   }
+
+  Future aprobarFamiliares() async {
+    try {
+      for (var e in listado.where((element) => element.check).toList()) {
+        await _dataSource.postActualizarFamiliares(e);
+      }
+      if (listado.where((element) => element.check).toList().isNotEmpty) {
+        await getFamiliares();
+      }
+    } catch (e) {}
+  }
 }

@@ -9,7 +9,7 @@ class Flurorouter {
   static String pacientes = "/pacientes";
   static String citamedica = "/citas";
   static String ingresoReporte = "/IngresoReporte";
-  static String pacienteMantenimineto = "/paciente";
+  static String pacienteMantenimineto = "/usuarios";
   static String consultaReporte = "/ConsutarReporte";
   static String citas1 = "/Citas1";
   static String enfermera = "/Efermera";
@@ -28,6 +28,9 @@ class Flurorouter {
   static String familiarMantenimiento = "/familiarMant";
   static String inscripcionMantenimiento = "/inscripcionMant";
   static String profesorXhorario = "/profesorXhorario";
+  static String aprobacion = "/aprobacion";
+  static String asistencias = "/asistencias";
+  static String asistenciasMant = "/asistenciasMant";
   // los nombres de las rutas no se pueden repetir
   // no van espacio
 
@@ -96,6 +99,18 @@ class Flurorouter {
 
     router.define(profesorXhorario,
         handler: Handlers.profesorXhorario,
+        transitionType: TransitionType.fadeIn);
+
+    router.define(aprobacion,
+        handler: Handlers.aprobacionSocio,
+        transitionType: TransitionType.fadeIn);
+
+    router.define(asistencias,
+        handler: Handlers.asistenciasSocios,
+        transitionType: TransitionType.fadeIn);
+   
+    router.define(asistenciasMant,
+        handler: Handlers.asistenciasSociosMant,
         transitionType: TransitionType.fadeIn);
 
     router.notFoundHandler = Handlers.noFound;

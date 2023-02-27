@@ -1,25 +1,27 @@
-// To parse this JSON data, do
-//
-//     final modelUsuarios = modelUsuariosFromMap(jsonString);
-
 import 'dart:convert';
 
 class ModelUsuarios {
   ModelUsuarios({
-    this.id = 0,
-    this.nombre = "",
-    this.apellido = "",
-    this.tipo = "",
-    this.usuario = "",
-    this.clave = "",
+    required this.id,
+    required this.usuario,
+    required this.nombres,
+    required this.identificacion,
+    required this.domicilio,
+    required this.correo,
+    required this.celular,
+    required this.contrasenia,
+    required this.estado,
   });
 
   int id;
-  String nombre;
-  String apellido;
-  String tipo;
   String usuario;
-  String clave;
+  String nombres;
+  String identificacion;
+  String domicilio;
+  String correo;
+  String celular;
+  String contrasenia;
+  String estado;
 
   factory ModelUsuarios.fromJson(String str) =>
       ModelUsuarios.fromMap(json.decode(str));
@@ -28,19 +30,25 @@ class ModelUsuarios {
 
   factory ModelUsuarios.fromMap(Map<String, dynamic> json) => ModelUsuarios(
         id: json["id"],
-        nombre: json["nombre"],
-        apellido: json["apellido"],
-        tipo: json["tipo"],
         usuario: json["usuario"],
-        clave: json["clave"],
+        nombres: json["nombres"],
+        identificacion: json["identificacion"],
+        domicilio: json["domicilio"],
+        correo: json["correo"],
+        celular: json["celular"],
+        contrasenia: json["contrasenia"],
+        estado: json["estado"],
       );
 
   Map<String, dynamic> toMap() => {
         "id": id,
-        "nombre": nombre,
-        "apellido": apellido,
-        "tipo": tipo,
         "usuario": usuario,
-        "clave": clave,
+        "nombres": nombres,
+        "identificacion": identificacion,
+        "domicilio": domicilio,
+        "correo": correo,
+        "celular": celular,
+        "contrasenia": contrasenia,
+        "estado": estado,
       };
 }

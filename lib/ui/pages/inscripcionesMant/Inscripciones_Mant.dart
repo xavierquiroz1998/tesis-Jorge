@@ -78,11 +78,80 @@ class _InscripcionesMantenimientoState
               ],
             ),
             Row(
+              children: [
+                SizedBox(
+                  width: 120,
+                  child: Text("socio :", style: CustomLabels.h11),
+                ),
+                Expanded(
+                  child: DropdownButton<String>(
+                    isExpanded: true,
+                    //value: provHorario.infoDisciplina,
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        provInscripcion.mesSelect = newValue!;
+                      });
+                    },
+
+                    hint: Text(
+                      provInscripcion.mesSelect,
+                      style: TextStyle(color: Colors.black),
+                    ),
+                    items: provInscripcion.listadoMeses
+                        .map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(
+                          value,
+                          style: TextStyle(fontSize: 20),
+                        ),
+                      );
+                    }).toList(),
+                  ),
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                SizedBox(
+                  width: 120,
+                  child: Text("disciplina :", style: CustomLabels.h11),
+                ),
+                Expanded(
+                  child: DropdownButton<String>(
+                    isExpanded: true,
+                    //value: provHorario.infoDisciplina,
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        provInscripcion.mesSelect = newValue!;
+                      });
+                    },
+
+                    hint: Text(
+                      provInscripcion.mesSelect,
+                      style: TextStyle(color: Colors.black),
+                    ),
+                    items: provInscripcion.listadoMeses
+                        .map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(
+                          value,
+                          style: TextStyle(fontSize: 20),
+                        ),
+                      );
+                    }).toList(),
+                  ),
+                ),
+              ],
+            ),
+            
+            Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 TextButton(
                   onPressed: () {},
-                  child: Text("Agrear"),
+                  child: Text("Agregar"),
                 ),
               ],
             ),
@@ -97,96 +166,46 @@ class _InscripcionesMantenimientoState
                     label: Center(child: Text("# Identificación")),
                   ),
                   const DataColumn(
-                    label: Center(child: Text("Nombres")),
+                    label: Center(child: Text("Nombres del Socio")),
                   ),
                   const DataColumn(
-                    label: Center(child: Text("Tipo")),
+                    label: Center(child: Text("Disciplina")),
                   ),
                   const DataColumn(
-                    label: Center(child: Text("Celular")),
+                    label: Center(child: Text("Nivel")),
                   ),
                   const DataColumn(
-                    label: Center(child: Text("Estado")),
+                    label: Center(child: Text("Horario")),
                   ),
                   const DataColumn(
                     label: Center(child: Text("")),
                   )
                 ],
-                rows: provFamilia.listado.map<DataRow>((e) {
-                  return DataRow(
+                rows: [
+                  DataRow(
                     //key: LocalKey(),
                     cells: <DataCell>[
                       DataCell(
-                        Text(e.identificacion),
+                        Text(""),
                       ),
                       DataCell(
-                        Text(e.nombres),
+                        Text(""),
                       ),
                       DataCell(
-                        Text(e.tipo),
+                        Text(""),
                       ),
                       DataCell(
-                        Text(e.celular),
+                        Text(""),
                       ),
                       DataCell(
-                        Text(e.estado),
+                        Text(""),
                       ),
                       DataCell(
-                        Row(
-                          children: [
-                            e.estado == "A"
-                                ? TextButton.icon(
-                                    onPressed: () {
-                                      // producto.product = e;
-                                      // NavigationService.navigateTo(
-                                      //     Flurorouter.ingreso);
-                                    },
-                                    icon: Icon(Icons.search),
-                                    label: Text(""))
-                                : Container(),
-                            e.estado == "A"
-                                ? TextButton.icon(
-                                    onPressed: () async {
-                                      // await showDialog(
-                                      //     context: context,
-                                      //     builder: (context) {
-                                      //       return AlertDialog(
-                                      //         title: Text("Anular"),
-                                      //         content: Container(
-                                      //           child: Text(
-                                      //               "Seguro desea anular el item " +
-                                      //                   e.detalle),
-                                      //         ),
-                                      //         actions: [
-                                      //           TextButton(
-                                      //             onPressed: () async {
-                                      //               print("Opt anular??");
-                                      //               await producto
-                                      //                   .anular(e);
-                                      //               Navigator.pop(context);
-                                      //             },
-                                      //             child: Text("Aceptar"),
-                                      //           ),
-                                      //           TextButton(
-                                      //             onPressed: () {
-                                      //               Navigator.pop(context);
-                                      //             },
-                                      //             child: Text("Cancelar"),
-                                      //           ),
-                                      //         ],
-                                      //       );
-                                      //     },
-                                      //    );
-                                    },
-                                    icon: Icon(Icons.delete),
-                                    label: Text(""))
-                                : Container(),
-                          ],
-                        ),
+                        Text(""),
                       ),
                     ],
-                  );
-                }).toList(),
+                  ),
+                ],
               ),
             ),
           ],
