@@ -38,6 +38,14 @@ class InscripcionProvider extends ChangeNotifier {
       }
     } catch (e) {}
   }
+
+  Future<bool> guardar() async {
+    try {
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
 }
 
 class InscripcionDet {

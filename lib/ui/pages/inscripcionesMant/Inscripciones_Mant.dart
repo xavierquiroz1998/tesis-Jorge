@@ -6,10 +6,12 @@ import 'package:provider/provider.dart';
 import 'package:tesis/data/model/disciplinaModel.dart';
 import 'package:tesis/data/model/familiares.dart';
 import 'package:tesis/data/model/horarios.dart';
+import 'package:tesis/domain/Navigation/NavigationService.dart';
 import 'package:tesis/domain/providers/disciplinas/Disciplina_Provider.dart';
 import 'package:tesis/domain/providers/familiares/familiares_provider.dart';
 import 'package:tesis/domain/providers/horarios/Horarios_Provider.dart';
 import 'package:tesis/domain/providers/incripciones/incripcion_provider.dart';
+import 'package:tesis/ui/Router/FluroRouter.dart';
 import 'package:tesis/ui/pages/widget/customLabels.dart';
 import 'package:tesis/ui/pages/widget/inputForm.dart';
 import 'package:tesis/ui/pages/widget/whiteCard.dart';
@@ -37,7 +39,6 @@ class _InscripcionesMantenimientoState
   Widget build(BuildContext context) {
     var provInscripcion = Provider.of<InscripcionProvider>(context);
     final provFamilia = Provider.of<FamiliaresProvider>(context);
-    final ptProvider = Provider.of<DisciplinaProvider>(context);
     final provHorario = Provider.of<HorarioProvider>(context);
     return WhiteCard(
       title: "Mantenimiento de Inscripciones",
@@ -248,11 +249,17 @@ class _InscripcionesMantenimientoState
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    NavigationService.navigateTo(Flurorouter.formulario5);
+                  },
                   child: Text("Cancelar"),
                 ),
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () async {
+                    if (await provInscripcion.guardar()) {
+                      NavigationService.navigateTo(Flurorouter.formulario5);
+                    }
+                  },
                   child: Text("Guardar"),
                 ),
               ],
