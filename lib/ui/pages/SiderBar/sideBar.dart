@@ -219,9 +219,9 @@ class _SideBarState extends State<SideBar> {
             text: 'Crear Usuario',
             icon: Icons.home,
             onPressed: () =>
-                NavigationService.navigateTo(Flurorouter.pacienteMantenimineto),
+                NavigationService.navigateTo(Flurorouter.pacientes),
             isActive: sideMenuProvider.currentPage ==
-                Flurorouter.pacienteMantenimineto,
+                Flurorouter.pacientes,
           ),
           MenuItemP(
             text: 'Salir',

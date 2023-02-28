@@ -30,6 +30,7 @@ import 'package:tesis/ui/pages/home/inicio.dart';
 import 'package:tesis/ui/pages/informes/Ingresoreporte1.dart';
 import 'package:tesis/ui/pages/inscripcionesMant/Inscripciones_Mant.dart';
 import 'package:tesis/ui/pages/login/Login.dart';
+import 'package:tesis/ui/pages/pacientes/pacientes.dart';
 import 'package:tesis/ui/pages/pacientes/pacientesmant.dart';
 
 class Handlers {
@@ -68,7 +69,7 @@ class Handlers {
     Provider.of<SideMenuProvider>(context, listen: false)
         .setCurrentPageUrl(Flurorouter.pacientes);
     if (logeo.authStatus == AuthStatus.authenticated) {
-      return PacientesConsulta();
+      return PacienteCons();
     } else {
       return LoginView();
     }

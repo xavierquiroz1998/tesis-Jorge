@@ -6,10 +6,10 @@ class Flurorouter {
 
   static String login = "/login";
   static String inicio = "/inicio";
-  static String pacientes = "/pacientes";
+  static String pacientes = "/usuarios";
   static String citamedica = "/citas";
   static String ingresoReporte = "/IngresoReporte";
-  static String pacienteMantenimineto = "/usuarios";
+  static String pacienteMantenimineto = "/usuario";
   static String consultaReporte = "/ConsutarReporte";
   static String citas1 = "/Citas1";
   static String enfermera = "/Efermera";
@@ -108,7 +108,7 @@ class Flurorouter {
     router.define(asistencias,
         handler: Handlers.asistenciasSocios,
         transitionType: TransitionType.fadeIn);
-   
+
     router.define(asistenciasMant,
         handler: Handlers.asistenciasSociosMant,
         transitionType: TransitionType.fadeIn);

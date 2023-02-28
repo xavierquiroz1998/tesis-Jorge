@@ -17,6 +17,15 @@ class UsuarioProvider extends ChangeNotifier {
   TextEditingController ctrCelular = TextEditingController();
   TextEditingController ctrContrasenia = TextEditingController();
 
+  List<ModelUsuarios> listUsuario = [];
+
+  Future getUsuarios() async {
+    try {
+      listUsuario = await _dataSourceUsuario.cargarUsuarios();
+      notifyListeners();
+    } catch (e) {}
+  }
+
   Future getMenu() async {
     try {
       listadoMenu = await _dataSource.getMenu();
