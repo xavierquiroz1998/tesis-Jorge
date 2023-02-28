@@ -48,11 +48,10 @@ class LoginProvider extends ChangeNotifier {
 
   Future<void> logeo() async {
     try {
-      authStatus = AuthStatus.authenticated;
-      authenticated = true;
-
       var result = await _dataSourceUsuario.logeoUsuario(cedula, contrasenia);
       if (result.id != 0) {
+        authStatus = AuthStatus.authenticated;
+        authenticated = true;
         LocalStorage.prefs.setString('token', "asdddsswwee");
         LocalStorage.prefs.setString('usuario', json.encode("usuario"));
         NavigationService.replaceTo(Flurorouter.inicio);

@@ -3,6 +3,12 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:provider/provider.dart';
+import 'package:tesis/data/model/disciplinaModel.dart';
+import 'package:tesis/data/model/familiares.dart';
+import 'package:tesis/data/model/horarios.dart';
+import 'package:tesis/domain/providers/disciplinas/Disciplina_Provider.dart';
+import 'package:tesis/domain/providers/familiares/familiares_provider.dart';
+import 'package:tesis/domain/providers/horarios/Horarios_Provider.dart';
 import 'package:tesis/domain/providers/incripciones/incripcion_provider.dart';
 import 'package:tesis/ui/pages/widget/customLabels.dart';
 import 'package:tesis/ui/pages/widget/inputForm.dart';
@@ -19,8 +25,20 @@ class InscripcionesMantenimiento extends StatefulWidget {
 class _InscripcionesMantenimientoState
     extends State<InscripcionesMantenimiento> {
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Provider.of<FamiliaresProvider>(context, listen: false).getFamiliares();
+    Provider.of<DisciplinaProvider>(context, listen: false).getDisciplinas();
+    Provider.of<HorarioProvider>(context, listen: false).getHorarios();
+  }
+
+  @override
   Widget build(BuildContext context) {
     var provInscripcion = Provider.of<InscripcionProvider>(context);
+    final provFamilia = Provider.of<FamiliaresProvider>(context);
+    final ptProvider = Provider.of<DisciplinaProvider>(context);
+    final provHorario = Provider.of<HorarioProvider>(context);
     return WhiteCard(
       title: "Mantenimiento de Inscripciones",
       child: Expanded(
@@ -84,25 +102,29 @@ class _InscripcionesMantenimientoState
                   child: Text("socio :", style: CustomLabels.h11),
                 ),
                 Expanded(
-                  child: DropdownButton<String>(
+                  child: DropdownButton<ModelFamiliares>(
                     isExpanded: true,
                     //value: provHorario.infoDisciplina,
-                    onChanged: (String? newValue) {
+                    onChanged: (ModelFamiliares? newValue) {
                       setState(() {
-                        provInscripcion.mesSelect = newValue!;
+                        provInscripcion.socioSelect = newValue!;
                       });
                     },
 
                     hint: Text(
-                      provInscripcion.mesSelect,
+                      provInscripcion.socioSelect == null
+                          ? ""
+                          : provInscripcion.socioSelect!.nombres,
                       style: TextStyle(color: Colors.black),
                     ),
-                    items: provInscripcion.listadoMeses
-                        .map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
+                    items: provFamilia.listado
+                        .where((element) => element.estado == "A")
+                        .map<DropdownMenuItem<ModelFamiliares>>(
+                            (ModelFamiliares value) {
+                      return DropdownMenuItem<ModelFamiliares>(
                         value: value,
                         child: Text(
-                          value,
+                          value.nombres,
                           style: TextStyle(fontSize: 20),
                         ),
                       );
@@ -118,25 +140,29 @@ class _InscripcionesMantenimientoState
                   child: Text("disciplina :", style: CustomLabels.h11),
                 ),
                 Expanded(
-                  child: DropdownButton<String>(
+                  child: DropdownButton<ModelViewHorarios>(
                     isExpanded: true,
                     //value: provHorario.infoDisciplina,
-                    onChanged: (String? newValue) {
+                    onChanged: (ModelViewHorarios? newValue) {
                       setState(() {
-                        provInscripcion.mesSelect = newValue!;
+                        provInscripcion.disciplinaSelect = newValue!;
                       });
                     },
 
                     hint: Text(
-                      provInscripcion.mesSelect,
+                      provInscripcion.disciplinaSelect == null
+                          ? ""
+                          : provInscripcion.disciplinaSelect!.nomDisciplina,
                       style: TextStyle(color: Colors.black),
                     ),
-                    items: provInscripcion.listadoMeses
-                        .map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
+                    items: provHorario.lisHorarios
+                        .where((element) => element.estado == "A")
+                        .map<DropdownMenuItem<ModelViewHorarios>>(
+                            (ModelViewHorarios value) {
+                      return DropdownMenuItem<ModelViewHorarios>(
                         value: value,
                         child: Text(
-                          value,
+                          value.nomDisciplina,
                           style: TextStyle(fontSize: 20),
                         ),
                       );
@@ -145,12 +171,13 @@ class _InscripcionesMantenimientoState
                 ),
               ],
             ),
-            
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    provInscripcion.agregarDetalle();
+                  },
                   child: Text("Agregar"),
                 ),
               ],
@@ -179,35 +206,57 @@ class _InscripcionesMantenimientoState
                   ),
                   const DataColumn(
                     label: Center(child: Text("")),
-                  )
-                ],
-                rows: [
-                  DataRow(
-                    //key: LocalKey(),
-                    cells: <DataCell>[
-                      DataCell(
-                        Text(""),
-                      ),
-                      DataCell(
-                        Text(""),
-                      ),
-                      DataCell(
-                        Text(""),
-                      ),
-                      DataCell(
-                        Text(""),
-                      ),
-                      DataCell(
-                        Text(""),
-                      ),
-                      DataCell(
-                        Text(""),
-                      ),
-                    ],
                   ),
                 ],
+                rows: provInscripcion.detalles
+                    .map(
+                      (e) => DataRow(
+                        //key: LocalKey(),
+                        cells: <DataCell>[
+                          DataCell(
+                            Text(e.socioSelect!.identificacion),
+                          ),
+                          DataCell(
+                            Text(e.socioSelect!.nombres),
+                          ),
+                          DataCell(
+                            Text(e.disciplinaSelect!.nomDisciplina),
+                          ),
+                          DataCell(
+                            Text(e.disciplinaSelect!.nivel),
+                          ),
+                          DataCell(
+                            Text(e.disciplinaSelect!.horario),
+                          ),
+                          DataCell(TextButton.icon(
+                              onPressed: () {
+                                provInscripcion.detalles.remove(e);
+                                setState(() {});
+                              },
+                              icon: Icon(Icons.delete),
+                              label: Text(""))),
+                        ],
+                      ),
+                    )
+                    .toList(),
               ),
             ),
+            SizedBox(
+              height: 50,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TextButton(
+                  onPressed: () {},
+                  child: Text("Cancelar"),
+                ),
+                TextButton(
+                  onPressed: () {},
+                  child: Text("Guardar"),
+                ),
+              ],
+            )
           ],
         ),
       ),

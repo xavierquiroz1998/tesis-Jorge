@@ -26,7 +26,7 @@ class UsuarioProvider extends ChangeNotifier {
     }
   }
 
-  Future guardarUsuario() async {
+  Future<bool> guardarUsuario() async {
     try {
       ModelUsuarios usuario = ModelUsuarios(
           id: 0,
@@ -49,8 +49,10 @@ class UsuarioProvider extends ChangeNotifier {
           var resultado = await _dataSource.postMenuUsuario(permisos);
         }
       }
+      return true;
     } catch (e) {
       print("${e.toString()}");
+      return false;
     }
   }
 }

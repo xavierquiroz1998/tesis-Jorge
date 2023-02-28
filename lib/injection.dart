@@ -10,6 +10,7 @@ import 'package:tesis/domain/providers/incripciones/incripcion_provider.dart';
 import 'package:tesis/domain/providers/informes/ingresoReporteProvider.dart';
 import 'package:tesis/domain/providers/profesor/profesor_provider.dart';
 import 'package:tesis/domain/providers/reportProvider.dart';
+import 'package:tesis/domain/providers/usuario/usuario_Provider.dart';
 
 final sl = GetIt.instance;
 
@@ -24,6 +25,7 @@ Future<void> init() async {
   sl.registerFactory(() => ProfesorProvider());
   sl.registerFactory(() => FamiliaresProvider());
   sl.registerFactory(() => InscripcionProvider());
+  sl.registerFactory(() => UsuarioProvider());
 
   sl.registerLazySingleton(() => http.Client());
 }

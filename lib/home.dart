@@ -11,6 +11,7 @@ import 'package:tesis/domain/providers/incripciones/incripcion_provider.dart';
 import 'package:tesis/domain/providers/informes/ingresoReporteProvider.dart';
 import 'package:tesis/domain/providers/profesor/profesor_provider.dart';
 import 'package:tesis/domain/providers/reportProvider.dart';
+import 'package:tesis/domain/providers/usuario/usuario_Provider.dart';
 import 'package:tesis/injection.dart';
 import 'package:tesis/ui/Router/FluroRouter.dart';
 import 'package:tesis/ui/pages/NavBar/NavBar.dart';
@@ -33,6 +34,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => sl<ProfesorProvider>()),
         ChangeNotifierProvider(create: (_) => sl<FamiliaresProvider>()),
         ChangeNotifierProvider(create: (_) => sl<InscripcionProvider>()),
+        ChangeNotifierProvider(create: (_) => sl<UsuarioProvider>()),
         ChangeNotifierProvider(lazy: false, create: (_) => SideMenuProvider()),
       ],
       child: MaterialApp(

@@ -216,12 +216,6 @@ class _SideBarState extends State<SideBar> {
             isActive: sideMenuProvider.currentPage == Flurorouter.asistencias,
           ),
           MenuItemP(
-            text: 'Chat',
-            icon: Icons.home,
-            onPressed: () => NavigationService.navigateTo(Flurorouter.chat),
-            isActive: sideMenuProvider.currentPage == Flurorouter.chat,
-          ),
-          MenuItemP(
             text: 'Crear Usuario',
             icon: Icons.home,
             onPressed: () =>
