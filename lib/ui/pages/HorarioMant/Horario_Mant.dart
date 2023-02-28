@@ -8,6 +8,8 @@ import 'package:tesis/data/model/disciplinaModel.dart';
 import 'package:tesis/domain/Navigation/NavigationService.dart';
 import 'package:tesis/domain/providers/horarios/Horarios_Provider.dart';
 import 'package:tesis/ui/Router/FluroRouter.dart';
+import 'package:tesis/ui/pages/widget/customLabels.dart';
+import 'package:tesis/ui/pages/widget/inputForm.dart';
 import 'package:tesis/ui/pages/widget/whiteCard.dart';
 
 class HorarioMantenimiento extends StatefulWidget {
@@ -35,9 +37,9 @@ class _HorarioMantenimientoState extends State<HorarioMantenimiento> {
           children: [
             Row(
               children: [
-                Text("Disciplina :"),
                 SizedBox(
-                  height: 10,
+                  width: 120,
+                  child: Text("Disciplina :", style: CustomLabels.h11),
                 ),
                 provHorario.listDisciplina.isNotEmpty
                     ? Expanded(
@@ -76,21 +78,26 @@ class _HorarioMantenimientoState extends State<HorarioMantenimiento> {
             ),
             Row(
               children: [
-                Text("Nivel :"),
                 SizedBox(
-                  height: 10,
+                  width: 120,
+                  child: Text("Nivel :", style: CustomLabels.h11),
                 ),
                 Expanded(
-                    child: TextField(
-                  controller: provHorario.ctrNivel,
-                )),
+                  child: InputForm(
+                    controller: provHorario.ctrNivel,
+                    hint: "",
+                    icon: Icons.assignment,
+                    length: 500,
+                    textInputType: TextInputType.text,
+                  ),
+                ),
               ],
             ),
             Row(
               children: [
-                Text("Categoria :"),
                 SizedBox(
-                  height: 10,
+                  width: 120,
+                  child: Text("Categoria :", style: CustomLabels.h11),
                 ),
                 Expanded(
                   child: DropdownButton<ModelCatalogos>(
@@ -125,9 +132,9 @@ class _HorarioMantenimientoState extends State<HorarioMantenimiento> {
             ),
             Row(
               children: [
-                Text("Ciclo :"),
                 SizedBox(
-                  height: 10,
+                  width: 120,
+                  child: Text("Ciclo :", style: CustomLabels.h11),
                 ),
                 Expanded(
                   child: DropdownButton<ModelCatalogos>(
@@ -162,22 +169,26 @@ class _HorarioMantenimientoState extends State<HorarioMantenimiento> {
             ),
             Row(
               children: [
-                Text("Valor :"),
                 SizedBox(
-                  height: 10,
+                  width: 120,
+                  child: Text("valor :", style: CustomLabels.h11),
                 ),
                 Expanded(
-                  child: TextFormField(
+                  child: InputForm(
                     controller: provHorario.ctrValor,
+                    hint: "",
+                    icon: Icons.assignment,
+                    length: 10,
+                    textInputType: TextInputType.text,
                   ),
                 ),
               ],
             ),
             Row(
               children: [
-                Text("Hora Inicio :"),
                 SizedBox(
-                  height: 10,
+                  width: 120,
+                  child: Text("Hora Inicio :", style: CustomLabels.h11),
                 ),
                 Expanded(
                   child: TextField(
@@ -198,9 +209,9 @@ class _HorarioMantenimientoState extends State<HorarioMantenimiento> {
                     },
                   ),
                 ),
-                Text("Hora Fin :"),
                 SizedBox(
-                  height: 10,
+                  width: 120,
+                  child: Text("Hora Fin :", style: CustomLabels.h11),
                 ),
                 Expanded(
                   child: TextField(

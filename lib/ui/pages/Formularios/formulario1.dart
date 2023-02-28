@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tesis/data/model/disciplinaModel.dart';
 import 'package:tesis/domain/Navigation/NavigationService.dart';
 import 'package:tesis/domain/providers/disciplinas/Disciplina_Provider.dart';
 import 'package:tesis/injection.dart';
@@ -39,59 +40,10 @@ class _Formulario1State extends State<Formulario1> {
             children: [
               TextButton(
                 onPressed: () async {
-                  // NavigationService.navigateTo(
-                  //     Flurorouter.disciplinaMantenimiento);
+                  ptProvider.disciplina = null;
 
-                  bool? dialogdisciplina = await showDialog(
-                    context: context,
-                    builder: (_) {
-                      return AlertDialog(
-                        title: Text("Disciplina"),
-                        content: Container(
-                          width: width / 5,
-                          height: height / 4,
-                          child: Column(
-                            children: [
-                              Row(
-                                children: [
-                                  Text("Codigo"),
-                                  Expanded(
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(left: 7),
-                                      child: TextFormField(),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  Text("Disciplina"),
-                                  Expanded(
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(left: 7),
-                                      child: TextFormField(),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                        actions: [
-                          TextButton(
-                              onPressed: () {
-                                return Navigator.pop(context, false);
-                              },
-                              child: Text("Cancelar")),
-                          TextButton(
-                              onPressed: () {
-                                return Navigator.pop(context, true);
-                              },
-                              child: Text("Guardar")),
-                        ],
-                      );
-                    },
-                  );
+                  bool? dialogdisciplina =
+                      await showDisciplina(context, width, height);
                 },
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -150,48 +102,18 @@ class _Formulario1State extends State<Formulario1> {
                         children: [
                           e.estado == "A"
                               ? TextButton.icon(
-                                  onPressed: () {
-                                    // producto.product = e;
-                                    // NavigationService.navigateTo(
-                                    //     Flurorouter.ingreso);
+                                  onPressed: () async {
+                                    patProvider.disciplina = e;
+                                    patProvider.setDisciplina();
+                                    await showDisciplina(
+                                        context, width, height);
                                   },
                                   icon: Icon(Icons.search),
                                   label: Text(""))
                               : Container(),
                           e.estado == "A"
                               ? TextButton.icon(
-                                  onPressed: () async {
-                                    // await showDialog(
-                                    //     context: context,
-                                    //     builder: (context) {
-                                    //       return AlertDialog(
-                                    //         title: Text("Anular"),
-                                    //         content: Container(
-                                    //           child: Text(
-                                    //               "Seguro desea anular el item " +
-                                    //                   e.detalle),
-                                    //         ),
-                                    //         actions: [
-                                    //           TextButton(
-                                    //             onPressed: () async {
-                                    //               print("Opt anular??");
-                                    //               await producto
-                                    //                   .anular(e);
-                                    //               Navigator.pop(context);
-                                    //             },
-                                    //             child: Text("Aceptar"),
-                                    //           ),
-                                    //           TextButton(
-                                    //             onPressed: () {
-                                    //               Navigator.pop(context);
-                                    //             },
-                                    //             child: Text("Cancelar"),
-                                    //           ),
-                                    //         ],
-                                    //       );
-                                    //     },
-                                    //    );
-                                  },
+                                  onPressed: () async {},
                                   icon: Icon(Icons.delete),
                                   label: Text(""))
                               : Container(),
@@ -203,9 +125,69 @@ class _Formulario1State extends State<Formulario1> {
               }).toList(),
             ),
           ),
-        
         ],
       ),
+    );
+  }
+
+  Future<bool?> showDisciplina(
+      BuildContext context, double width, double height) {
+    return showDialog(
+      context: context,
+      builder: (_) {
+        return AlertDialog(
+          title: Text("Disciplina"),
+          content: Container(
+            width: width / 5,
+            height: height / 4,
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Text("Codigo"),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 7),
+                        child: TextFormField(
+                          controller: patProvider.ctrCodigo,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Text("Disciplina"),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 7),
+                        child: TextFormField(
+                          controller: patProvider.ctrDescripcion,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+                onPressed: () {
+                  return Navigator.pop(context, false);
+                },
+                child: Text("Cancelar")),
+            TextButton(
+                onPressed: () async {
+                  bool res = await patProvider.guardar();
+                  if (res) {
+                    return Navigator.pop(context, true);
+                  }
+                },
+                child: Text("Guardar")),
+          ],
+        );
+      },
     );
   }
 }

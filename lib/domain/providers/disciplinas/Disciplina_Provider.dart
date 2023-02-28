@@ -4,7 +4,12 @@ import 'package:tesis/data/model/disciplinaModel.dart';
 
 class DisciplinaProvider extends ChangeNotifier {
   List<ModelDisciplina> listado = [];
-  Disciplinas dataSource = Disciplinas();
+  Disciplinas _dataSource = Disciplinas();
+
+  TextEditingController ctrCodigo = TextEditingController();
+  TextEditingController ctrDescripcion = TextEditingController();
+
+  ModelDisciplina? disciplina;
 
   bool _estado = false;
 
@@ -16,7 +21,7 @@ class DisciplinaProvider extends ChangeNotifier {
 
   Future getDisciplinas() async {
     try {
-      listado = await dataSource.getDisciplinas();
+      listado = await _dataSource.getDisciplinas();
     } catch (e) {}
     notifyListeners();
   }
@@ -24,5 +29,31 @@ class DisciplinaProvider extends ChangeNotifier {
   changeState(bool value) {
     estado = value;
     notifyListeners();
+  }
+
+  void setDisciplina() {
+    try {
+      ctrCodigo = TextEditingController(text: disciplina!.codigo);
+      ctrDescripcion = TextEditingController(text: disciplina!.descripcion);
+      notifyListeners();
+    } catch (e) {}
+  }
+
+  Future<bool> guardar() async {
+    try {
+      ModelDisciplina d = ModelDisciplina(
+          id: 0,
+          estado: "A",
+          codigo: ctrCodigo.text,
+          descripcion: ctrDescripcion.text);
+
+      bool result = await _dataSource.postDisciplina(d);
+      if (result) {
+        await getDisciplinas();
+      }
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 }
