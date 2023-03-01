@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tesis/data/datasource/cursoDt.dart';
+import 'package:tesis/data/datasource/familiaresDT.dart';
+import 'package:tesis/data/datasource/horarios.dart';
 import 'package:tesis/data/model/curso.dart';
 import 'package:tesis/data/model/cursoDet.dart';
 import 'package:tesis/data/model/disciplinaModel.dart';
@@ -11,8 +13,14 @@ class InscripcionProvider extends ChangeNotifier {
   ModelFamiliares? socioSelect;
   ModelViewHorarios? horariosSelect;
   List<ModelCursoDet> detalles = [];
+  List<ModelCurso> lisCursos = [];
+  List<ModelFamiliares> listadoFamiliares = [];
+  List<ModelViewHorarios> lisHorarios = [];
 
   CursoDataSource _datasource = CursoDataSource();
+  FamiliaresDataSource _dataSourceFamiliar = FamiliaresDataSource();
+
+  final HorariosDatasource _datasourceHorario = HorariosDatasource();
 
   String mesSelect = "";
   List<String> listadoMeses = [
@@ -29,6 +37,66 @@ class InscripcionProvider extends ChangeNotifier {
     "Noviembre",
     "Diciembre"
   ];
+
+  ModelCurso? cursoSelect;
+  bool edit = false;
+
+  Future getFamiliares() async {
+    try {
+      listadoFamiliares = await _dataSourceFamiliar.getFamiliares();
+    } catch (e) {}
+  }
+
+  Future getHorarios() async {
+    try {
+      lisHorarios = await _datasourceHorario.getHorarios();
+    } catch (e) {}
+  }
+
+  Future getCursos() async {
+    try {
+      lisCursos = await _datasource.getCursos();
+      notifyListeners();
+    } catch (e) {}
+  }
+
+  Future inicilizar() async {
+    try {
+      if (edit) {
+        mesSelect = cursoSelect!.periodo;
+        ctrDescripcion = TextEditingController(text: cursoSelect!.descripcion);
+        detalles = [];
+        socioSelect = null;
+        horariosSelect = null;
+
+        var cursoDet = await _datasource.getCursosDet(cursoSelect!.id);
+
+        await getFamiliares();
+        await getHorarios();
+        for (var element in cursoDet) {
+          var obj1 =
+              listadoFamiliares.firstWhere((e) => e.id == element.idSocio);
+          if (obj1 != null) {
+            element.socioSelect = obj1;
+          }
+
+          ModelViewHorarios? obj2 = lisHorarios
+              .firstWhere((e) => e.id == element.idHorario);
+          if (obj2 != null) {
+            element.horariosSelect = obj2;
+          }
+        }
+        detalles = cursoDet;
+        notifyListeners();
+      } else {
+        mesSelect = "";
+        ctrDescripcion = TextEditingController();
+        detalles = [];
+        socioSelect = null;
+        horariosSelect = null;
+      }
+    } catch (e) {}
+  }
 
   void agregarDetalle() {
     try {

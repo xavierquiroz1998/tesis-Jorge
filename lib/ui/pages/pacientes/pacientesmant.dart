@@ -47,7 +47,6 @@ class _PacienteMantState extends State<PacienteMant> {
                 ),
               ],
             ),
-
             Row(children: [
               SizedBox(
                 width: 120,
@@ -191,7 +190,6 @@ class _PacienteMantState extends State<PacienteMant> {
                 }).toList(),
               ),
             ),
-
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -221,10 +219,6 @@ class _PacienteMantState extends State<PacienteMant> {
                 ),
               ],
             ),
-
-            // ya avanza
-
-            //yaaaaaaaa
           ],
         ),
       ),

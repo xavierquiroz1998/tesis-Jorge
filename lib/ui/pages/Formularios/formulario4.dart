@@ -32,6 +32,7 @@ class _Formulario4State extends State<Formulario4> {
             children: [
               TextButton(
                 onPressed: () {
+                  provFamilia.edit = false;
                   NavigationService.navigateTo(
                       Flurorouter.familiarMantenimiento);
                 },
@@ -99,11 +100,12 @@ class _Formulario4State extends State<Formulario4> {
                           e.estado == "A"
                               ? TextButton.icon(
                                   onPressed: () {
-                                    // producto.product = e;
-                                    // NavigationService.navigateTo(
-                                    //     Flurorouter.ingreso);
+                                    provFamilia.edit = true;
+                                    provFamilia.familiarSelect = e;
+                                    NavigationService.navigateTo(
+                                        Flurorouter.familiarMantenimiento);
                                   },
-                                  icon: Icon(Icons.search),
+                                  icon: Icon(Icons.edit),
                                   label: Text(""))
                               : Container(),
                           e.estado == "A"
@@ -151,10 +153,8 @@ class _Formulario4State extends State<Formulario4> {
               }).toList(),
             ),
           ),
-        
         ],
       ),
     );
-  
   }
 }

@@ -108,7 +108,7 @@ class _Formulario1State extends State<Formulario1> {
                                     await showDisciplina(
                                         context, width, height);
                                   },
-                                  icon: Icon(Icons.search),
+                                  icon: Icon(Icons.edit),
                                   label: Text(""))
                               : Container(),
                           e.estado == "A"

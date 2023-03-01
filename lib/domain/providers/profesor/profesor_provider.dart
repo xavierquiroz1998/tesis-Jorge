@@ -16,6 +16,9 @@ class ProfesorProvider extends ChangeNotifier {
   TextEditingController ctrDomicilio = TextEditingController();
   TextEditingController ctrCorreo = TextEditingController();
 
+  ModelProfesor? profeSelect;
+  bool edit = false;
+
   Future getProfesores() async {
     try {
       listProfesores = await _dataSource.getProfesor();
@@ -24,14 +27,26 @@ class ProfesorProvider extends ChangeNotifier {
   }
 
   inicializacion() {
-    ctrIdentificacion = TextEditingController();
-    ctrNombres = TextEditingController();
+    if (edit) {
+      ctrIdentificacion =
+          TextEditingController(text: profeSelect!.identificacion);
+      ctrNombres = TextEditingController(text: profeSelect!.nombres);
 
-    ctrApellidos = TextEditingController();
-    ctrCelular = TextEditingController();
+      ctrApellidos = TextEditingController(text: profeSelect!.apellidos);
+      ctrCelular = TextEditingController(text: profeSelect!.celular);
 
-    ctrDomicilio = TextEditingController();
-    ctrCorreo = TextEditingController();
+      ctrDomicilio = TextEditingController(text: profeSelect!.domicilio);
+      ctrCorreo = TextEditingController(text: profeSelect!.correo);
+    } else {
+      ctrIdentificacion = TextEditingController();
+      ctrNombres = TextEditingController();
+
+      ctrApellidos = TextEditingController();
+      ctrCelular = TextEditingController();
+
+      ctrDomicilio = TextEditingController();
+      ctrCorreo = TextEditingController();
+    }
   }
 
   Future guardar(List<ModelViewHorarios> cursosAsigandos) async {

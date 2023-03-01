@@ -15,9 +15,12 @@ class FamiliaresProvider extends ChangeNotifier {
   TextEditingController ctrCelular = TextEditingController();
   TextEditingController ctrCorreo = TextEditingController();
   TextEditingController ctrDomicilio = TextEditingController();
-  TextEditingController ctr = TextEditingController();
+  //TextEditingController ctr = TextEditingController();
 
   FamiliaresDataSource _dataSource = FamiliaresDataSource();
+
+  ModelFamiliares? familiarSelect;
+  bool edit = false;
 
   Future getFamiliares() async {
     try {
@@ -28,15 +31,30 @@ class FamiliaresProvider extends ChangeNotifier {
 
   Future inicializacion() async {
     try {
-      ctrIdentificacion = TextEditingController();
-      ctrNombres = TextEditingController();
-      ctrCodigoSocio = TextEditingController();
-      ctrNombresSocio = TextEditingController();
-      ctrCelular = TextEditingController();
-      ctrCorreo = TextEditingController();
-      ctrDomicilio = TextEditingController();
-      ctr = TextEditingController();
-      tipoSlect = "";
+      if (edit) {
+        ctrIdentificacion =
+            TextEditingController(text: familiarSelect!.identificacion);
+        ctrNombres = TextEditingController(text: familiarSelect!.nombres);
+        ctrCodigoSocio =
+            TextEditingController(text: familiarSelect!.codigoSocio);
+        ctrNombresSocio =
+            TextEditingController(text: familiarSelect!.nombreSocio);
+        ctrCelular = TextEditingController(text: familiarSelect!.celular);
+        ctrCorreo = TextEditingController(text: familiarSelect!.correo);
+        ctrDomicilio = TextEditingController(text: familiarSelect!.domicilio);
+
+        tipoSlect = familiarSelect!.tipo;
+      } else {
+        ctrIdentificacion = TextEditingController();
+        ctrNombres = TextEditingController();
+        ctrCodigoSocio = TextEditingController();
+        ctrNombresSocio = TextEditingController();
+        ctrCelular = TextEditingController();
+        ctrCorreo = TextEditingController();
+        ctrDomicilio = TextEditingController();
+
+        tipoSlect = "";
+      }
     } catch (e) {}
   }
 

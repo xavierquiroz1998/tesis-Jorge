@@ -20,6 +20,13 @@ class FamiliaresMantenimiento extends StatefulWidget {
 
 class _FamiliaresMantenimientoState extends State<FamiliaresMantenimiento> {
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Provider.of<FamiliaresProvider>(context, listen: false).inicializacion();
+  }
+
+  @override
   Widget build(BuildContext context) {
     var provFamiliares = Provider.of<FamiliaresProvider>(context);
     return SingleChildScrollView(

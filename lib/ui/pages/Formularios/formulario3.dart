@@ -30,9 +30,9 @@ class _Formulario3State extends State<Formulario3> {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-
               TextButton(
                 onPressed: () {
+                  provProfesor.edit = false;
                   NavigationService.navigateTo(
                       Flurorouter.profesorMantenimiento);
                 },
@@ -106,11 +106,12 @@ class _Formulario3State extends State<Formulario3> {
                           e.estado == "A"
                               ? TextButton.icon(
                                   onPressed: () {
-                                    // producto.product = e;
-                                    // NavigationService.navigateTo(
-                                    //     Flurorouter.ingreso);
+                                    provProfesor.edit = true;
+                                    provProfesor.profeSelect = e;
+                                    NavigationService.navigateTo(
+                                        Flurorouter.profesorMantenimiento);
                                   },
-                                  icon: Icon(Icons.search),
+                                  icon: Icon(Icons.edit),
                                   label: Text(""))
                               : Container(),
                           e.estado == "A"
@@ -158,7 +159,6 @@ class _Formulario3State extends State<Formulario3> {
               }).toList(),
             ),
           ),
-        
         ],
       ),
     );

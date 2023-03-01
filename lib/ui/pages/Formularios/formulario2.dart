@@ -33,6 +33,7 @@ class _Formulario2State extends State<Formulario2> {
             children: [
               TextButton(
                 onPressed: () {
+                  provHorario.edit = false;
                   NavigationService.navigateTo(
                       Flurorouter.horarioMantenimiento);
                 },
@@ -118,47 +119,17 @@ class _Formulario2State extends State<Formulario2> {
                           e.estado == "A"
                               ? TextButton.icon(
                                   onPressed: () {
-                                    // producto.product = e;
-                                    // NavigationService.navigateTo(
-                                    //     Flurorouter.ingreso);
+                                    provHorario.edit = true;
+                                    provHorario.modelHorariSelect = e;
+                                    NavigationService.navigateTo(
+                                        Flurorouter.horarioMantenimiento);
                                   },
-                                  icon: Icon(Icons.search),
+                                  icon: Icon(Icons.edit),
                                   label: Text(""))
                               : Container(),
                           e.estado == "A"
                               ? TextButton.icon(
-                                  onPressed: () async {
-                                    // await showDialog(
-                                    //     context: context,
-                                    //     builder: (context) {
-                                    //       return AlertDialog(
-                                    //         title: Text("Anular"),
-                                    //         content: Container(
-                                    //           child: Text(
-                                    //               "Seguro desea anular el item " +
-                                    //                   e.detalle),
-                                    //         ),
-                                    //         actions: [
-                                    //           TextButton(
-                                    //             onPressed: () async {
-                                    //               print("Opt anular??");
-                                    //               await producto
-                                    //                   .anular(e);
-                                    //               Navigator.pop(context);
-                                    //             },
-                                    //             child: Text("Aceptar"),
-                                    //           ),
-                                    //           TextButton(
-                                    //             onPressed: () {
-                                    //               Navigator.pop(context);
-                                    //             },
-                                    //             child: Text("Cancelar"),
-                                    //           ),
-                                    //         ],
-                                    //       );
-                                    //     },
-                                    //    );
-                                  },
+                                  onPressed: () async {},
                                   icon: Icon(Icons.delete),
                                   label: Text(""))
                               : Container(),
@@ -170,7 +141,6 @@ class _Formulario2State extends State<Formulario2> {
               }).toList(),
             ),
           ),
-        
         ],
       ),
     );

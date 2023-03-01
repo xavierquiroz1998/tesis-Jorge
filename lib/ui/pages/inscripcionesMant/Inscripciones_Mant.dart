@@ -33,6 +33,7 @@ class _InscripcionesMantenimientoState
     Provider.of<FamiliaresProvider>(context, listen: false).getFamiliares();
     Provider.of<DisciplinaProvider>(context, listen: false).getDisciplinas();
     Provider.of<HorarioProvider>(context, listen: false).getHorarios();
+    Provider.of<InscripcionProvider>(context, listen: false).inicilizar();
   }
 
   @override
@@ -215,19 +216,29 @@ class _InscripcionesMantenimientoState
                         //key: LocalKey(),
                         cells: <DataCell>[
                           DataCell(
-                            Text(e.socioSelect!.identificacion),
+                            Text(e.socioSelect == null
+                                ? ""
+                                : e.socioSelect!.identificacion),
                           ),
                           DataCell(
-                            Text(e.socioSelect!.nombres),
+                            Text(e.socioSelect == null
+                                ? ""
+                                : e.socioSelect!.nombres),
                           ),
                           DataCell(
-                            Text(e.horariosSelect!.nomDisciplina),
+                            Text(e.horariosSelect == null
+                                ? ""
+                                : e.horariosSelect!.nomDisciplina),
                           ),
                           DataCell(
-                            Text(e.horariosSelect!.nivel),
+                            Text(e.horariosSelect == null
+                                ? ""
+                                : e.horariosSelect!.nivel),
                           ),
                           DataCell(
-                            Text(e.horariosSelect!.horario),
+                            Text(e.horariosSelect == null
+                                ? ""
+                                : e.horariosSelect!.horario),
                           ),
                           DataCell(TextButton.icon(
                               onPressed: () {

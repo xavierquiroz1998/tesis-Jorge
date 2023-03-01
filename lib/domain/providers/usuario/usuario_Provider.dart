@@ -19,22 +19,12 @@ class UsuarioProvider extends ChangeNotifier {
 
   List<ModelUsuarios> listUsuario = [];
 
+  ModelUsuarios? usuarioSelect;
+  bool edit = false;
+
   Future getUsuarios() async {
     try {
       listUsuario = await _dataSourceUsuario.cargarUsuarios();
-
-      ctrIdentificacion = TextEditingController();
-      ctrUsuario = TextEditingController();
-
-      ctrNombres = TextEditingController();
-
-      ctrDomicilio = TextEditingController();
-      ctrCorreo = TextEditingController();
-
-      ctrCelular = TextEditingController();
-
-      ctrContrasenia = TextEditingController();
-
       notifyListeners();
     } catch (e) {}
   }
@@ -42,6 +32,33 @@ class UsuarioProvider extends ChangeNotifier {
   Future getMenu() async {
     try {
       listadoMenu = await _dataSource.getMenu();
+      if (edit) {
+        ctrIdentificacion =
+            TextEditingController(text: usuarioSelect!.identificacion);
+        ctrUsuario = TextEditingController(text: usuarioSelect!.usuario);
+
+        ctrNombres = TextEditingController(text: usuarioSelect!.nombres);
+
+        ctrDomicilio = TextEditingController(text: usuarioSelect!.domicilio);
+        ctrCorreo = TextEditingController(text: usuarioSelect!.correo);
+
+        ctrCelular = TextEditingController(text: usuarioSelect!.celular);
+
+        ctrContrasenia =
+            TextEditingController(text: usuarioSelect!.contrasenia);
+      } else {
+        ctrIdentificacion = TextEditingController();
+        ctrUsuario = TextEditingController();
+
+        ctrNombres = TextEditingController();
+
+        ctrDomicilio = TextEditingController();
+        ctrCorreo = TextEditingController();
+
+        ctrCelular = TextEditingController();
+
+        ctrContrasenia = TextEditingController();
+      }
       notifyListeners();
     } catch (e) {
       print("${e.toString()}");

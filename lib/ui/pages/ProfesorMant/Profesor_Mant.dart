@@ -7,6 +7,8 @@ import 'package:tesis/domain/Navigation/NavigationService.dart';
 import 'package:tesis/domain/providers/horarios/Horarios_Provider.dart';
 import 'package:tesis/domain/providers/profesor/profesor_provider.dart';
 import 'package:tesis/ui/Router/FluroRouter.dart';
+import 'package:tesis/ui/pages/widget/customLabels.dart';
+import 'package:tesis/ui/pages/widget/inputForm.dart';
 import 'package:tesis/ui/pages/widget/whiteCard.dart';
 
 class ProfesorMantenimiento extends StatefulWidget {
@@ -31,22 +33,26 @@ class _ProfesorMantenimientoState extends State<ProfesorMantenimiento> {
   Widget build(BuildContext context) {
     final provProfesor = Provider.of<ProfesorProvider>(context);
     final provHorario = Provider.of<HorarioProvider>(context);
-    return WhiteCard(
-      title: "Mantenimiento de Profesores",
-      child: Expanded(
+    return SingleChildScrollView(
+      child: WhiteCard(
+        title: "Mantenimiento de Profesores",
         child: Column(
           children: [
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
                 children: [
-                  Text("# de Identificación :"),
                   SizedBox(
-                    height: 10,
+                    width: 120,
+                    child: Text("Identificación :", style: CustomLabels.h11),
                   ),
                   Expanded(
-                    child: TextFormField(
+                    child: InputForm(
                       controller: provProfesor.ctrIdentificacion,
+                      hint: "",
+                      icon: Icons.assignment,
+                      length: 500,
+                      textInputType: TextInputType.text,
                     ),
                   ),
                 ],
@@ -56,13 +62,17 @@ class _ProfesorMantenimientoState extends State<ProfesorMantenimiento> {
               padding: const EdgeInsets.all(8.0),
               child: Row(
                 children: [
-                  Text("Nombre de Profesor :"),
                   SizedBox(
-                    height: 10,
+                    width: 120,
+                    child: Text("Nombres :", style: CustomLabels.h11),
                   ),
                   Expanded(
-                    child: TextFormField(
+                    child: InputForm(
                       controller: provProfesor.ctrNombres,
+                      hint: "",
+                      icon: Icons.assignment,
+                      length: 500,
+                      textInputType: TextInputType.text,
                     ),
                   ),
                 ],
@@ -72,13 +82,17 @@ class _ProfesorMantenimientoState extends State<ProfesorMantenimiento> {
               padding: const EdgeInsets.all(8.0),
               child: Row(
                 children: [
-                  Text("Apellidos de Profesor :"),
                   SizedBox(
-                    height: 10,
+                    width: 120,
+                    child: Text("Apellidos :", style: CustomLabels.h11),
                   ),
                   Expanded(
-                    child: TextFormField(
+                    child: InputForm(
                       controller: provProfesor.ctrApellidos,
+                      hint: "",
+                      icon: Icons.assignment,
+                      length: 500,
+                      textInputType: TextInputType.text,
                     ),
                   ),
                 ],
@@ -88,13 +102,17 @@ class _ProfesorMantenimientoState extends State<ProfesorMantenimiento> {
               padding: const EdgeInsets.all(8.0),
               child: Row(
                 children: [
-                  Text("Celular de Profesor :"),
                   SizedBox(
-                    height: 10,
+                    width: 120,
+                    child: Text("Celular :", style: CustomLabels.h11),
                   ),
                   Expanded(
-                    child: TextFormField(
+                    child: InputForm(
                       controller: provProfesor.ctrCelular,
+                      hint: "",
+                      icon: Icons.assignment,
+                      length: 500,
+                      textInputType: TextInputType.text,
                     ),
                   ),
                 ],
@@ -104,13 +122,17 @@ class _ProfesorMantenimientoState extends State<ProfesorMantenimiento> {
               padding: const EdgeInsets.all(8.0),
               child: Row(
                 children: [
-                  Text("Correo de Profesor :"),
                   SizedBox(
-                    height: 10,
+                    width: 120,
+                    child: Text("Correo :", style: CustomLabels.h11),
                   ),
                   Expanded(
-                    child: TextFormField(
+                    child: InputForm(
                       controller: provProfesor.ctrCorreo,
+                      hint: "",
+                      icon: Icons.assignment,
+                      length: 500,
+                      textInputType: TextInputType.text,
                     ),
                   ),
                 ],
@@ -120,13 +142,17 @@ class _ProfesorMantenimientoState extends State<ProfesorMantenimiento> {
               padding: const EdgeInsets.all(8.0),
               child: Row(
                 children: [
-                  Text("domicilio de Profesor :"),
                   SizedBox(
-                    height: 10,
+                    width: 120,
+                    child: Text("Domicilio :", style: CustomLabels.h11),
                   ),
                   Expanded(
-                    child: TextFormField(
+                    child: InputForm(
                       controller: provProfesor.ctrDomicilio,
+                      hint: "",
+                      icon: Icons.assignment,
+                      length: 500,
+                      textInputType: TextInputType.text,
                     ),
                   ),
                 ],
@@ -151,10 +177,9 @@ class _ProfesorMantenimientoState extends State<ProfesorMantenimiento> {
                   const DataColumn(
                     label: Center(child: Text("Ciclo")),
                   ),
-                   DataColumn(
+                  DataColumn(
                     label: Center(child: Text("Horario")),
                   ),
-                  
                 ],
                 rows: provHorario.lisHorarios.map<DataRow>((e) {
                   return DataRow(
@@ -180,11 +205,9 @@ class _ProfesorMantenimientoState extends State<ProfesorMantenimiento> {
                       DataCell(
                         Text(e.nomCiclo),
                       ),
-                      
                       DataCell(
                         Text(e.horario),
                       ),
-                      
                     ],
                   );
                 }).toList(),
@@ -195,7 +218,8 @@ class _ProfesorMantenimientoState extends State<ProfesorMantenimiento> {
               children: [
                 TextButton(
                   onPressed: () async {
-                    await provProfesor.guardar(provHorario.lisHorarios.where((e) => e.check).toList());
+                    await provProfesor.guardar(
+                        provHorario.lisHorarios.where((e) => e.check).toList());
                   },
                   child: Text("Guardar"),
                 ),

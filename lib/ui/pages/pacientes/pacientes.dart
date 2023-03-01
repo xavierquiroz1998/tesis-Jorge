@@ -35,6 +35,7 @@ class _PacienteConsState extends State<PacienteCons> {
             children: [
               TextButton(
                   onPressed: () {
+                    provUsuarios.edit = false;
                     NavigationService.navigateTo(
                         Flurorouter.pacienteMantenimineto);
                   },
@@ -85,47 +86,17 @@ class _PacienteConsState extends State<PacienteCons> {
                               e.estado == "A"
                                   ? TextButton.icon(
                                       onPressed: () {
-                                        // producto.product = e;
-                                        // NavigationService.navigateTo(
-                                        //     Flurorouter.ingreso);
+                                        provUsuarios.edit = true;
+                                        provUsuarios.usuarioSelect = e;
+                                        NavigationService.navigateTo(
+                                            Flurorouter.pacienteMantenimineto);
                                       },
-                                      icon: Icon(Icons.search),
+                                      icon: Icon(Icons.edit),
                                       label: Text(""))
                                   : Container(),
                               e.estado == "A"
                                   ? TextButton.icon(
-                                      onPressed: () async {
-                                        // await showDialog(
-                                        //     context: context,
-                                        //     builder: (context) {
-                                        //       return AlertDialog(
-                                        //         title: Text("Anular"),
-                                        //         content: Container(
-                                        //           child: Text(
-                                        //               "Seguro desea anular el item " +
-                                        //                   e.detalle),
-                                        //         ),
-                                        //         actions: [
-                                        //           TextButton(
-                                        //             onPressed: () async {
-                                        //               print("Opt anular??");
-                                        //               await producto
-                                        //                   .anular(e);
-                                        //               Navigator.pop(context);
-                                        //             },
-                                        //             child: Text("Aceptar"),
-                                        //           ),
-                                        //           TextButton(
-                                        //             onPressed: () {
-                                        //               Navigator.pop(context);
-                                        //             },
-                                        //             child: Text("Cancelar"),
-                                        //           ),
-                                        //         ],
-                                        //       );
-                                        //     },
-                                        //    );
-                                      },
+                                      onPressed: () async {},
                                       icon: Icon(Icons.delete),
                                       label: Text(""))
                                   : Container(),

@@ -26,16 +26,20 @@ class HorarioProvider extends ChangeNotifier {
   TextEditingController ctrNivel = TextEditingController();
   TextEditingController ctrValor = TextEditingController();
 
+  ModelViewHorarios? modelHorariSelect;
+
   final HorariosDatasource _datasourceHorario = HorariosDatasource();
   final Disciplinas _datasourceDisciplina = Disciplinas();
+
+  bool edit = false;
 
   Future getCatalogos() async {
     try {
       listDisciplina = await _datasourceDisciplina.getDisciplinas();
 
-      if (listDisciplina.isNotEmpty) {
-        infoDisciplina = listDisciplina.firstOrDefault() ?? ModelDisciplina();
-      }
+      // if (listDisciplina.isNotEmpty) {
+      //   infoDisciplina = listDisciplina.firstOrDefault() ?? ModelDisciplina();
+      // }
 
       var lisTotal = await _datasourceHorario.getCatalogos();
 
@@ -45,13 +49,40 @@ class HorarioProvider extends ChangeNotifier {
         listCategoria = lisTotal.where((e) => e.idTipoCatalogo == 3).toList();
         listCiclo = lisTotal.where((e) => e.idTipoCatalogo == 4).toList();
       }
-      infoDisciplina = ModelDisciplina();
-      infoNivel = ModelCatalogos();
 
-      infoTiempo = ModelCatalogos();
+      if (edit) {
+        infoDisciplina = listDisciplina.firstWhere(
+            (element) => element.id == modelHorariSelect!.idDisciplina);
 
-      infoCategoria = ModelCatalogos();
-      infoCiclo = ModelCatalogos();
+        infoCategoria = listCategoria.firstWhere(
+            (element) => element.id == modelHorariSelect!.idCategoria);
+
+        infoCiclo = listCiclo
+            .firstWhere((element) => element.id == modelHorariSelect!.idCiclo);
+
+        ctrNivel = TextEditingController(text: modelHorariSelect!.nivel);
+        ctrValor =
+            TextEditingController(text: modelHorariSelect!.valor.toString());
+
+        var horas = modelHorariSelect!.horario.split('/');
+        if (horas.isNotEmpty) {
+          ctrHoraInicio = TextEditingController(text: horas[0]);
+          ctrHoraFin = TextEditingController(text: horas[1]);
+        }
+      } else {
+        infoDisciplina = ModelDisciplina();
+        infoNivel = ModelCatalogos();
+
+        infoTiempo = ModelCatalogos();
+
+        infoCategoria = ModelCatalogos();
+        infoCiclo = ModelCatalogos();
+
+        ctrNivel = TextEditingController();
+        ctrValor = TextEditingController();
+        ctrHoraFin = TextEditingController();
+        ctrHoraInicio = TextEditingController();
+      }
     } catch (e) {
       print("Erro al obtener catalogo ${e.toString()}");
     }
@@ -64,7 +95,7 @@ class HorarioProvider extends ChangeNotifier {
       notifyListeners();
     } catch (e) {}
   }
-  
+
   Future getHorarios_x_profesor() async {
     try {
       lisHorarios = await _datasourceHorario.getHorarios_x_horairo();
