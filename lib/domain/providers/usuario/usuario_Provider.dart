@@ -22,6 +22,19 @@ class UsuarioProvider extends ChangeNotifier {
   Future getUsuarios() async {
     try {
       listUsuario = await _dataSourceUsuario.cargarUsuarios();
+
+      ctrIdentificacion = TextEditingController();
+      ctrUsuario = TextEditingController();
+
+      ctrNombres = TextEditingController();
+
+      ctrDomicilio = TextEditingController();
+      ctrCorreo = TextEditingController();
+
+      ctrCelular = TextEditingController();
+
+      ctrContrasenia = TextEditingController();
+
       notifyListeners();
     } catch (e) {}
   }
@@ -58,6 +71,9 @@ class UsuarioProvider extends ChangeNotifier {
           var resultado = await _dataSource.postMenuUsuario(permisos);
         }
       }
+
+      await getUsuarios();
+
       return true;
     } catch (e) {
       print("${e.toString()}");

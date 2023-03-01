@@ -200,8 +200,7 @@ class _PacienteMantState extends State<PacienteMant> {
                   // textColor: Colors.white,
                   // color: Colors.blue,
                   onPressed: () {
-                    NavigationService.navigateTo(
-                        Flurorouter.pacienteMantenimineto);
+                    NavigationService.navigateTo(Flurorouter.pacientes);
                   },
                   child: Text('Cancelar'),
                 ),
@@ -215,11 +214,10 @@ class _PacienteMantState extends State<PacienteMant> {
                   onPressed: () async {
                     bool result = await provUsuarios.guardarUsuario();
                     if (result) {
-                      NavigationService.navigateTo(
-                          Flurorouter.pacienteMantenimineto);
+                      NavigationService.navigateTo(Flurorouter.pacientes);
                     }
                   },
-                  child: Text('Grabar'),
+                  child: Text('Guardar'),
                 ),
               ],
             ),
