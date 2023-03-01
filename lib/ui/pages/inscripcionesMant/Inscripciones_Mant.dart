@@ -146,14 +146,14 @@ class _InscripcionesMantenimientoState
                     //value: provHorario.infoDisciplina,
                     onChanged: (ModelViewHorarios? newValue) {
                       setState(() {
-                        provInscripcion.disciplinaSelect = newValue!;
+                        provInscripcion.horariosSelect = newValue!;
                       });
                     },
 
                     hint: Text(
-                      provInscripcion.disciplinaSelect == null
+                      provInscripcion.horariosSelect == null
                           ? ""
-                          : provInscripcion.disciplinaSelect!.nomDisciplina,
+                          : provInscripcion.horariosSelect!.nomDisciplina,
                       style: TextStyle(color: Colors.black),
                     ),
                     items: provHorario.lisHorarios
@@ -221,13 +221,13 @@ class _InscripcionesMantenimientoState
                             Text(e.socioSelect!.nombres),
                           ),
                           DataCell(
-                            Text(e.disciplinaSelect!.nomDisciplina),
+                            Text(e.horariosSelect!.nomDisciplina),
                           ),
                           DataCell(
-                            Text(e.disciplinaSelect!.nivel),
+                            Text(e.horariosSelect!.nivel),
                           ),
                           DataCell(
-                            Text(e.disciplinaSelect!.horario),
+                            Text(e.horariosSelect!.horario),
                           ),
                           DataCell(TextButton.icon(
                               onPressed: () {
