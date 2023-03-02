@@ -103,10 +103,10 @@ class HorarioProvider extends ChangeNotifier {
     } catch (e) {}
   }
 
-  Future guardarHorario() async {
+  Future<bool> guardarHorario() async {
     try {
       ModelHorarios datos = ModelHorarios(
-          id: 0,
+          id: modelHorariSelect == null ? 0 : modelHorariSelect!.id,
           idDisciplina: infoDisciplina.id,
           nivel: ctrNivel.text,
           idCategoria: infoCategoria.id,
@@ -115,7 +115,35 @@ class HorarioProvider extends ChangeNotifier {
           valor: double.parse(ctrValor.text),
           horario: ctrHoraInicio.text + "/" + ctrHoraFin.text);
 
-      await _datasourceHorario.postApiHorario(datos);
-    } catch (e) {}
+      if (edit) {
+        await _datasourceHorario.postActualizarHorario(datos);
+      } else {
+        await _datasourceHorario.postApiHorario(datos);
+      }
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  Future<bool> anularHorario() async {
+    try {
+      ModelHorarios datos = ModelHorarios(
+          id: modelHorariSelect!.id,
+          idDisciplina: 0,
+          nivel: "",
+          idCategoria: 0,
+          estado: "A",
+          idCiclo: 0,
+          valor: 0,
+          horario: "");
+      var result = await _datasourceHorario.postAnularHorario(datos);
+      if (result) {
+        modelHorariSelect!.estado = "I";
+      }
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 }

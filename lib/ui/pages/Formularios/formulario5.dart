@@ -53,9 +53,6 @@ class _Formulario5State extends State<Formulario5> {
             width: double.infinity,
             child: DataTable(
               columns: <DataColumn>[
-                // const DataColumn(
-                //   label: Center(child: Text("Id")),
-                // ),
                 const DataColumn(
                   label: Center(child: Text("Id")),
                 ),
@@ -68,7 +65,6 @@ class _Formulario5State extends State<Formulario5> {
                 const DataColumn(
                   label: Center(child: Text("Estado")),
                 ),
-
                 const DataColumn(
                   label: Center(child: Text("")),
                 ),
@@ -76,6 +72,13 @@ class _Formulario5State extends State<Formulario5> {
               rows: provInscripcion.lisCursos
                   .map(
                     (e) => DataRow(
+                      color:
+                          MaterialStateProperty.resolveWith<Color?>((states) {
+                        if (e.estado != "A") {
+                          return Colors.red.shade300;
+                        }
+                        return null;
+                      }),
                       //key: LocalKey(),
                       cells: <DataCell>[
                         DataCell(
@@ -90,27 +93,33 @@ class _Formulario5State extends State<Formulario5> {
                         DataCell(
                           Text(e.estado),
                         ),
-                        DataCell(
-                          Row(
-                            children: [
-                              TextButton.icon(
-                                onPressed: () {
-                                  provInscripcion.edit = true;
-                                  provInscripcion.cursoSelect = e;
-                                  NavigationService.navigateTo(
-                                      Flurorouter.inscripcionMantenimiento);
-                                },
-                                icon: Icon(Icons.edit),
-                                label: Text(""),
-                              ),
-                              TextButton.icon(
-                                onPressed: () {},
-                                icon: Icon(Icons.delete),
-                                label: Text(""),
-                              ),
-                            ],
-                          ),
-                        ),
+                        DataCell(e.estado == "A"
+                            ? Row(
+                                children: [
+                                  TextButton.icon(
+                                    onPressed: () {
+                                      provInscripcion.edit = true;
+                                      provInscripcion.cursoSelect = e;
+                                      NavigationService.navigateTo(
+                                          Flurorouter.inscripcionMantenimiento);
+                                    },
+                                    icon: Icon(Icons.edit),
+                                    label: Text(""),
+                                  ),
+                                  TextButton.icon(
+                                    onPressed: () async {
+                                      provInscripcion.cursoSelect = e;
+                                      var ass = await provInscripcion.anular();
+                                      if (ass) {
+                                        setState(() {});
+                                      }
+                                    },
+                                    icon: Icon(Icons.delete),
+                                    label: Text(""),
+                                  ),
+                                ],
+                              )
+                            : Container()),
                       ],
                     ),
                   )

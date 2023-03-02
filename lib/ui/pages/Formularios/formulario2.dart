@@ -113,11 +113,10 @@ class _Formulario2State extends State<Formulario2> {
                     DataCell(
                       Text(e.estado),
                     ),
-                    DataCell(
-                      Row(
-                        children: [
-                          e.estado == "A"
-                              ? TextButton.icon(
+                    DataCell(e.estado == "A"
+                        ? Row(
+                            children: [
+                              TextButton.icon(
                                   onPressed: () {
                                     provHorario.edit = true;
                                     provHorario.modelHorariSelect = e;
@@ -125,17 +124,20 @@ class _Formulario2State extends State<Formulario2> {
                                         Flurorouter.horarioMantenimiento);
                                   },
                                   icon: Icon(Icons.edit),
-                                  label: Text(""))
-                              : Container(),
-                          e.estado == "A"
-                              ? TextButton.icon(
-                                  onPressed: () async {},
+                                  label: Text("")),
+                              TextButton.icon(
+                                  onPressed: () async {
+                                    provHorario.modelHorariSelect = e;
+                                    var ass = await provHorario.anularHorario();
+                                    if (ass) {
+                                      setState(() {});
+                                    }
+                                  },
                                   icon: Icon(Icons.delete),
                                   label: Text(""))
-                              : Container(),
-                        ],
-                      ),
-                    ),
+                            ],
+                          )
+                        : Container()),
                   ],
                 );
               }).toList(),

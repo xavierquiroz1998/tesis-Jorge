@@ -80,6 +80,44 @@ class HorariosDatasource {
     }
   }
 
+  Future<bool> postAnularHorario(ModelHorarios datos) async {
+    var url = Uri.parse("${Url.urlBse}horarios/anular");
+    var data = datos.toJson();
+
+    final resquet = await http.post(url,
+        body: data,
+        headers: {"Content-type": "application/json;charset=UTF-8"});
+
+    try {
+      if (resquet.statusCode != 200) {
+        throw Exception('${resquet.statusCode}');
+      } else {
+        return true;
+      }
+    } catch (e) {
+      throw ('$e');
+    }
+  }
+
+  Future<bool> postActualizarHorario(ModelHorarios datos) async {
+    var url = Uri.parse("${Url.urlBse}horarios/update");
+    var data = datos.toJson();
+
+    final resquet = await http.post(url,
+        body: data,
+        headers: {"Content-type": "application/json;charset=UTF-8"});
+
+    try {
+      if (resquet.statusCode != 200) {
+        throw Exception('${resquet.statusCode}');
+      } else {
+        return true;
+      }
+    } catch (e) {
+      throw ('$e');
+    }
+  }
+
   List<ModelHorarios> decodeHorarios(String respuesta) {
     var parseo = jsonDecode(respuesta);
     return parseo

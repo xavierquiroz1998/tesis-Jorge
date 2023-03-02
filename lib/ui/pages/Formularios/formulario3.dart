@@ -100,11 +100,10 @@ class _Formulario3State extends State<Formulario3> {
                     DataCell(
                       Text(e.estado),
                     ),
-                    DataCell(
-                      Row(
-                        children: [
-                          e.estado == "A"
-                              ? TextButton.icon(
+                    DataCell(e.estado == "A"
+                        ? Row(
+                            children: [
+                              TextButton.icon(
                                   onPressed: () {
                                     provProfesor.edit = true;
                                     provProfesor.profeSelect = e;
@@ -112,48 +111,20 @@ class _Formulario3State extends State<Formulario3> {
                                         Flurorouter.profesorMantenimiento);
                                   },
                                   icon: Icon(Icons.edit),
-                                  label: Text(""))
-                              : Container(),
-                          e.estado == "A"
-                              ? TextButton.icon(
+                                  label: Text("")),
+                              TextButton.icon(
                                   onPressed: () async {
-                                    // await showDialog(
-                                    //     context: context,
-                                    //     builder: (context) {
-                                    //       return AlertDialog(
-                                    //         title: Text("Anular"),
-                                    //         content: Container(
-                                    //           child: Text(
-                                    //               "Seguro desea anular el item " +
-                                    //                   e.detalle),
-                                    //         ),
-                                    //         actions: [
-                                    //           TextButton(
-                                    //             onPressed: () async {
-                                    //               print("Opt anular??");
-                                    //               await producto
-                                    //                   .anular(e);
-                                    //               Navigator.pop(context);
-                                    //             },
-                                    //             child: Text("Aceptar"),
-                                    //           ),
-                                    //           TextButton(
-                                    //             onPressed: () {
-                                    //               Navigator.pop(context);
-                                    //             },
-                                    //             child: Text("Cancelar"),
-                                    //           ),
-                                    //         ],
-                                    //       );
-                                    //     },
-                                    //    );
+                                    provProfesor.profeSelect = e;
+                                    var ass = await provProfesor.anular();
+                                    if (ass) {
+                                      setState(() {});
+                                    }
                                   },
                                   icon: Icon(Icons.delete),
                                   label: Text(""))
-                              : Container(),
-                        ],
-                      ),
-                    ),
+                            ],
+                          )
+                        : Container()),
                   ],
                 );
               }).toList(),

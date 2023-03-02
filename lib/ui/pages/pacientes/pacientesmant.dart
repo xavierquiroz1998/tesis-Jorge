@@ -212,6 +212,7 @@ class _PacienteMantState extends State<PacienteMant> {
                   onPressed: () async {
                     bool result = await provUsuarios.guardarUsuario();
                     if (result) {
+                      setState(() {});
                       NavigationService.navigateTo(Flurorouter.pacientes);
                     }
                   },

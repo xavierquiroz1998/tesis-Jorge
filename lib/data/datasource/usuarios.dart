@@ -40,6 +40,44 @@ class UsuariosDatasurce {
     }
   }
 
+  Future<ModelUsuarios> postUpdateUsuarios(ModelUsuarios datos) async {
+    var url = Uri.parse("${Url.urlBse}usuarios/update");
+    var data = datos.toJson();
+
+    final resquet = await http.post(url,
+        body: data,
+        headers: {"Content-type": "application/json;charset=UTF-8"});
+
+    try {
+      if (resquet.statusCode != 200) {
+        throw Exception('${resquet.statusCode}');
+      } else {
+        return ModelUsuarios.fromMap(jsonDecode(resquet.body));
+      }
+    } catch (e) {
+      throw ('$e');
+    }
+  }
+
+  Future<ModelUsuarios> postanularUsuarios(ModelUsuarios datos) async {
+    var url = Uri.parse("${Url.urlBse}usuarios/anular");
+    var data = datos.toJson();
+
+    final resquet = await http.post(url,
+        body: data,
+        headers: {"Content-type": "application/json;charset=UTF-8"});
+
+    try {
+      if (resquet.statusCode != 200) {
+        throw Exception('${resquet.statusCode}');
+      } else {
+        return ModelUsuarios.fromMap(jsonDecode(resquet.body));
+      }
+    } catch (e) {
+      throw ('$e');
+    }
+  }
+
   Future<ModelUsuarios> logeoUsuario(String usuario, String contr) async {
     var url = Uri.parse("${Url.urlBse}usuarios/login/$usuario/$contr");
 

@@ -218,8 +218,12 @@ class _ProfesorMantenimientoState extends State<ProfesorMantenimiento> {
               children: [
                 TextButton(
                   onPressed: () async {
-                    await provProfesor.guardar(
+                    var ass = await provProfesor.guardar(
                         provHorario.lisHorarios.where((e) => e.check).toList());
+                    if (ass) {
+                      setState(() {});
+                      NavigationService.navigateTo(Flurorouter.formulario3);
+                    }
                   },
                   child: Text("Guardar"),
                 ),

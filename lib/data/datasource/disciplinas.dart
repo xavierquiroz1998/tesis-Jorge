@@ -40,6 +40,44 @@ class Disciplinas {
     }
   }
 
+  Future<bool> postactualizaDisciplina(ModelDisciplina datos) async {
+    var url = Uri.parse("${Url.urlBse}Disciplinas/update");
+    var data = datos.toJson();
+
+    final resquet = await http.post(url,
+        body: data,
+        headers: {"Content-type": "application/json;charset=UTF-8"});
+
+    try {
+      if (resquet.statusCode != 200) {
+        throw Exception('${resquet.statusCode}');
+      } else {
+        return true;
+      }
+    } catch (e) {
+      throw ('$e');
+    }
+  }
+
+  Future<bool> postAnularDisciplina(ModelDisciplina datos) async {
+    var url = Uri.parse("${Url.urlBse}Disciplinas/anular");
+    var data = datos.toJson();
+
+    final resquet = await http.post(url,
+        body: data,
+        headers: {"Content-type": "application/json;charset=UTF-8"});
+
+    try {
+      if (resquet.statusCode != 200) {
+        throw Exception('${resquet.statusCode}');
+      } else {
+        return true;
+      }
+    } catch (e) {
+      throw ('$e');
+    }
+  }
+
   List<ModelDisciplina> decodeDisciplina(String respuesta) {
     var parseo = jsonDecode(respuesta);
     return parseo

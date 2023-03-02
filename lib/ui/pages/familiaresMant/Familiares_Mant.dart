@@ -208,31 +208,15 @@ class _FamiliaresMantenimientoState extends State<FamiliaresMantenimiento> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
-                children: [
-                  SizedBox(
-                    width: 120,
-                    child: Text("Fecha Nacimiento :", style: CustomLabels.h11),
-                  ),
-                  Expanded(
-                    child: InputForm(
-                      controller: provFamiliares.ctrNombres,
-                      hint: "",
-                      icon: Icons.assignment,
-                      length: 6,
-                      textInputType: TextInputType.datetime,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   TextButton(
                     onPressed: () async {
-                      await provFamiliares.garabar();
+                      var ass = await provFamiliares.garabar();
+                      if (ass) {
+                        setState(() {});
+                      }
+                      NavigationService.navigateTo(Flurorouter.formulario4);
                     },
                     child: Text("Guardar"),
                   ),

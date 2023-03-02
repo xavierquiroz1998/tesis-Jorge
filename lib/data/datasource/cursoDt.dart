@@ -57,6 +57,44 @@ class CursoDataSource {
     }
   }
 
+  Future<ModelCurso> postActualizarCursos(ModelCurso datos) async {
+    var url = Uri.parse("${Url.urlBse}cursos/update");
+    var data = datos.toJson();
+
+    final resquet = await http.post(url,
+        body: data,
+        headers: {"Content-type": "application/json;charset=UTF-8"});
+
+    try {
+      if (resquet.statusCode != 200) {
+        throw Exception('${resquet.statusCode}');
+      } else {
+        return ModelCurso.fromMap(jsonDecode(resquet.body));
+      }
+    } catch (e) {
+      throw ('$e');
+    }
+  }
+
+  Future<ModelCurso> postAnularCursos(ModelCurso datos) async {
+    var url = Uri.parse("${Url.urlBse}cursos/anular");
+    var data = datos.toJson();
+
+    final resquet = await http.post(url,
+        body: data,
+        headers: {"Content-type": "application/json;charset=UTF-8"});
+
+    try {
+      if (resquet.statusCode != 200) {
+        throw Exception('${resquet.statusCode}');
+      } else {
+        return ModelCurso.fromMap(jsonDecode(resquet.body));
+      }
+    } catch (e) {
+      throw ('$e');
+    }
+  }
+
   Future<ModelCursoDet> postCursosDet(ModelCursoDet datos) async {
     var url = Uri.parse("${Url.urlBse}cursos/det");
     var data = datos.toJson();

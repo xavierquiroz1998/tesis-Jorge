@@ -80,8 +80,8 @@ class InscripcionProvider extends ChangeNotifier {
             element.socioSelect = obj1;
           }
 
-          ModelViewHorarios? obj2 = lisHorarios
-              .firstWhere((e) => e.id == element.idHorario);
+          ModelViewHorarios? obj2 =
+              lisHorarios.firstWhere((e) => e.id == element.idHorario);
           if (obj2 != null) {
             element.horariosSelect = obj2;
           }
@@ -119,18 +119,36 @@ class InscripcionProvider extends ChangeNotifier {
   Future<bool> guardar() async {
     try {
       ModelCurso curso = ModelCurso(
-          id: 0,
+          id: cursoSelect == null ? 0 : cursoSelect!.id,
           estado: "A",
           periodo: mesSelect,
           descripcion: ctrDescripcion.text);
 
-      var result = await _datasource.postCursos(curso);
-      if (result.id != 0) {
-        for (var element in detalles) {
-          element.idCab = result.id;
-          await _datasource.postCursosDet(element);
+      if (edit) {
+        var result = await _datasource.postActualizarCursos(curso);
+      } else {
+        var result = await _datasource.postCursos(curso);
+        if (result.id != 0) {
+          for (var element in detalles) {
+            element.idCab = result.id;
+            await _datasource.postCursosDet(element);
+          }
         }
       }
+
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  Future<bool> anular() async {
+    try {
+      var result = await _datasource.postAnularCursos(cursoSelect!);
+      if (result.id != 0) {
+        cursoSelect!.estado = "I";
+      }
+
       return true;
     } catch (e) {
       return false;

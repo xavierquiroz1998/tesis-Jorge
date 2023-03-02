@@ -77,6 +77,12 @@ class _Formulario4State extends State<Formulario4> {
               ],
               rows: provFamilia.listado.map<DataRow>((e) {
                 return DataRow(
+                  color: MaterialStateProperty.resolveWith<Color?>((states) {
+                    if (e.estado != "A") {
+                      return Colors.red.shade300;
+                    }
+                    return null;
+                  }),
                   //key: LocalKey(),
                   cells: <DataCell>[
                     DataCell(
@@ -94,11 +100,10 @@ class _Formulario4State extends State<Formulario4> {
                     DataCell(
                       Text(e.estado),
                     ),
-                    DataCell(
-                      Row(
-                        children: [
-                          e.estado == "A"
-                              ? TextButton.icon(
+                    DataCell(e.estado == "A"
+                        ? Row(
+                            children: [
+                              TextButton.icon(
                                   onPressed: () {
                                     provFamilia.edit = true;
                                     provFamilia.familiarSelect = e;
@@ -106,48 +111,20 @@ class _Formulario4State extends State<Formulario4> {
                                         Flurorouter.familiarMantenimiento);
                                   },
                                   icon: Icon(Icons.edit),
-                                  label: Text(""))
-                              : Container(),
-                          e.estado == "A"
-                              ? TextButton.icon(
+                                  label: Text("")),
+                              TextButton.icon(
                                   onPressed: () async {
-                                    // await showDialog(
-                                    //     context: context,
-                                    //     builder: (context) {
-                                    //       return AlertDialog(
-                                    //         title: Text("Anular"),
-                                    //         content: Container(
-                                    //           child: Text(
-                                    //               "Seguro desea anular el item " +
-                                    //                   e.detalle),
-                                    //         ),
-                                    //         actions: [
-                                    //           TextButton(
-                                    //             onPressed: () async {
-                                    //               print("Opt anular??");
-                                    //               await producto
-                                    //                   .anular(e);
-                                    //               Navigator.pop(context);
-                                    //             },
-                                    //             child: Text("Aceptar"),
-                                    //           ),
-                                    //           TextButton(
-                                    //             onPressed: () {
-                                    //               Navigator.pop(context);
-                                    //             },
-                                    //             child: Text("Cancelar"),
-                                    //           ),
-                                    //         ],
-                                    //       );
-                                    //     },
-                                    //    );
+                                    provFamilia.familiarSelect = e;
+                                    var ass = await provFamilia.anular();
+                                    if (ass) {
+                                      setState(() {});
+                                    }
                                   },
                                   icon: Icon(Icons.delete),
                                   label: Text(""))
-                              : Container(),
-                        ],
-                      ),
-                    ),
+                            ],
+                          )
+                        : Container()),
                   ],
                 );
               }).toList(),

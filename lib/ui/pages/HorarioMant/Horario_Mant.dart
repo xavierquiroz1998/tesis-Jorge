@@ -239,7 +239,10 @@ class _HorarioMantenimientoState extends State<HorarioMantenimiento> {
               children: [
                 TextButton(
                   onPressed: () async {
-                    await provHorario.guardarHorario();
+                    var ass = await provHorario.guardarHorario();
+                    if (ass) {
+                      NavigationService.navigateTo(Flurorouter.formulario2);
+                    }
                   },
                   child: Text("Guardar"),
                 ),

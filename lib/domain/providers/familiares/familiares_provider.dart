@@ -58,10 +58,10 @@ class FamiliaresProvider extends ChangeNotifier {
     } catch (e) {}
   }
 
-  Future garabar() async {
+  Future<bool> garabar() async {
     try {
       ModelFamiliares familiar = ModelFamiliares(
-          id: 0,
+          id: familiarSelect == null ? 0 : familiarSelect!.id,
           identificacion: ctrIdentificacion.text,
           codigoSocio: ctrCodigoSocio.text,
           nombreSocio: ctrNombresSocio.text,
@@ -70,11 +70,30 @@ class FamiliaresProvider extends ChangeNotifier {
           correo: ctrCorreo.text,
           domicilio: ctrDomicilio.text,
           fechaNac: DateTime.now(),
-          estado: "PEN",
+          estado: familiarSelect == null ?  "PEN" : familiarSelect!.estado ,
           tipo: tipoSlect);
+      if (edit) {
+        await _dataSource.postUpdateFamiliares(familiar);
+      } else {
+        await _dataSource.postFamiliares(familiar);
+      }
 
-      await _dataSource.postFamiliares(familiar);
-    } catch (e) {}
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  Future<bool> anular() async {
+    try {
+      var ress = await _dataSource.postAnularFamiliares(familiarSelect!);
+      if (ress.id != 0) {
+        familiarSelect!.estado = "I";
+      }
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 
   Future aprobarFamiliares() async {

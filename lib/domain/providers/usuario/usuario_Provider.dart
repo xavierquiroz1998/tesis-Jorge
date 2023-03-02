@@ -68,7 +68,7 @@ class UsuarioProvider extends ChangeNotifier {
   Future<bool> guardarUsuario() async {
     try {
       ModelUsuarios usuario = ModelUsuarios(
-          id: 0,
+          id: usuarioSelect == null ? 0 : usuarioSelect!.id,
           estado: "A",
           identificacion: ctrIdentificacion.text,
           usuario: ctrUsuario.text,
@@ -77,15 +77,19 @@ class UsuarioProvider extends ChangeNotifier {
           correo: ctrCorreo.text,
           celular: ctrCelular.text,
           contrasenia: ctrContrasenia.text);
+      if (edit) {
+        var result = await _dataSourceUsuario.postUpdateUsuarios(usuario);
+      } else {
+        var result = await _dataSourceUsuario.postUsuarios(usuario);
+        if (result.id != 0) {
+          //
+          for (var e
+              in listadoMenu.where((element) => element.check).toList()) {
+            Modelmenu_x_usuario permisos = Modelmenu_x_usuario(
+                id: 0, id_menu: e.id, id_usuario: result.id);
 
-      var result = await _dataSourceUsuario.postUsuarios(usuario);
-      if (result.id != 0) {
-        //
-        for (var e in listadoMenu.where((element) => element.check).toList()) {
-          Modelmenu_x_usuario permisos =
-              Modelmenu_x_usuario(id: 0, id_menu: e.id, id_usuario: result.id);
-
-          var resultado = await _dataSource.postMenuUsuario(permisos);
+            var resultado = await _dataSource.postMenuUsuario(permisos);
+          }
         }
       }
 
@@ -94,6 +98,18 @@ class UsuarioProvider extends ChangeNotifier {
       return true;
     } catch (e) {
       print("${e.toString()}");
+      return false;
+    }
+  }
+
+  Future<bool> anular() async {
+    try {
+      var result = await _dataSourceUsuario.postUsuarios(usuarioSelect!);
+      if (result.id != 0) {
+        usuarioSelect!.estado = "I";
+      }
+      return true;
+    } catch (e) {
       return false;
     }
   }

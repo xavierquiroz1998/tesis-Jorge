@@ -97,11 +97,10 @@ class _Formulario1State extends State<Formulario1> {
                     DataCell(
                       Text(e.estado),
                     ),
-                    DataCell(
-                      Row(
-                        children: [
-                          e.estado == "A"
-                              ? TextButton.icon(
+                    DataCell(e.estado == "A"
+                        ? Row(
+                            children: [
+                              TextButton.icon(
                                   onPressed: () async {
                                     patProvider.disciplina = e;
                                     patProvider.setDisciplina();
@@ -109,17 +108,20 @@ class _Formulario1State extends State<Formulario1> {
                                         context, width, height);
                                   },
                                   icon: Icon(Icons.edit),
-                                  label: Text(""))
-                              : Container(),
-                          e.estado == "A"
-                              ? TextButton.icon(
-                                  onPressed: () async {},
+                                  label: Text("")),
+                              TextButton.icon(
+                                  onPressed: () async {
+                                    patProvider.disciplina = e;
+                                    var ss = await patProvider.anular();
+                                    if (ss) {
+                                      setState(() {});
+                                    }
+                                  },
                                   icon: Icon(Icons.delete),
                                   label: Text(""))
-                              : Container(),
-                        ],
-                      ),
-                    ),
+                            ],
+                          )
+                        : Container()),
                   ],
                 );
               }).toList(),
@@ -181,6 +183,7 @@ class _Formulario1State extends State<Formulario1> {
                 onPressed: () async {
                   bool res = await patProvider.guardar();
                   if (res) {
+                    setState(() {});
                     return Navigator.pop(context, true);
                   }
                 },

@@ -74,17 +74,23 @@ class _PacienteConsState extends State<PacienteCons> {
               rows: provUsuarios.listUsuario
                   .map(
                     (e) => DataRow(
+                      color:
+                          MaterialStateProperty.resolveWith<Color?>((states) {
+                        if (e.estado != "A") {
+                          return Colors.red.shade300;
+                        }
+                        return null;
+                      }),
                       cells: [
                         DataCell(Text("${e.identificacion}")),
                         DataCell(Text("${e.nombres}")),
                         DataCell(Text("${e.celular}")),
                         DataCell(Text("${e.correo}")),
                         DataCell(Text("${e.estado}")),
-                        DataCell(
-                          Row(
-                            children: [
-                              e.estado == "A"
-                                  ? TextButton.icon(
+                        DataCell(e.estado == "A"
+                            ? Row(
+                                children: [
+                                  TextButton.icon(
                                       onPressed: () {
                                         provUsuarios.edit = true;
                                         provUsuarios.usuarioSelect = e;
@@ -92,17 +98,20 @@ class _PacienteConsState extends State<PacienteCons> {
                                             Flurorouter.pacienteMantenimineto);
                                       },
                                       icon: Icon(Icons.edit),
-                                      label: Text(""))
-                                  : Container(),
-                              e.estado == "A"
-                                  ? TextButton.icon(
-                                      onPressed: () async {},
+                                      label: Text("")),
+                                  TextButton.icon(
+                                      onPressed: () async {
+                                        provUsuarios.usuarioSelect = e;
+                                        var ass = await provUsuarios.anular();
+                                        if (ass) {
+                                          setState(() {});
+                                        }
+                                      },
                                       icon: Icon(Icons.delete),
                                       label: Text(""))
-                                  : Container(),
-                            ],
-                          ),
-                        ),
+                                ],
+                              )
+                            : Container()),
                       ],
                     ),
                   )
