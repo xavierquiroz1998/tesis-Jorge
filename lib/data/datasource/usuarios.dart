@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:tesis/data/datasource/reference/URLbase.dart';
+import 'package:tesis/data/model/permisos.dart';
 import 'package:tesis/data/model/usuarios.dart';
 
 class UsuariosDatasurce {
@@ -13,6 +14,22 @@ class UsuariosDatasurce {
 
       if (temp.statusCode == 200) {
         lisTemp = decodeUsuarios(utf8.decode(temp.bodyBytes));
+      }
+      return lisTemp;
+    } catch (e) {
+      print("$e");
+      return [];
+    }
+  }
+
+  Future<List<ModelPermisos>> getPermisosUsuarios(int idUsuario) async {
+    List<ModelPermisos> lisTemp = [];
+    try {
+      String url = "${Url.urlBse}menu/permiso/$idUsuario";
+      var temp = await http.get(Uri.parse(url));
+
+      if (temp.statusCode == 200) {
+        lisTemp = decodePermisos(utf8.decode(temp.bodyBytes));
       }
       return lisTemp;
     } catch (e) {
@@ -98,6 +115,13 @@ class UsuariosDatasurce {
     var parseo = jsonDecode(respuesta);
     return parseo
         .map<ModelUsuarios>((json) => ModelUsuarios.fromMap(json))
+        .toList();
+  }
+
+  List<ModelPermisos> decodePermisos(String respuesta) {
+    var parseo = jsonDecode(respuesta);
+    return parseo
+        .map<ModelPermisos>((json) => ModelPermisos.fromMap(json))
         .toList();
   }
 }

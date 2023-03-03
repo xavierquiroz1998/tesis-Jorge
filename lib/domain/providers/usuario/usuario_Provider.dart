@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:tesis/data/datasource/menuDT.dart';
+import 'package:tesis/data/datasource/reference/local_storage.dart';
 import 'package:tesis/data/datasource/usuarios.dart';
 import 'package:tesis/data/model/menu.dart';
+import 'package:tesis/data/model/permisos.dart';
 import 'package:tesis/data/model/usuarios.dart';
 
 class UsuarioProvider extends ChangeNotifier {
   List<ModelMenu> listadoMenu = [];
+  List<ModelPermisos> listadoPermisos = [];
   final MenuDataSource _dataSource = MenuDataSource();
   final UsuariosDatasurce _dataSourceUsuario = UsuariosDatasurce();
 
@@ -63,6 +66,17 @@ class UsuarioProvider extends ChangeNotifier {
     } catch (e) {
       print("${e.toString()}");
     }
+  }
+
+  Future callgetPermisos() async {
+    try {
+      String? idUsuario = LocalStorage.prefs.getString('usuario');
+      if (idUsuario != null) {
+        listadoPermisos =
+            await _dataSourceUsuario.getPermisosUsuarios(int.parse(idUsuario));
+        notifyListeners();
+      }
+    } catch (e) {}
   }
 
   Future<bool> guardarUsuario() async {

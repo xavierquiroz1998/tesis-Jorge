@@ -4,6 +4,7 @@ import 'package:tesis/data/datasource/reference/local_storage.dart';
 import 'package:tesis/domain/Navigation/NavigationService.dart';
 import 'package:tesis/domain/providers/Home/sideMenuProvider.dart';
 import 'package:tesis/domain/providers/Login/LoginProvider.dart';
+import 'package:tesis/domain/providers/usuario/usuario_Provider.dart';
 import 'package:tesis/ui/Router/FluroRouter.dart';
 import 'package:tesis/ui/pages/Logo/logo.dart';
 import 'package:tesis/ui/pages/SiderBar/sidebarWidgets/menu_item.dart';
@@ -18,7 +19,7 @@ class SideBar extends StatefulWidget {
 class _SideBarState extends State<SideBar> {
   @override
   void initState() {
-    //Provider.of<PermisoProvider>(context, listen: false).callgetPermisos();
+    Provider.of<UsuarioProvider>(context, listen: false).callgetPermisos();
     super.initState();
   }
 
@@ -30,7 +31,7 @@ class _SideBarState extends State<SideBar> {
   @override
   Widget build(BuildContext context) {
     final logeo = Provider.of<LoginProvider>(context);
-    //final permiso = Provider.of<PermisoProvider>(context);
+    final permiso = Provider.of<UsuarioProvider>(context);
     final sideMenuProvider = Provider.of<SideMenuProvider>(context);
     final LocalStorage _prefService = LocalStorage();
     return Container(
@@ -44,19 +45,19 @@ class _SideBarState extends State<SideBar> {
           SizedBox(
             height: 30,
           ),
-          // for (var value in permiso.listGrupo) ...[
-          //   MenuItemP(
-          //     text: value.proyecto!.nombre,
-          //     icon: UtilView.icons[int.parse(value.proyecto!.referencia)],
-          //     onPressed: () async {
-          //       navigateTo(value.proyecto!.ruta);
-          //       /*      _prefService.createCache(value).whenComplete(() {
-          //         Navigator.pushNamed(context, 'dashboard');
-          //       }); */
-          //     },
-          //     isActive: sideMenuProvider.currentPage == value.proyecto!.ruta,
-          //   ),
-          // ],
+          for (var value in permiso.listadoPermisos) ...[
+            MenuItemP(
+              text: value.descripcion,
+              icon: Icons.home,
+              onPressed: () async {
+                navigateTo(value.ruta);
+                /*      _prefService.createCache(value).whenComplete(() {
+                  Navigator.pushNamed(context, 'dashboard');
+                }); */
+              },
+              isActive: sideMenuProvider.currentPage == value.ruta,
+            ),
+          ],
 
           /* 
            MenuItem(
@@ -159,70 +160,69 @@ class _SideBarState extends State<SideBar> {
               isActive: NavigationService.currentPage == Flurorouter.kardex,
             )
           }, */
-          MenuItemP(
-            text: 'Home',
-            icon: Icons.home,
-            onPressed: () => NavigationService.navigateTo(Flurorouter.inicio),
-            isActive: sideMenuProvider.currentPage == Flurorouter.inicio,
-            //isActive: NavigationService.currentPage == Flurorouter.inicio,
-          ),
-          MenuItemP(
-            text: 'Disciplina',
-            icon: Icons.home,
-            onPressed: () =>
-                NavigationService.navigateTo(Flurorouter.formulario1),
-            isActive: sideMenuProvider.currentPage == Flurorouter.formulario1,
-          ),
-          MenuItemP(
-            text: 'Horarios',
-            icon: Icons.home,
-            onPressed: () =>
-                NavigationService.navigateTo(Flurorouter.formulario2),
-            isActive: sideMenuProvider.currentPage == Flurorouter.formulario2,
-          ),
-          MenuItemP(
-            text: 'Profesores',
-            icon: Icons.home,
-            onPressed: () =>
-                NavigationService.navigateTo(Flurorouter.formulario3),
-            isActive: sideMenuProvider.currentPage == Flurorouter.formulario3,
-          ),
-          MenuItemP(
-            text: 'Familiar o Invitado',
-            icon: Icons.home,
-            onPressed: () =>
-                NavigationService.navigateTo(Flurorouter.formulario4),
-            isActive: sideMenuProvider.currentPage == Flurorouter.formulario4,
-          ),
-          MenuItemP(
-            text: 'Inscripciones',
-            icon: Icons.home,
-            onPressed: () =>
-                NavigationService.navigateTo(Flurorouter.formulario5),
-            isActive: sideMenuProvider.currentPage == Flurorouter.formulario5,
-          ),
-          MenuItemP(
-            text: 'Aprobacion de socios',
-            icon: Icons.home,
-            onPressed: () =>
-                NavigationService.navigateTo(Flurorouter.aprobacion),
-            isActive: sideMenuProvider.currentPage == Flurorouter.aprobacion,
-          ),
-          MenuItemP(
-            text: 'Asistencias',
-            icon: Icons.home,
-            onPressed: () =>
-                NavigationService.navigateTo(Flurorouter.asistencias),
-            isActive: sideMenuProvider.currentPage == Flurorouter.asistencias,
-          ),
-          MenuItemP(
-            text: 'Crear Usuario',
-            icon: Icons.home,
-            onPressed: () =>
-                NavigationService.navigateTo(Flurorouter.pacientes),
-            isActive: sideMenuProvider.currentPage ==
-                Flurorouter.pacientes,
-          ),
+          // MenuItemP(
+          //   text: 'Home',
+          //   icon: Icons.home,
+          //   onPressed: () => NavigationService.navigateTo(Flurorouter.inicio),
+          //   isActive: sideMenuProvider.currentPage == Flurorouter.inicio,
+          //   //isActive: NavigationService.currentPage == Flurorouter.inicio,
+          // ),
+          // MenuItemP(
+          //   text: 'Disciplina',
+          //   icon: Icons.home,
+          //   onPressed: () =>
+          //       NavigationService.navigateTo(Flurorouter.formulario1),
+          //   isActive: sideMenuProvider.currentPage == Flurorouter.formulario1,
+          // ),
+          // MenuItemP(
+          //   text: 'Horarios',
+          //   icon: Icons.home,
+          //   onPressed: () =>
+          //       NavigationService.navigateTo(Flurorouter.formulario2),
+          //   isActive: sideMenuProvider.currentPage == Flurorouter.formulario2,
+          // ),
+          // MenuItemP(
+          //   text: 'Profesores',
+          //   icon: Icons.home,
+          //   onPressed: () =>
+          //       NavigationService.navigateTo(Flurorouter.formulario3),
+          //   isActive: sideMenuProvider.currentPage == Flurorouter.formulario3,
+          // ),
+          // MenuItemP(
+          //   text: 'Familiar o Invitado',
+          //   icon: Icons.home,
+          //   onPressed: () =>
+          //       NavigationService.navigateTo(Flurorouter.formulario4),
+          //   isActive: sideMenuProvider.currentPage == Flurorouter.formulario4,
+          // ),
+          // MenuItemP(
+          //   text: 'Inscripciones',
+          //   icon: Icons.home,
+          //   onPressed: () =>
+          //       NavigationService.navigateTo(Flurorouter.formulario5),
+          //   isActive: sideMenuProvider.currentPage == Flurorouter.formulario5,
+          // ),
+          // MenuItemP(
+          //   text: 'Aprobacion de socios',
+          //   icon: Icons.home,
+          //   onPressed: () =>
+          //       NavigationService.navigateTo(Flurorouter.aprobacion),
+          //   isActive: sideMenuProvider.currentPage == Flurorouter.aprobacion,
+          // ),
+          // MenuItemP(
+          //   text: 'Asistencias',
+          //   icon: Icons.home,
+          //   onPressed: () =>
+          //       NavigationService.navigateTo(Flurorouter.asistencias),
+          //   isActive: sideMenuProvider.currentPage == Flurorouter.asistencias,
+          // ),
+          // MenuItemP(
+          //   text: 'Crear Usuario',
+          //   icon: Icons.home,
+          //   onPressed: () =>
+          //       NavigationService.navigateTo(Flurorouter.pacientes),
+          //   isActive: sideMenuProvider.currentPage == Flurorouter.pacientes,
+          // ),
           MenuItemP(
             text: 'Salir',
             icon: Icons.exit_to_app,
