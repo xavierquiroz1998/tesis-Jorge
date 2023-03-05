@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:tesis/domain/providers/CrearCita/CitaProvider.dart';
 import 'package:tesis/domain/providers/Login/LoginProvider.dart';
 import 'package:tesis/domain/providers/asistencias_provider.dart';
+import 'package:tesis/domain/providers/cursos/cursos_provider.dart';
 import 'package:tesis/domain/providers/disciplinas/Disciplina_Provider.dart';
 import 'package:tesis/domain/providers/enfermeras/enfermeraProvider.dart';
 import 'package:tesis/domain/providers/familiares/familiares_provider.dart';
@@ -28,6 +29,7 @@ Future<void> init() async {
   sl.registerFactory(() => InscripcionProvider());
   sl.registerFactory(() => UsuarioProvider());
   sl.registerFactory(() => AsistenciasProvider());
+  sl.registerFactory(() => CurosProvider());
 
   sl.registerLazySingleton(() => http.Client());
 }

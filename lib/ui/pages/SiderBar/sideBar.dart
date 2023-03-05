@@ -216,13 +216,13 @@ class _SideBarState extends State<SideBar> {
           //       NavigationService.navigateTo(Flurorouter.asistencias),
           //   isActive: sideMenuProvider.currentPage == Flurorouter.asistencias,
           // ),
-          // MenuItemP(
-          //   text: 'Crear Usuario',
-          //   icon: Icons.home,
-          //   onPressed: () =>
-          //       NavigationService.navigateTo(Flurorouter.pacientes),
-          //   isActive: sideMenuProvider.currentPage == Flurorouter.pacientes,
-          // ),
+          MenuItemP(
+            text: 'Consulta de Cursos',
+            icon: Icons.home,
+            onPressed: () =>
+                NavigationService.navigateTo(Flurorouter.cursos),
+            isActive: sideMenuProvider.currentPage == Flurorouter.cursos,
+          ),
           MenuItemP(
             text: 'Salir',
             icon: Icons.exit_to_app,

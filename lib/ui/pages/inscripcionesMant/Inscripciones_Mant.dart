@@ -101,7 +101,7 @@ class _InscripcionesMantenimientoState
               children: [
                 SizedBox(
                   width: 120,
-                  child: Text("disciplina :", style: CustomLabels.h11),
+                  child: Text("Horarios :", style: CustomLabels.h11),
                 ),
                 Expanded(
                   child: DropdownButton<ModelViewHorarios>(
@@ -116,7 +116,11 @@ class _InscripcionesMantenimientoState
                     hint: Text(
                       provInscripcion.horariosSelect == null
                           ? ""
-                          : provInscripcion.horariosSelect!.nomDisciplina,
+                          : provInscripcion.horariosSelect!.nomDisciplina +
+                              " nivel: " +
+                              provInscripcion.horariosSelect!.nivel +
+                              " Horas: " +
+                              provInscripcion.horariosSelect!.horario,
                       style: TextStyle(color: Colors.black),
                     ),
                     items: provHorario.lisHorarios
@@ -126,7 +130,11 @@ class _InscripcionesMantenimientoState
                       return DropdownMenuItem<ModelViewHorarios>(
                         value: value,
                         child: Text(
-                          value.nomDisciplina,
+                          value.nomDisciplina +
+                              " nivel: " +
+                              value.nivel +
+                              " Horas: " +
+                              value.horario,
                           style: TextStyle(fontSize: 20),
                         ),
                       );
@@ -135,7 +143,6 @@ class _InscripcionesMantenimientoState
                 ),
               ],
             ),
-            
             Row(
               children: [
                 SizedBox(
@@ -174,7 +181,6 @@ class _InscripcionesMantenimientoState
                 ),
               ],
             ),
-            
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
@@ -255,6 +261,7 @@ class _InscripcionesMantenimientoState
                     .toList(),
               ),
             ),
+           
             SizedBox(
               height: 50,
             ),
