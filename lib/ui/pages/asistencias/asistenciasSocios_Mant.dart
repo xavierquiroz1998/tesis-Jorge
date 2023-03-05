@@ -1,14 +1,23 @@
+import 'package:darq/darq.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:tesis/data/model/disciplinaModel.dart';
+import 'package:tesis/data/model/horarios.dart';
+import 'package:tesis/domain/Navigation/NavigationService.dart';
+import 'package:tesis/domain/providers/asistencias_provider.dart';
 import 'package:tesis/domain/providers/familiares/familiares_provider.dart';
 import 'package:tesis/domain/providers/horarios/Horarios_Provider.dart';
 import 'package:tesis/domain/providers/incripciones/incripcion_provider.dart';
+import 'package:tesis/ui/Router/FluroRouter.dart';
 import 'package:tesis/ui/pages/widget/customLabels.dart';
+import 'package:tesis/ui/pages/widget/inputForm.dart';
 import 'package:tesis/ui/pages/widget/whiteCard.dart';
+import 'package:tesis/ui/style/Custom_Inputs.dart';
+import 'package:tesis/ui/style/utilview.dart';
 
 class AsistenciaSociosMant extends StatefulWidget {
   const AsistenciaSociosMant({Key? key}) : super(key: key);
@@ -23,49 +32,143 @@ class _AsistenciaSociosMantState extends State<AsistenciaSociosMant> {
     // TODO: implement initState
     super.initState();
     Provider.of<FamiliaresProvider>(context, listen: false).getFamiliares();
+    Provider.of<HorarioProvider>(context, listen: false).getHorarios();
+    Provider.of<AsistenciasProvider>(context, listen: false).inicializar();
   }
 
   @override
   Widget build(BuildContext context) {
-    final provFamilia = Provider.of<FamiliaresProvider>(context);
     final provHorario = Provider.of<HorarioProvider>(context);
+    final provAsistencia = Provider.of<AsistenciasProvider>(context);
     return WhiteCard(
       title: "Asistencia de Socios",
       child: Column(
         children: [
           Row(
             children: [
-              Text("Disciplina :"),
               SizedBox(
-                height: 10,
+                width: 120,
+                child: Text("Fecha :", style: CustomLabels.h11),
               ),
               Expanded(
-                child: DropdownButton<ModelDisciplina>(
+                child: TextField(
+                  controller: provAsistencia.ctrFecha,
+                  decoration: CustomInputs.boxInputDecoration3(
+                      label: "Fecha de Asistencia", icon: Icons.calendar_today),
+                  readOnly: true,
+                  onTap: () async {
+                    DateTime? pickedDate = await showDatePicker(
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime(2020),
+                        lastDate: DateTime(2101));
+                    if (pickedDate != null) {
+                      String formattedDate =
+                          DateFormat('yyyy-MM-dd').format(pickedDate);
+
+                      setState(() {
+                        provAsistencia.ctrFecha.text = formattedDate;
+                      });
+                    }
+                  },
+                ),
+              ),
+            ],
+          ),
+          Row(
+            children: [
+              SizedBox(
+                width: 120,
+                child: Text("Periodo :", style: CustomLabels.h11),
+              ),
+              Expanded(
+                child: DropdownButton<String>(
                   isExpanded: true,
                   //value: provHorario.infoDisciplina,
-                  onChanged: (ModelDisciplina? newValue) {
+                  onChanged: (String? newValue) {
                     setState(() {
-                      provHorario.infoDisciplina = newValue!;
+                      provAsistencia.mesSelect = newValue!;
+                      provAsistencia.cargarSocios(
+                          provAsistencia.mesSelect,
+                          provAsistencia.infoDisciplina == null
+                              ? 0
+                              : provAsistencia.infoDisciplina!.id);
                     });
                   },
 
                   hint: Text(
-                    provHorario.infoDisciplina.id == 0
-                        ? ""
-                        : provHorario.infoDisciplina.descripcion,
+                    provAsistencia.mesSelect,
                     style: TextStyle(color: Colors.black),
                   ),
-                  items: provHorario.listDisciplina
-                      .map<DropdownMenuItem<ModelDisciplina>>(
-                          (ModelDisciplina value) {
-                    return DropdownMenuItem<ModelDisciplina>(
+                  items: provAsistencia.listadoMeses
+                      .map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
                       value: value,
                       child: Text(
-                        value.descripcion == "" ? "prueba" : value.descripcion,
+                        value,
                         style: TextStyle(fontSize: 20),
                       ),
                     );
                   }).toList(),
+                ),
+              ),
+            ],
+          ),
+          Row(
+            children: [
+              SizedBox(
+                width: 120,
+                child: Text("Horarios :", style: CustomLabels.h11),
+              ),
+              Expanded(
+                child: DropdownButton<ModelViewHorarios>(
+                  isExpanded: true,
+                  //value: provHorario.infoDisciplina,
+                  onChanged: (ModelViewHorarios? newValue) {
+                    setState(() {
+                      provAsistencia.infoDisciplina = newValue!;
+                    });
+                    provAsistencia.cargarSocios(
+                        provAsistencia.mesSelect,
+                        provAsistencia.infoDisciplina == null
+                            ? 0
+                            : provAsistencia.infoDisciplina!.id);
+                  },
+
+                  hint: Text(
+                    provAsistencia.infoDisciplina == null
+                        ? ""
+                        : provAsistencia.infoDisciplina!.nomDisciplina,
+                    style: TextStyle(color: Colors.black),
+                  ),
+                  items: provHorario.lisHorarios
+                      .map<DropdownMenuItem<ModelViewHorarios>>(
+                          (ModelViewHorarios value) {
+                    return DropdownMenuItem<ModelViewHorarios>(
+                      value: value,
+                      child: Text(
+                        value.nomDisciplina == "" ? "" : value.nomDisciplina,
+                        style: TextStyle(fontSize: 20),
+                      ),
+                    );
+                  }).toList(),
+                ),
+              ),
+            ],
+          ),
+          Row(
+            children: [
+              SizedBox(
+                width: 120,
+                child: Text("Descripción :", style: CustomLabels.h11),
+              ),
+              Expanded(
+                child: InputForm(
+                  controller: provAsistencia.ctrDescripcion,
+                  hint: "",
+                  icon: Icons.assignment,
+                  length: 500,
+                  textInputType: TextInputType.text,
                 ),
               ),
             ],
@@ -84,21 +187,16 @@ class _AsistenciaSociosMantState extends State<AsistenciaSociosMant> {
                   label: Center(child: Text("Nombres")),
                 ),
                 const DataColumn(
-                  label: Center(child: Text("Tipo")),
+                  label: Center(child: Text("Asistencia")),
                 ),
                 const DataColumn(
-                  label: Center(child: Text("Celular")),
+                  label: Center(child: Text("Falta Justificada")),
                 ),
                 const DataColumn(
-                  label: Center(child: Text("Estado")),
-                ),
-                const DataColumn(
-                  label: Center(child: Text("")),
+                  label: Center(child: Text("Retraso")),
                 )
               ],
-              rows: provFamilia.listado
-                  .where((element) => element.estado == "A")
-                  .map<DataRow>((e) {
+              rows: provAsistencia.listDetalle.map<DataRow>((e) {
                 return DataRow(
                   //key: LocalKey(),
                   cells: <DataCell>[
@@ -109,23 +207,101 @@ class _AsistenciaSociosMantState extends State<AsistenciaSociosMant> {
                       Text(e.nombres),
                     ),
                     DataCell(
-                      Text(e.tipo),
+                      Checkbox(
+                        value: e.asistencia,
+                        onChanged: (value) {
+                          if (!e.faltaJustificada && !e.atraso) {
+                            e.asistencia = value!;
+                          }
+
+                          setState(() {});
+                        },
+                      ),
                     ),
                     DataCell(
-                      Text(e.celular),
+                      Checkbox(
+                        value: e.faltaJustificada,
+                        onChanged: (value) {
+                          if (!e.asistencia && !e.atraso) {
+                            e.faltaJustificada = value!;
+                          }
+                          setState(() {});
+                        },
+                      ),
                     ),
                     DataCell(
-                      Text(e.estado),
+                      Checkbox(
+                        value: e.atraso,
+                        onChanged: (value) {
+                          if (!e.asistencia && !e.faltaJustificada) {
+                            e.atraso = value!;
+                          }
+                          setState(() {});
+                        },
+                      ),
                     ),
-                    DataCell(Checkbox(
-                      value: false,
-                      onChanged: (value) {},
-                    )),
                   ],
                 );
               }).toList(),
             ),
           ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextButton(
+                onPressed: () {
+                  NavigationService.navigateTo(Flurorouter.asistencias);
+                },
+                child: Text("Cancelar"),
+              ),
+              TextButton(
+                onPressed: () async {
+                  if (provAsistencia.ctrFecha.text == "") {
+                    UtilView.messageDanger("Seleccione un Fecha");
+                    return;
+                  }
+                  if (provAsistencia.mesSelect == "") {
+                    UtilView.messageDanger("Seleccione un Periodo");
+                    return;
+                  }
+
+                  if (provAsistencia.infoDisciplina == null) {
+                    UtilView.messageDanger("Seleccione un Horario");
+                    return;
+                  }
+
+                  if (provAsistencia.ctrDescripcion.text == "") {
+                    UtilView.messageDanger("Ingrese una Descripción");
+                    return;
+                  }
+
+                  if (provAsistencia.listDetalle.count() == 0) {
+                    UtilView.messageDanger(
+                        "No hay información de asistencia para este Periodo y Horario, Por favor Seleccione otro Periodo o Horario");
+                    return;
+                  }
+
+                  if (provAsistencia.listDetalle
+                          .where((e) =>
+                              e.asistencia || e.faltaJustificada || e.atraso)
+                          .toList()
+                          .count() ==
+                      0) {
+                    UtilView.messageDanger(
+                        "Ingrese Asistencia de los Socios o Familiares");
+                    return;
+                  }
+
+                  if (await provAsistencia.guardar()) {
+                    UtilView.messageSnackNewAccess(
+                        "Asistencia Guardada \ncon exito", context);
+                    NavigationService.navigateTo(Flurorouter.asistencias);
+                  }
+                },
+                child: Text("Guardar"),
+              ),
+            ],
+          )
         ],
       ),
     );

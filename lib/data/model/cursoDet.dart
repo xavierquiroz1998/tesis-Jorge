@@ -10,7 +10,6 @@ class ModelCursoDet {
     required this.idSocio,
     required this.idHorario,
     socioSelect = null,
-    horariosSelect = null,
   });
 
   int id;
@@ -18,7 +17,6 @@ class ModelCursoDet {
   int idSocio;
   int idHorario;
   ModelFamiliares? socioSelect;
-  ModelViewHorarios? horariosSelect;
 
   factory ModelCursoDet.fromJson(String str) =>
       ModelCursoDet.fromMap(json.decode(str));

@@ -101,44 +101,6 @@ class _InscripcionesMantenimientoState
               children: [
                 SizedBox(
                   width: 120,
-                  child: Text("socio :", style: CustomLabels.h11),
-                ),
-                Expanded(
-                  child: DropdownButton<ModelFamiliares>(
-                    isExpanded: true,
-                    //value: provHorario.infoDisciplina,
-                    onChanged: (ModelFamiliares? newValue) {
-                      setState(() {
-                        provInscripcion.socioSelect = newValue!;
-                      });
-                    },
-
-                    hint: Text(
-                      provInscripcion.socioSelect == null
-                          ? ""
-                          : provInscripcion.socioSelect!.nombres,
-                      style: TextStyle(color: Colors.black),
-                    ),
-                    items: provFamilia.listado
-                        .where((element) => element.estado == "A")
-                        .map<DropdownMenuItem<ModelFamiliares>>(
-                            (ModelFamiliares value) {
-                      return DropdownMenuItem<ModelFamiliares>(
-                        value: value,
-                        child: Text(
-                          value.nombres,
-                          style: TextStyle(fontSize: 20),
-                        ),
-                      );
-                    }).toList(),
-                  ),
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                SizedBox(
-                  width: 120,
                   child: Text("disciplina :", style: CustomLabels.h11),
                 ),
                 Expanded(
@@ -173,6 +135,46 @@ class _InscripcionesMantenimientoState
                 ),
               ],
             ),
+            
+            Row(
+              children: [
+                SizedBox(
+                  width: 120,
+                  child: Text("socio :", style: CustomLabels.h11),
+                ),
+                Expanded(
+                  child: DropdownButton<ModelFamiliares>(
+                    isExpanded: true,
+                    //value: provHorario.infoDisciplina,
+                    onChanged: (ModelFamiliares? newValue) {
+                      setState(() {
+                        provInscripcion.socioSelect = newValue!;
+                      });
+                    },
+
+                    hint: Text(
+                      provInscripcion.socioSelect == null
+                          ? ""
+                          : provInscripcion.socioSelect!.nombres,
+                      style: TextStyle(color: Colors.black),
+                    ),
+                    items: provFamilia.listado
+                        .where((element) => element.estado == "A")
+                        .map<DropdownMenuItem<ModelFamiliares>>(
+                            (ModelFamiliares value) {
+                      return DropdownMenuItem<ModelFamiliares>(
+                        value: value,
+                        child: Text(
+                          value.nombres,
+                          style: TextStyle(fontSize: 20),
+                        ),
+                      );
+                    }).toList(),
+                  ),
+                ),
+              ],
+            ),
+            
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
@@ -198,14 +200,14 @@ class _InscripcionesMantenimientoState
                     label: Center(child: Text("Nombres del Socio")),
                   ),
                   const DataColumn(
-                    label: Center(child: Text("Disciplina")),
+                    label: Center(child: Text("Celular")),
                   ),
-                  const DataColumn(
-                    label: Center(child: Text("Nivel")),
-                  ),
-                  const DataColumn(
-                    label: Center(child: Text("Horario")),
-                  ),
+                  // const DataColumn(
+                  //   label: Center(child: Text("Celular")),
+                  // ),
+                  // const DataColumn(
+                  //   label: Center(child: Text("Horario")),
+                  // ),
                   const DataColumn(
                     label: Center(child: Text("")),
                   ),
@@ -226,20 +228,20 @@ class _InscripcionesMantenimientoState
                                 : e.socioSelect!.nombres),
                           ),
                           DataCell(
-                            Text(e.horariosSelect == null
+                            Text(e.socioSelect == null
                                 ? ""
-                                : e.horariosSelect!.nomDisciplina),
+                                : e.socioSelect!.celular),
                           ),
-                          DataCell(
-                            Text(e.horariosSelect == null
-                                ? ""
-                                : e.horariosSelect!.nivel),
-                          ),
-                          DataCell(
-                            Text(e.horariosSelect == null
-                                ? ""
-                                : e.horariosSelect!.horario),
-                          ),
+                          // DataCell(
+                          //   Text(e.horariosSelect == null
+                          //       ? ""
+                          //       : e.horariosSelect!.nivel),
+                          // ),
+                          // DataCell(
+                          //   Text(e.horariosSelect == null
+                          //       ? ""
+                          //       : e.horariosSelect!.horario),
+                          // ),
                           DataCell(TextButton.icon(
                               onPressed: () {
                                 provInscripcion.detalles.remove(e);

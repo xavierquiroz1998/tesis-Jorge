@@ -9,6 +9,7 @@ import 'package:tesis/ui/Router/FluroRouter.dart';
 import 'package:tesis/ui/pages/widget/customLabels.dart';
 import 'package:tesis/ui/pages/widget/inputForm.dart';
 import 'package:tesis/ui/pages/widget/whiteCard.dart';
+import 'package:tesis/ui/style/utilview.dart';
 
 class FamiliaresMantenimiento extends StatefulWidget {
   const FamiliaresMantenimiento({Key? key}) : super(key: key);
@@ -215,6 +216,8 @@ class _FamiliaresMantenimientoState extends State<FamiliaresMantenimiento> {
                       var ass = await provFamiliares.garabar();
                       if (ass) {
                         setState(() {});
+                        UtilView.messageSnackNewAccess(
+                            "Familiar Registrado \ncon exito", context);
                       }
                       NavigationService.navigateTo(Flurorouter.formulario4);
                     },

@@ -13,12 +13,14 @@ class ModelCurso {
     required this.descripcion,
     required this.periodo,
     required this.estado,
+    required this.id_horario,
   });
 
   int id;
   String descripcion;
   String periodo;
   String estado;
+  int id_horario;
 
   factory ModelCurso.fromJson(String str) =>
       ModelCurso.fromMap(json.decode(str));
@@ -30,6 +32,7 @@ class ModelCurso {
         descripcion: json["descripcion"],
         periodo: json["periodo"],
         estado: json["estado"],
+        id_horario: json["id_horario"],
       );
 
   Map<String, dynamic> toMap() => {
@@ -37,5 +40,6 @@ class ModelCurso {
         "descripcion": descripcion,
         "periodo": periodo,
         "estado": estado,
+        "id_horario": id_horario,
       };
 }

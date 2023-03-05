@@ -79,12 +79,6 @@ class InscripcionProvider extends ChangeNotifier {
           if (obj1 != null) {
             element.socioSelect = obj1;
           }
-
-          ModelViewHorarios? obj2 =
-              lisHorarios.firstWhere((e) => e.id == element.idHorario);
-          if (obj2 != null) {
-            element.horariosSelect = obj2;
-          }
         }
         detalles = cursoDet;
         notifyListeners();
@@ -102,16 +96,13 @@ class InscripcionProvider extends ChangeNotifier {
     try {
       if (socioSelect != null && horariosSelect != null) {
         ModelCursoDet det = ModelCursoDet(
-            id: 0,
-            idCab: 0,
-            idHorario: horariosSelect!.id,
-            idSocio: socioSelect!.id);
+            id: 0, idCab: 0, idHorario: 0, idSocio: socioSelect!.id);
         det.socioSelect = socioSelect;
-        det.horariosSelect = horariosSelect;
+        //det.horariosSelect = horariosSelect;
         detalles.add(det);
         notifyListeners();
         socioSelect = null;
-        horariosSelect = null;
+        //horariosSelect = null;
       }
     } catch (e) {}
   }
@@ -122,7 +113,8 @@ class InscripcionProvider extends ChangeNotifier {
           id: cursoSelect == null ? 0 : cursoSelect!.id,
           estado: "A",
           periodo: mesSelect,
-          descripcion: ctrDescripcion.text);
+          descripcion: ctrDescripcion.text,
+          id_horario: horariosSelect!.id);
 
       if (edit) {
         var result = await _datasource.postActualizarCursos(curso);

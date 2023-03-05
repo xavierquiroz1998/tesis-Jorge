@@ -42,6 +42,24 @@ class CustomInputs {
         labelStyle: TextStyle(color: Colors.grey));
   }
 
+  static InputDecoration boxInputDecoration3({
+    required String label,
+    required IconData icon,
+  }) {
+    return InputDecoration(
+      border: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.grey.withOpacity(0.3))),
+      enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.grey.withOpacity(0.3))),
+      labelText: label,
+      isDense: true,
+      contentPadding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+      prefixIcon: Icon(icon, color: Colors.grey),
+      labelStyle: const TextStyle(color: Colors.grey),
+      hintStyle: const TextStyle(color: Colors.grey),
+    );
+  }
+
   static InputDecoration cantInputDecoration({required String hint}) {
     return InputDecoration(
         border: OutlineInputBorder(
