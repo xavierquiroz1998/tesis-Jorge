@@ -6,6 +6,7 @@ import 'package:tesis/ui/Router/FluroRouter.dart';
 import 'package:tesis/ui/pages/widget/customLabels.dart';
 import 'package:tesis/ui/pages/widget/inputForm.dart';
 import 'package:tesis/ui/pages/widget/whiteCard.dart';
+import 'package:tesis/ui/style/utilview.dart';
 
 class PacienteMant extends StatefulWidget {
   const PacienteMant({Key? key}) : super(key: key);
@@ -59,6 +60,38 @@ class _PacienteMantState extends State<PacienteMant> {
                   icon: Icons.assignment,
                   length: 500,
                   textInputType: TextInputType.text,
+                ),
+              ),
+            ]),
+            Row(children: [
+              SizedBox(
+                width: 120,
+                child: Text("Tipo de Usuario :", style: CustomLabels.h11),
+              ),
+              Expanded(
+                child: DropdownButton<String>(
+                  isExpanded: true,
+                  //value: provHorario.infoDisciplina,
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      provUsuarios.tipoUsuarioSelect = newValue!;
+                    });
+                  },
+
+                  hint: Text(
+                    provUsuarios.tipoUsuarioSelect,
+                    style: TextStyle(color: Colors.black),
+                  ),
+                  items: provUsuarios.listTipoUsuario
+                      .map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(
+                        value,
+                        style: TextStyle(fontSize: 20),
+                      ),
+                    );
+                  }).toList(),
                 ),
               ),
             ]),
@@ -210,6 +243,39 @@ class _PacienteMantState extends State<PacienteMant> {
                   // textColor: Colors.white,
                   // color: Colors.blue,
                   onPressed: () async {
+                    if (provUsuarios.ctrIdentificacion.text == "") {
+                      UtilView.messageDanger("Ingrese # de Identificación");
+                      return;
+                    }
+                    if (provUsuarios.ctrUsuario.text == "") {
+                      UtilView.messageDanger("Ingrese Usuario");
+                      return;
+                    }
+                    if (provUsuarios.tipoUsuarioSelect == "") {
+                      UtilView.messageDanger("Selecciones Tipo de Usuario");
+                      return;
+                    }
+                    if (provUsuarios.ctrNombres.text == "") {
+                      UtilView.messageDanger("Ingrese Nombres");
+                      return;
+                    }
+                    if (provUsuarios.ctrDomicilio.text == "") {
+                      UtilView.messageDanger("Ingrese Domicilio");
+                      return;
+                    }
+                    if (provUsuarios.ctrCorreo.text == "") {
+                      UtilView.messageDanger("Ingrese Correo");
+                      return;
+                    }
+                    if (provUsuarios.ctrCelular.text == "") {
+                      UtilView.messageDanger("Ingrese Celular");
+                      return;
+                    }
+                    if (provUsuarios.ctrContrasenia.text == "") {
+                      UtilView.messageDanger("Ingrese Contaseñia");
+                      return;
+                    }
+
                     bool result = await provUsuarios.guardarUsuario();
                     if (result) {
                       setState(() {});

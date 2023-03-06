@@ -76,7 +76,7 @@ class _FormLoginViewState extends State<FormLoginView> {
                     child: TextButton(
                       onPressed: () async {
                         if (_keyLogin.currentState!.validate()) {
-                          logeo.logeo();
+                          await logeo.logeo();
                         }
                       },
                       style: TextButton.styleFrom(

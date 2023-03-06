@@ -54,6 +54,8 @@ class LoginProvider extends ChangeNotifier {
         authenticated = true;
         LocalStorage.prefs.setString('token', "asdddsswwee");
         LocalStorage.prefs.setString('usuario', result.id.toString());
+        LocalStorage.prefs
+            .setString('Tipousuario', result.tipo_usuario.toString());
         NavigationService.replaceTo(Flurorouter.inicio);
         notifyListeners();
         NavigationService.replaceTo(Flurorouter.inicio);

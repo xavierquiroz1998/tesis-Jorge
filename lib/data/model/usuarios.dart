@@ -11,6 +11,7 @@ class ModelUsuarios {
     required this.celular,
     required this.contrasenia,
     required this.estado,
+    required this.tipo_usuario,
   });
 
   int id;
@@ -22,6 +23,7 @@ class ModelUsuarios {
   String celular;
   String contrasenia;
   String estado;
+  String tipo_usuario;
 
   factory ModelUsuarios.fromJson(String str) =>
       ModelUsuarios.fromMap(json.decode(str));
@@ -38,6 +40,7 @@ class ModelUsuarios {
         celular: json["celular"],
         contrasenia: json["contrasenia"],
         estado: json["estado"],
+        tipo_usuario: json["tipo_usuario"],
       );
 
   Map<String, dynamic> toMap() => {
@@ -50,5 +53,6 @@ class ModelUsuarios {
         "celular": celular,
         "contrasenia": contrasenia,
         "estado": estado,
+        "tipo_usuario": tipo_usuario,
       };
 }

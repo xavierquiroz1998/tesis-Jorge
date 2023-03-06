@@ -5,6 +5,7 @@ import 'package:tesis/domain/Navigation/NavigationService.dart';
 import 'package:tesis/domain/providers/disciplinas/Disciplina_Provider.dart';
 import 'package:tesis/injection.dart';
 import 'package:tesis/ui/Router/FluroRouter.dart';
+import 'package:tesis/ui/style/utilview.dart';
 import '../widget/whiteCard.dart';
 
 class Formulario1 extends StatefulWidget {
@@ -183,6 +184,14 @@ class _Formulario1State extends State<Formulario1> {
                 child: Text("Cancelar")),
             TextButton(
                 onPressed: () async {
+                  if (patProvider.ctrCodigo.text == "") {
+                    UtilView.messageDanger("Ingrese un Codigo de Disciplina");
+                    return;
+                  }
+                  if (patProvider.ctrDescripcion.text == "") {
+                    UtilView.messageDanger("Ingrese una Descripción");
+                    return;
+                  }
                   bool res = await patProvider.guardar();
                   if (res) {
                     setState(() {});

@@ -212,7 +212,7 @@ class _UsuarioExternoState extends State<UsuarioExterno> {
                     // textColor: Colors.white,
                     // color: Colors.blue,
                     onPressed: () async {
-                      bool result = await provUsuarios.guardarUsuario();
+                      bool result = await provUsuarios.guardarUsuarioExterno();
                       if (result) {
                         setState(() {});
                         NavigationService.navigateTo(Flurorouter.pacientes);

@@ -1,3 +1,4 @@
+import 'package:darq/darq.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -15,6 +16,7 @@ import 'package:tesis/ui/Router/FluroRouter.dart';
 import 'package:tesis/ui/pages/widget/customLabels.dart';
 import 'package:tesis/ui/pages/widget/inputForm.dart';
 import 'package:tesis/ui/pages/widget/whiteCard.dart';
+import 'package:tesis/ui/style/utilview.dart';
 
 class InscripcionesMantenimiento extends StatefulWidget {
   const InscripcionesMantenimiento({Key? key}) : super(key: key);
@@ -261,7 +263,6 @@ class _InscripcionesMantenimientoState
                     .toList(),
               ),
             ),
-           
             SizedBox(
               height: 50,
             ),
@@ -276,6 +277,22 @@ class _InscripcionesMantenimientoState
                 ),
                 TextButton(
                   onPressed: () async {
+                    if (provInscripcion.mesSelect == "") {
+                      UtilView.messageDanger("Seleccione Periodo");
+                      return;
+                    }
+                    if (provInscripcion.ctrDescripcion.text == "") {
+                      UtilView.messageDanger("Ingrese Descripción");
+                      return;
+                    }
+                    if (provInscripcion.horariosSelect == null) {
+                      UtilView.messageDanger("Seleccione Horario");
+                      return;
+                    }
+                    if (provInscripcion.detalles.count() == 0) {
+                      UtilView.messageDanger("Agrege al menos un Socio");
+                      return;
+                    }
                     if (await provInscripcion.guardar()) {
                       setState(() {});
                       NavigationService.navigateTo(Flurorouter.formulario5);

@@ -33,9 +33,12 @@ class FamiliaresProvider extends ChangeNotifier {
   Future getFamiliares_x_usuario() async {
     try {
       String? idUsuario = LocalStorage.prefs.getString('usuario');
-      if (idUsuario != null) {
+      String? tipoUsuario = LocalStorage.prefs.getString('Tipousuario');
+      if (idUsuario != null && tipoUsuario == "Socio") {
         listado =
             await _dataSource.getFamiliares_x_usuario(int.parse(idUsuario));
+      } else {
+        listado = await _dataSource.getFamiliares();
       }
 
       notifyListeners();
