@@ -17,120 +17,123 @@ class _Formulario4State extends State<Formulario4> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    Provider.of<FamiliaresProvider>(context, listen: false).getFamiliares();
+    Provider.of<FamiliaresProvider>(context, listen: false)
+        .getFamiliares_x_usuario();
   }
 
   @override
   Widget build(BuildContext context) {
     final provFamilia = Provider.of<FamiliaresProvider>(context);
-    return WhiteCard(
-      title: "Familiares o Invitados",
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              TextButton(
-                onPressed: () {
-                  provFamilia.edit = false;
-                  NavigationService.navigateTo(
-                      Flurorouter.familiarMantenimiento);
-                },
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    "Nuevo",
-                    style: TextStyle(color: Colors.white),
+    return SingleChildScrollView(
+      child: WhiteCard(
+        title: "Familiares o Invitados",
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                TextButton(
+                  onPressed: () {
+                    provFamilia.edit = false;
+                    NavigationService.navigateTo(
+                        Flurorouter.familiarMantenimiento);
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "Nuevo",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                  style: TextButton.styleFrom(
+                    backgroundColor: Colors.blue,
                   ),
                 ),
-                style: TextButton.styleFrom(
-                  backgroundColor: Colors.blue,
-                ),
-              ),
-            ],
-          ),
-          Container(
-            width: double.infinity,
-            child: DataTable(
-              columns: <DataColumn>[
-                // const DataColumn(
-                //   label: Center(child: Text("Id")),
-                // ),
-                const DataColumn(
-                  label: Center(child: Text("# Identificación")),
-                ),
-                const DataColumn(
-                  label: Center(child: Text("Nombres")),
-                ),
-                const DataColumn(
-                  label: Center(child: Text("Tipo")),
-                ),
-                const DataColumn(
-                  label: Center(child: Text("Celular")),
-                ),
-                const DataColumn(
-                  label: Center(child: Text("Estado")),
-                ),
-                const DataColumn(
-                  label: Center(child: Text("")),
-                )
               ],
-              rows: provFamilia.listado.map<DataRow>((e) {
-                return DataRow(
-                  color: MaterialStateProperty.resolveWith<Color?>((states) {
-                    if (e.estado != "A") {
-                      return Colors.red.shade300;
-                    }
-                    return null;
-                  }),
-                  //key: LocalKey(),
-                  cells: <DataCell>[
-                    DataCell(
-                      Text(e.identificacion),
-                    ),
-                    DataCell(
-                      Text(e.nombres),
-                    ),
-                    DataCell(
-                      Text(e.tipo),
-                    ),
-                    DataCell(
-                      Text(e.celular),
-                    ),
-                    DataCell(
-                      Text(e.estado),
-                    ),
-                    DataCell(e.estado == "A"
-                        ? Row(
-                            children: [
-                              TextButton.icon(
-                                  onPressed: () {
-                                    provFamilia.edit = true;
-                                    provFamilia.familiarSelect = e;
-                                    NavigationService.navigateTo(
-                                        Flurorouter.familiarMantenimiento);
-                                  },
-                                  icon: Icon(Icons.edit),
-                                  label: Text("")),
-                              TextButton.icon(
-                                  onPressed: () async {
-                                    provFamilia.familiarSelect = e;
-                                    var ass = await provFamilia.anular();
-                                    if (ass) {
-                                      setState(() {});
-                                    }
-                                  },
-                                  icon: Icon(Icons.delete),
-                                  label: Text(""))
-                            ],
-                          )
-                        : Container()),
-                  ],
-                );
-              }).toList(),
             ),
-          ),
-        ],
+            Container(
+              width: double.infinity,
+              child: DataTable(
+                columns: <DataColumn>[
+                  // const DataColumn(
+                  //   label: Center(child: Text("Id")),
+                  // ),
+                  const DataColumn(
+                    label: Center(child: Text("# Identificación")),
+                  ),
+                  const DataColumn(
+                    label: Center(child: Text("Nombres")),
+                  ),
+                  const DataColumn(
+                    label: Center(child: Text("Tipo")),
+                  ),
+                  const DataColumn(
+                    label: Center(child: Text("Celular")),
+                  ),
+                  const DataColumn(
+                    label: Center(child: Text("Estado")),
+                  ),
+                  const DataColumn(
+                    label: Center(child: Text("")),
+                  )
+                ],
+                rows: provFamilia.listado.map<DataRow>((e) {
+                  return DataRow(
+                    color: MaterialStateProperty.resolveWith<Color?>((states) {
+                      if (e.estado != "A") {
+                        return Colors.red.shade300;
+                      }
+                      return null;
+                    }),
+                    //key: LocalKey(),
+                    cells: <DataCell>[
+                      DataCell(
+                        Text(e.identificacion),
+                      ),
+                      DataCell(
+                        Text(e.nombres),
+                      ),
+                      DataCell(
+                        Text(e.tipo),
+                      ),
+                      DataCell(
+                        Text(e.celular),
+                      ),
+                      DataCell(
+                        Text(e.estado),
+                      ),
+                      DataCell(e.estado == "A"
+                          ? Row(
+                              children: [
+                                TextButton.icon(
+                                    onPressed: () {
+                                      provFamilia.edit = true;
+                                      provFamilia.familiarSelect = e;
+                                      NavigationService.navigateTo(
+                                          Flurorouter.familiarMantenimiento);
+                                    },
+                                    icon: Icon(Icons.edit),
+                                    label: Text("")),
+                                TextButton.icon(
+                                    onPressed: () async {
+                                      provFamilia.familiarSelect = e;
+                                      var ass = await provFamilia.anular();
+                                      if (ass) {
+                                        setState(() {});
+                                      }
+                                    },
+                                    icon: Icon(Icons.delete),
+                                    label: Text(""))
+                              ],
+                            )
+                          : Container()),
+                    ],
+                  );
+                }).toList(),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

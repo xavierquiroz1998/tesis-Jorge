@@ -31,103 +31,105 @@ class _Formulario1State extends State<Formulario1> {
     var width = MediaQuery.of(context).size.width;
 
     var ptProvider = Provider.of<DisciplinaProvider>(context);
-    return WhiteCard(
-      title: "Disciplinas",
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              TextButton(
-                onPressed: () async {
-                  ptProvider.disciplina = null;
+    return SingleChildScrollView(
+      child: WhiteCard(
+        title: "Disciplinas",
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                TextButton(
+                  onPressed: () async {
+                    ptProvider.disciplina = null;
 
-                  bool? dialogdisciplina =
-                      await showDisciplina(context, width, height);
-                },
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    "Nuevo",
-                    style: TextStyle(color: Colors.white),
+                    bool? dialogdisciplina =
+                        await showDisciplina(context, width, height);
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "Nuevo",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                  style: TextButton.styleFrom(
+                    backgroundColor: Colors.blue,
                   ),
                 ),
-                style: TextButton.styleFrom(
-                  backgroundColor: Colors.blue,
-                ),
-              ),
-            ],
-          ),
-          Container(
-            width: double.infinity,
-            child: DataTable(
-              columns: <DataColumn>[
-                // const DataColumn(
-                //   label: Center(child: Text("Id")),
-                // ),
-                const DataColumn(
-                  label: Center(child: Text("Cod. Ref")),
-                ),
-                const DataColumn(
-                  label: Center(child: Text("Descripción")),
-                ),
-                const DataColumn(
-                  label: Center(child: Text("Estado")),
-                ),
-                const DataColumn(
-                  label: Center(child: Text("")),
-                )
               ],
-              rows: ptProvider.listado.map<DataRow>((e) {
-                return DataRow(
-                  color: MaterialStateProperty.resolveWith<Color?>((states) {
-                    if (e.estado != "A") {
-                      return Colors.red.shade300;
-                    }
-                    return null;
-                  }),
-                  //key: LocalKey(),
-                  cells: <DataCell>[
-                    DataCell(
-                      Text(e.codigo),
-                    ),
-                    DataCell(
-                      Text(e.descripcion),
-                    ),
-                    DataCell(
-                      Text(e.estado),
-                    ),
-                    DataCell(e.estado == "A"
-                        ? Row(
-                            children: [
-                              TextButton.icon(
-                                  onPressed: () async {
-                                    patProvider.disciplina = e;
-                                    patProvider.setDisciplina();
-                                    await showDisciplina(
-                                        context, width, height);
-                                  },
-                                  icon: Icon(Icons.edit),
-                                  label: Text("")),
-                              TextButton.icon(
-                                  onPressed: () async {
-                                    patProvider.disciplina = e;
-                                    var ss = await patProvider.anular();
-                                    if (ss) {
-                                      setState(() {});
-                                    }
-                                  },
-                                  icon: Icon(Icons.delete),
-                                  label: Text(""))
-                            ],
-                          )
-                        : Container()),
-                  ],
-                );
-              }).toList(),
             ),
-          ),
-        ],
+            Container(
+              width: double.infinity,
+              child: DataTable(
+                columns: <DataColumn>[
+                  // const DataColumn(
+                  //   label: Center(child: Text("Id")),
+                  // ),
+                  const DataColumn(
+                    label: Center(child: Text("Cod. Ref")),
+                  ),
+                  const DataColumn(
+                    label: Center(child: Text("Descripción")),
+                  ),
+                  const DataColumn(
+                    label: Center(child: Text("Estado")),
+                  ),
+                  const DataColumn(
+                    label: Center(child: Text("")),
+                  )
+                ],
+                rows: ptProvider.listado.map<DataRow>((e) {
+                  return DataRow(
+                    color: MaterialStateProperty.resolveWith<Color?>((states) {
+                      if (e.estado != "A") {
+                        return Colors.red.shade300;
+                      }
+                      return null;
+                    }),
+                    //key: LocalKey(),
+                    cells: <DataCell>[
+                      DataCell(
+                        Text(e.codigo),
+                      ),
+                      DataCell(
+                        Text(e.descripcion),
+                      ),
+                      DataCell(
+                        Text(e.estado),
+                      ),
+                      DataCell(e.estado == "A"
+                          ? Row(
+                              children: [
+                                TextButton.icon(
+                                    onPressed: () async {
+                                      patProvider.disciplina = e;
+                                      patProvider.setDisciplina();
+                                      await showDisciplina(
+                                          context, width, height);
+                                    },
+                                    icon: Icon(Icons.edit),
+                                    label: Text("")),
+                                TextButton.icon(
+                                    onPressed: () async {
+                                      patProvider.disciplina = e;
+                                      var ss = await patProvider.anular();
+                                      if (ss) {
+                                        setState(() {});
+                                      }
+                                    },
+                                    icon: Icon(Icons.delete),
+                                    label: Text(""))
+                              ],
+                            )
+                          : Container()),
+                    ],
+                  );
+                }).toList(),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -193,5 +195,4 @@ class _Formulario1State extends State<Formulario1> {
       },
     );
   }
-
 }

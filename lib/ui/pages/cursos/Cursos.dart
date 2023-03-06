@@ -28,108 +28,112 @@ class _CursosConsulSociosState extends State<CursosConsulSocios> {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     final provHorario = Provider.of<CurosProvider>(context);
-    return WhiteCard(
-      title: "Consulta de Disciplinas",
-      child: Column(
-        children: [
-          Row(
-            children: [
-              SizedBox(
-                width: 120,
-                child: Text("Disciplinas :", style: CustomLabels.h11),
-              ),
-              Expanded(
-                child: DropdownButton<ModelDisciplina>(
-                  isExpanded: true,
-                  //value: provHorario.infoDisciplina,
-                  onChanged: (ModelDisciplina? newValue) {
-                    setState(() {
-                      provHorario.disciplinaSlect = newValue!;
-                    });
-                    provHorario.getHorarios_x_disciplina(
-                        provHorario.disciplinaSlect == null
-                            ? 0
-                            : provHorario.disciplinaSlect!.id);
-                  },
+    return SingleChildScrollView(
+      child: WhiteCard(
+        title: "Consulta de Disciplinas",
+        child: Column(
+          children: [
+            Row(
+              children: [
+                SizedBox(
+                  width: 120,
+                  child: Text("Disciplinas :", style: CustomLabels.h11),
+                ),
+                Expanded(
+                  child: DropdownButton<ModelDisciplina>(
+                    isExpanded: true,
+                    //value: provHorario.infoDisciplina,
+                    onChanged: (ModelDisciplina? newValue) {
+                      setState(() {
+                        provHorario.disciplinaSlect = newValue!;
+                      });
+                      provHorario.getHorarios_x_disciplina(
+                          provHorario.disciplinaSlect == null
+                              ? 0
+                              : provHorario.disciplinaSlect!.id);
+                    },
 
-                  hint: Text(
-                    provHorario.disciplinaSlect == null
-                        ? ""
-                        : provHorario.disciplinaSlect!.descripcion,
-                    style: TextStyle(color: Colors.black),
+                    hint: Text(
+                      provHorario.disciplinaSlect == null
+                          ? ""
+                          : provHorario.disciplinaSlect!.descripcion,
+                      style: TextStyle(color: Colors.black),
+                    ),
+                    items: provHorario.listDisciplina
+                        .map<DropdownMenuItem<ModelDisciplina>>(
+                            (ModelDisciplina value) {
+                      return DropdownMenuItem<ModelDisciplina>(
+                        value: value,
+                        child: Text(
+                          value.descripcion == ""
+                              ? "prueba"
+                              : value.descripcion,
+                          style: TextStyle(fontSize: 20),
+                        ),
+                      );
+                    }).toList(),
                   ),
-                  items: provHorario.listDisciplina
-                      .map<DropdownMenuItem<ModelDisciplina>>(
-                          (ModelDisciplina value) {
-                    return DropdownMenuItem<ModelDisciplina>(
-                      value: value,
-                      child: Text(
-                        value.descripcion == "" ? "prueba" : value.descripcion,
-                        style: TextStyle(fontSize: 20),
-                      ),
-                    );
-                  }).toList(),
-                ),
-              ),
-            ],
-          ),
-          Container(
-            width: double.infinity,
-            child: DataTable(
-              columns: <DataColumn>[
-                const DataColumn(
-                  label: Center(child: Text("Nivel")),
-                ),
-                const DataColumn(
-                  label: Center(child: Text("Categoria")),
-                ),
-                const DataColumn(
-                  label: Center(child: Text("Ciclo")),
-                ),
-                const DataColumn(
-                  label: Center(child: Text("Horario")),
-                ),
-                const DataColumn(
-                  label: Center(child: Text("Ver Profesor")),
                 ),
               ],
-              rows: provHorario.lisHorarios
-                  .map(
-                    (e) => DataRow(
-                      //key: LocalKey(),
-                      cells: <DataCell>[
-                        DataCell(
-                          Text(e.nivel),
-                        ),
-                        DataCell(
-                          Text(e.nomCategoria),
-                        ),
-                        DataCell(
-                          Text(e.nomCiclo),
-                        ),
-                        DataCell(
-                          Text(e.horario),
-                        ),
-                        DataCell(TextButton.icon(
-                            onPressed: () async {
-                              await provHorario.getProfesor_x_Horario(e.id);
-                              if (provHorario.profesor != null) {
-                                if (provHorario.profesor!.id != 0) {
-                                  await showProfesor(
-                                      context, width, height, provHorario);
-                                }
-                              }
-                              setState(() {});
-                            },
-                            icon: Icon(Icons.search),
-                            label: Text(""))),
-                      ],
-                    ),
-                  )
-                  .toList(),
             ),
-          ),
-        ],
+            Container(
+              width: double.infinity,
+              child: DataTable(
+                columns: <DataColumn>[
+                  const DataColumn(
+                    label: Center(child: Text("Nivel")),
+                  ),
+                  const DataColumn(
+                    label: Center(child: Text("Categoria")),
+                  ),
+                  const DataColumn(
+                    label: Center(child: Text("Ciclo")),
+                  ),
+                  const DataColumn(
+                    label: Center(child: Text("Horario")),
+                  ),
+                  const DataColumn(
+                    label: Center(child: Text("Ver Profesor")),
+                  ),
+                ],
+                rows: provHorario.lisHorarios
+                    .map(
+                      (e) => DataRow(
+                        //key: LocalKey(),
+                        cells: <DataCell>[
+                          DataCell(
+                            Text(e.nivel),
+                          ),
+                          DataCell(
+                            Text(e.nomCategoria),
+                          ),
+                          DataCell(
+                            Text(e.nomCiclo),
+                          ),
+                          DataCell(
+                            Text(e.horario),
+                          ),
+                          DataCell(TextButton.icon(
+                              onPressed: () async {
+                                await provHorario.getProfesor_x_Horario(e.id);
+                                if (provHorario.profesor != null) {
+                                  if (provHorario.profesor!.id != 0) {
+                                    await showProfesor(
+                                        context, width, height, provHorario);
+                                  }
+                                }
+                                setState(() {});
+                              },
+                              icon: Icon(Icons.search),
+                              label: Text(""))),
+                        ],
+                      ),
+                    )
+                    .toList(),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:provider/provider.dart';
 import 'package:tesis/domain/Navigation/NavigationService.dart';
-import 'package:tesis/domain/providers/horarios/Horarios_Provider.dart';
 import 'package:tesis/domain/providers/profesor/profesor_provider.dart';
 import 'package:tesis/ui/Router/FluroRouter.dart';
 import 'package:tesis/ui/pages/widget/customLabels.dart';
@@ -24,15 +20,12 @@ class _ProfesorMantenimientoState extends State<ProfesorMantenimiento> {
     // TODO: implement initState
     super.initState();
     Provider.of<ProfesorProvider>(context, listen: false).inicializacion();
-
-    Provider.of<HorarioProvider>(context, listen: false)
-        .getHorarios_x_profesor();
   }
 
   @override
   Widget build(BuildContext context) {
     final provProfesor = Provider.of<ProfesorProvider>(context);
-    final provHorario = Provider.of<HorarioProvider>(context);
+    // final provHorario = Provider.of<HorarioProvider>(context);
     return SingleChildScrollView(
       child: WhiteCard(
         title: "Mantenimiento de Profesores",
@@ -181,7 +174,7 @@ class _ProfesorMantenimientoState extends State<ProfesorMantenimiento> {
                     label: Center(child: Text("Horario")),
                   ),
                 ],
-                rows: provHorario.lisHorarios.map<DataRow>((e) {
+                rows: provProfesor.lisHorarios.map<DataRow>((e) {
                   return DataRow(
                     //key: LocalKey(),
                     cells: <DataCell>[
@@ -218,8 +211,10 @@ class _ProfesorMantenimientoState extends State<ProfesorMantenimiento> {
               children: [
                 TextButton(
                   onPressed: () async {
-                    var ass = await provProfesor.guardar(
-                        provHorario.lisHorarios.where((e) => e.check).toList());
+                    var ass = await provProfesor.guardar(provProfesor
+                        .lisHorarios
+                        .where((e) => e.check)
+                        .toList());
                     if (ass) {
                       setState(() {});
                       NavigationService.navigateTo(Flurorouter.formulario3);

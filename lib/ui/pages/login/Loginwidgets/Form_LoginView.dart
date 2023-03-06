@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tesis/domain/Navigation/NavigationService.dart';
 import 'package:tesis/domain/providers/Login/LoginProvider.dart';
+import 'package:tesis/ui/Router/FluroRouter.dart';
 import 'package:tesis/ui/style/Custom_Inputs.dart';
 
 class FormLoginView extends StatefulWidget {
@@ -66,26 +68,50 @@ class _FormLoginViewState extends State<FormLoginView> {
                 decoration: CustomInputs.loginInputDecoration(
                     hint: "Contraseña", label: "Contraseña", icon: Icons.lock),
               ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(0, 20, 0, 10),
-                child: TextButton(
-                  onPressed: () async {
-                    if (_keyLogin.currentState!.validate()) {
-                      logeo.logeo();
-                    }
-                  },
-                  style: TextButton.styleFrom(
-                    backgroundColor: Colors.blue,
-                    //elevation: 15,
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(9),
-                    child: Text(
-                      "Ingresar",
-                      style: TextStyle(color: Colors.black),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 20, 0, 10),
+                    child: TextButton(
+                      onPressed: () async {
+                        if (_keyLogin.currentState!.validate()) {
+                          logeo.logeo();
+                        }
+                      },
+                      style: TextButton.styleFrom(
+                        backgroundColor: Colors.blue,
+                        //elevation: 15,
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(9),
+                        child: Text(
+                          "Ingresar",
+                          style: TextStyle(color: Colors.black),
+                        ),
+                      ),
                     ),
                   ),
-                ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 20, 0, 10),
+                    child: TextButton(
+                      onPressed: () async {
+                        NavigationService.navigateTo(Flurorouter.usuarioExt);
+                      },
+                      style: TextButton.styleFrom(
+                        backgroundColor: Colors.blue,
+                        //elevation: 15,
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(9),
+                        child: Text(
+                          "Registro",
+                          style: TextStyle(color: Colors.black),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),

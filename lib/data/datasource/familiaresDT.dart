@@ -21,6 +21,22 @@ class FamiliaresDataSource {
     }
   }
 
+  Future<List<ModelFamiliares>> getFamiliares_x_usuario(int idUsuario) async {
+    List<ModelFamiliares> lisTemp = [];
+    try {
+      String url = "${Url.urlBse}familiares/$idUsuario";
+      var temp = await http.get(Uri.parse(url));
+
+      if (temp.statusCode == 200) {
+        lisTemp = decodeFamiliar(utf8.decode(temp.bodyBytes));
+      }
+      return lisTemp;
+    } catch (e) {
+      print("Error en dataource horaios $e");
+      return [];
+    }
+  }
+
   Future<ModelFamiliares> postFamiliares(ModelFamiliares datos) async {
     var url = Uri.parse("${Url.urlBse}familiares");
     var data = datos.toJson();
@@ -39,6 +55,7 @@ class FamiliaresDataSource {
       throw ('$e');
     }
   }
+
   Future<ModelFamiliares> postUpdateFamiliares(ModelFamiliares datos) async {
     var url = Uri.parse("${Url.urlBse}familiares/update");
     var data = datos.toJson();

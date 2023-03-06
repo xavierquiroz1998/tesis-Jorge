@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:tesis/data/datasource/familiaresDT.dart';
+import 'package:tesis/data/datasource/reference/local_storage.dart';
 import 'package:tesis/data/model/familiares.dart';
 
 class FamiliaresProvider extends ChangeNotifier {
@@ -25,6 +26,18 @@ class FamiliaresProvider extends ChangeNotifier {
   Future getFamiliares() async {
     try {
       listado = await _dataSource.getFamiliares();
+      notifyListeners();
+    } catch (e) {}
+  }
+
+  Future getFamiliares_x_usuario() async {
+    try {
+      String? idUsuario = LocalStorage.prefs.getString('usuario');
+      if (idUsuario != null) {
+        listado =
+            await _dataSource.getFamiliares_x_usuario(int.parse(idUsuario));
+      }
+
       notifyListeners();
     } catch (e) {}
   }
@@ -60,22 +73,26 @@ class FamiliaresProvider extends ChangeNotifier {
 
   Future<bool> garabar() async {
     try {
-      ModelFamiliares familiar = ModelFamiliares(
-          id: familiarSelect == null ? 0 : familiarSelect!.id,
-          identificacion: ctrIdentificacion.text,
-          codigoSocio: ctrCodigoSocio.text,
-          nombreSocio: ctrNombresSocio.text,
-          nombres: ctrNombres.text,
-          celular: ctrCelular.text,
-          correo: ctrCorreo.text,
-          domicilio: ctrDomicilio.text,
-          fechaNac: DateTime.now(),
-          estado: familiarSelect == null ?  "PEN" : familiarSelect!.estado ,
-          tipo: tipoSlect);
-      if (edit) {
-        await _dataSource.postUpdateFamiliares(familiar);
-      } else {
-        await _dataSource.postFamiliares(familiar);
+      String? idUsuario = LocalStorage.prefs.getString('usuario');
+      if (idUsuario != null) {
+        ModelFamiliares familiar = ModelFamiliares(
+            id: familiarSelect == null ? 0 : familiarSelect!.id,
+            identificacion: ctrIdentificacion.text,
+            codigoSocio: ctrCodigoSocio.text,
+            nombreSocio: ctrNombresSocio.text,
+            nombres: ctrNombres.text,
+            celular: ctrCelular.text,
+            correo: ctrCorreo.text,
+            domicilio: ctrDomicilio.text,
+            fechaNac: DateTime.now(),
+            estado: familiarSelect == null ? "PEN" : familiarSelect!.estado,
+            idUsuario: int.parse(idUsuario),
+            tipo: tipoSlect);
+        if (edit) {
+          await _dataSource.postUpdateFamiliares(familiar);
+        } else {
+          await _dataSource.postFamiliares(familiar);
+        }
       }
 
       return true;

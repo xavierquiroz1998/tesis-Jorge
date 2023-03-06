@@ -33,6 +33,7 @@ import 'package:tesis/ui/pages/inscripcionesMant/Inscripciones_Mant.dart';
 import 'package:tesis/ui/pages/login/Login.dart';
 import 'package:tesis/ui/pages/pacientes/pacientes.dart';
 import 'package:tesis/ui/pages/pacientes/pacientesmant.dart';
+import 'package:tesis/ui/pages/usuariosExternos/usuariosExt.dart';
 
 class Handlers {
   static Handler login = Handler(handlerFunc: (context, param) {
@@ -343,6 +344,18 @@ class Handlers {
         .setCurrentPageUrl(Flurorouter.cursos);
     if (logeo.authStatus == AuthStatus.authenticated) {
       return const CursosConsulSocios();
+    } else {
+      return const LoginView();
+    }
+  });
+
+  static Handler usuarioExter = Handler(handlerFunc: (context, param) {
+    // validacion de sesion
+    final logeo = Provider.of<LoginProvider>(context!);
+    Provider.of<SideMenuProvider>(context, listen: false)
+        .setCurrentPageUrl(Flurorouter.usuarioExt);
+    if (logeo.authStatus == AuthStatus.notAuthenticated) {
+      return const UsuarioExterno();
     } else {
       return const LoginView();
     }

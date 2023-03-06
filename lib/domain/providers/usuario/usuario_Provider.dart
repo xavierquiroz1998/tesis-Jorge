@@ -68,6 +68,45 @@ class UsuarioProvider extends ChangeNotifier {
     }
   }
 
+  Future getMenuExterno() async {
+    try {
+      listadoMenu = await _dataSource.getMenu();
+      listadoMenu = listadoMenu
+          .where((e) => e.id == 4 || e.id == 5 || e.id == 9)
+          .toList();
+      if (edit) {
+        ctrIdentificacion =
+            TextEditingController(text: usuarioSelect!.identificacion);
+        ctrUsuario = TextEditingController(text: usuarioSelect!.usuario);
+
+        ctrNombres = TextEditingController(text: usuarioSelect!.nombres);
+
+        ctrDomicilio = TextEditingController(text: usuarioSelect!.domicilio);
+        ctrCorreo = TextEditingController(text: usuarioSelect!.correo);
+
+        ctrCelular = TextEditingController(text: usuarioSelect!.celular);
+
+        ctrContrasenia =
+            TextEditingController(text: usuarioSelect!.contrasenia);
+      } else {
+        ctrIdentificacion = TextEditingController();
+        ctrUsuario = TextEditingController();
+
+        ctrNombres = TextEditingController();
+
+        ctrDomicilio = TextEditingController();
+        ctrCorreo = TextEditingController();
+
+        ctrCelular = TextEditingController();
+
+        ctrContrasenia = TextEditingController();
+      }
+      notifyListeners();
+    } catch (e) {
+      print("${e.toString()}");
+    }
+  }
+
   Future callgetPermisos() async {
     try {
       String? idUsuario = LocalStorage.prefs.getString('usuario');
@@ -118,7 +157,7 @@ class UsuarioProvider extends ChangeNotifier {
 
   Future<bool> anular() async {
     try {
-      var result = await _dataSourceUsuario.postUsuarios(usuarioSelect!);
+      var result = await _dataSourceUsuario.postanularUsuarios(usuarioSelect!);
       if (result.id != 0) {
         usuarioSelect!.estado = "I";
       }
