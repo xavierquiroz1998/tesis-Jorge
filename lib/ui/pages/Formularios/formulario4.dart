@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:tesis/domain/Navigation/NavigationService.dart';
 import 'package:tesis/domain/providers/familiares/familiares_provider.dart';
 import 'package:tesis/ui/Router/FluroRouter.dart';
+import 'package:tesis/ui/pages/widget/createPdf.dart';
 import 'package:tesis/ui/pages/widget/whiteCard.dart';
 
 class Formulario4 extends StatefulWidget {
@@ -115,15 +117,54 @@ class _Formulario4State extends State<Formulario4> {
                                     icon: Icon(Icons.edit),
                                     label: Text("")),
                                 TextButton.icon(
-                                    onPressed: () async {
-                                      provFamilia.familiarSelect = e;
-                                      var ass = await provFamilia.anular();
-                                      if (ass) {
-                                        setState(() {});
-                                      }
-                                    },
-                                    icon: Icon(Icons.delete),
-                                    label: Text(""))
+                                  onPressed: () async {
+                                    provFamilia.familiarSelect = e;
+                                    var ass = await provFamilia.anular();
+                                    if (ass) {
+                                      setState(() {});
+                                    }
+                                  },
+                                  icon: Icon(Icons.delete),
+                                  label: Text(""),
+                                ),
+                                TextButton.icon(
+                                  onPressed: () async {
+                                    provFamilia.familiarSelect = e;
+                                    var img = Image.asset(
+                                      "logo.jpeg",
+                                      fit: BoxFit.contain,
+                                    );
+
+ ByteData bytes =
+                                        await rootBundle.load('logo.jpeg');
+                                    var buffer = bytes.buffer;
+
+                                    var logo = Uint8List.view(buffer);
+                                    PdfReportc.generate(e, "codRef", logo);
+                                  },
+                                  icon: Icon(
+                                    Icons.picture_as_pdf,
+                                    color: Colors.red,
+                                  ),
+                                  label: Text(""),
+                                ),
+                                TextButton.icon(
+                                  onPressed: () async {
+                                    provFamilia.familiarSelect = e;
+                                    var img = Image.asset(
+                                      "logo.jpeg",
+                                      fit: BoxFit.contain,
+                                    );
+
+                                   
+                                    PdfReportc.generateCarta(e, "codRef");
+                                  },
+                                  icon: Icon(
+                                    Icons.picture_as_pdf,
+                                    color: Colors.green,
+                                  ),
+                                  label: Text(""),
+                                )
                               ],
                             )
                           : Container()),

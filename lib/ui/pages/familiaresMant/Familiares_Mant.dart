@@ -1,7 +1,13 @@
+import 'dart:convert';
+import 'dart:io';
+import 'dart:typed_data';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:tesis/domain/Navigation/NavigationService.dart';
 import 'package:tesis/domain/providers/familiares/familiares_provider.dart';
@@ -201,6 +207,39 @@ class _FamiliaresMantenimientoState extends State<FamiliaresMantenimiento> {
                       icon: Icons.assignment,
                       length: 500,
                       textInputType: TextInputType.text,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  SizedBox(
+                    width: 120,
+                    child: Text("Cargar Imagen :", style: CustomLabels.h11),
+                  ),
+                  Expanded(
+                    child: TextFormField(
+                      enabled: true,
+                      onTap: () async {
+                        FilePickerResult? result =
+                            await FilePicker.platform.pickFiles();
+
+                        if (result != null) {
+                          // provFamiliares.imagen =
+                          //     utf8.decode(result.files.first.bytes!);
+                          // PlatformFile file = result.files.first;
+                          // // print(file.path!);
+                          // File file = File(result.files.first.path!);
+                          // Uint8List imgbytes = file.readAsBytesSync();
+                          provFamiliares.imagen =
+                              base64Encode(result.files.first.bytes!);
+                        } else {
+                          // User canceled the pickerb
+                        }
+                      },
                     ),
                   ),
                 ],

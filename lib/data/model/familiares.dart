@@ -14,6 +14,7 @@ class ModelFamiliares {
     required this.fechaNac,
     required this.estado,
     required this.idUsuario,
+    required this.img,
     this.check = false,
   });
 
@@ -30,6 +31,7 @@ class ModelFamiliares {
   String estado;
   int idUsuario;
   bool check;
+  String img;
 
   factory ModelFamiliares.fromJson(String str) =>
       ModelFamiliares.fromMap(json.decode(str));
@@ -49,6 +51,7 @@ class ModelFamiliares {
         fechaNac: DateTime.parse(json["fecha_nac"]),
         estado: json["estado"],
         idUsuario: json["id_usuario"],
+        img: json["img"],
       );
 
   Map<String, dynamic> toMap() => {
@@ -64,5 +67,6 @@ class ModelFamiliares {
         "fecha_nac": fechaNac.toIso8601String(),
         "estado": estado,
         "id_usuario": idUsuario,
+        "img": img,
       };
 }

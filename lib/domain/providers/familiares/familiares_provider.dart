@@ -8,6 +8,7 @@ class FamiliaresProvider extends ChangeNotifier {
   List<ModelFamiliares> listado = [];
   List<String> tipos = ["Socio", "Invitado"];
   String tipoSlect = "";
+  String imagen = "";
 
   TextEditingController ctrIdentificacion = TextEditingController();
   TextEditingController ctrNombres = TextEditingController();
@@ -90,6 +91,7 @@ class FamiliaresProvider extends ChangeNotifier {
             fechaNac: DateTime.now(),
             estado: familiarSelect == null ? "PEN" : familiarSelect!.estado,
             idUsuario: int.parse(idUsuario),
+            img: imagen,
             tipo: tipoSlect);
         if (edit) {
           await _dataSource.postUpdateFamiliares(familiar);
