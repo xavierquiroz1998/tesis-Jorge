@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:tesis/data/datasource/cursoDt.dart';
 import 'package:tesis/data/datasource/familiaresDT.dart';
 import 'package:tesis/data/datasource/horarios.dart';
+import 'package:tesis/data/datasource/inscripcionDT.dart';
 import 'package:tesis/data/model/curso.dart';
 import 'package:tesis/data/model/cursoDet.dart';
 import 'package:tesis/data/model/disciplinaModel.dart';
 import 'package:tesis/data/model/familiares.dart';
 import 'package:tesis/data/model/horarios.dart';
+import 'package:tesis/data/model/inscripcion.dart';
 
 class InscripcionProvider extends ChangeNotifier {
   TextEditingController ctrDescripcion = TextEditingController();
@@ -17,8 +19,9 @@ class InscripcionProvider extends ChangeNotifier {
   List<ModelFamiliares> listadoFamiliares = [];
   List<ModelViewHorarios> lisHorarios = [];
 
-  CursoDataSource _datasource = CursoDataSource();
-  FamiliaresDataSource _dataSourceFamiliar = FamiliaresDataSource();
+  final CursoDataSource _datasource = CursoDataSource();
+  final FamiliaresDataSource _dataSourceFamiliar = FamiliaresDataSource();
+  final InscripcionDataSource _dataSourceInscripcion = InscripcionDataSource();
 
   final HorariosDatasource _datasourceHorario = HorariosDatasource();
 
@@ -109,21 +112,38 @@ class InscripcionProvider extends ChangeNotifier {
 
   Future<bool> guardar() async {
     try {
-      ModelCurso curso = ModelCurso(
-          id: cursoSelect == null ? 0 : cursoSelect!.id,
-          estado: "A",
-          periodo: mesSelect,
-          descripcion: ctrDescripcion.text,
-          id_horario: horariosSelect!.id);
+// primero que se cree la inscripcion y despues lo agrega al curso
 
-      if (edit) {
-        var result = await _datasource.postActualizarCursos(curso);
-      } else {
-        var result = await _datasource.postCursos(curso);
-        if (result.id != 0) {
-          for (var element in detalles) {
-            element.idCab = result.id;
-            await _datasource.postCursosDet(element);
+      ModelIncripcion insc = ModelIncripcion(
+          id: 0,
+          estado: "A",
+          descripcion: ctrDescripcion.text,
+          idFamiliar: socioSelect!.id,
+          idHorario: horariosSelect!.id,
+          periodo: mesSelect);
+
+      if (await _dataSourceInscripcion.postApiInscripcion(insc)) {
+
+
+
+
+
+        ModelCurso curso = ModelCurso(
+            id: cursoSelect == null ? 0 : cursoSelect!.id,
+            estado: "A",
+            periodo: mesSelect,
+            descripcion: ctrDescripcion.text,
+            id_horario: horariosSelect!.id);
+
+        if (edit) {
+          var result = await _datasource.postActualizarCursos(curso);
+        } else {
+          var result = await _datasource.postCursos(curso);
+          if (result.id != 0) {
+            for (var element in detalles) {
+              element.idCab = result.id;
+              await _datasource.postCursosDet(element);
+            }
           }
         }
       }

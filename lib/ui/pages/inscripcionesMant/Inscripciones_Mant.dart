@@ -183,86 +183,87 @@ class _InscripcionesMantenimientoState
                 ),
               ],
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                TextButton(
-                  onPressed: () {
-                    provInscripcion.agregarDetalle();
-                  },
-                  child: Text("Agregar"),
-                ),
-              ],
-            ),
-            Container(
-              width: double.infinity,
-              child: DataTable(
-                columns: <DataColumn>[
-                  // const DataColumn(
-                  //   label: Center(child: Text("Id")),
-                  // ),
-                  const DataColumn(
-                    label: Center(child: Text("# Identificación")),
-                  ),
-                  const DataColumn(
-                    label: Center(child: Text("Nombres del Socio")),
-                  ),
-                  const DataColumn(
-                    label: Center(child: Text("Celular")),
-                  ),
-                  // const DataColumn(
-                  //   label: Center(child: Text("Celular")),
-                  // ),
-                  // const DataColumn(
-                  //   label: Center(child: Text("Horario")),
-                  // ),
-                  const DataColumn(
-                    label: Center(child: Text("")),
-                  ),
-                ],
-                rows: provInscripcion.detalles
-                    .map(
-                      (e) => DataRow(
-                        //key: LocalKey(),
-                        cells: <DataCell>[
-                          DataCell(
-                            Text(e.socioSelect == null
-                                ? ""
-                                : e.socioSelect!.identificacion),
-                          ),
-                          DataCell(
-                            Text(e.socioSelect == null
-                                ? ""
-                                : e.socioSelect!.nombres),
-                          ),
-                          DataCell(
-                            Text(e.socioSelect == null
-                                ? ""
-                                : e.socioSelect!.celular),
-                          ),
-                          // DataCell(
-                          //   Text(e.horariosSelect == null
-                          //       ? ""
-                          //       : e.horariosSelect!.nivel),
-                          // ),
-                          // DataCell(
-                          //   Text(e.horariosSelect == null
-                          //       ? ""
-                          //       : e.horariosSelect!.horario),
-                          // ),
-                          DataCell(TextButton.icon(
-                              onPressed: () {
-                                provInscripcion.detalles.remove(e);
-                                setState(() {});
-                              },
-                              icon: Icon(Icons.delete),
-                              label: Text(""))),
-                        ],
-                      ),
-                    )
-                    .toList(),
-              ),
-            ),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.end,
+            //   children: [
+            //     TextButton(
+            //       onPressed: () {
+            //         provInscripcion.agregarDetalle();
+            //       },
+            //       child: Text("Agregar"),
+            //     ),
+            //   ],
+            // ),
+            // Container(
+            //   width: double.infinity,
+            //   child: DataTable(
+            //     columns: <DataColumn>[
+            //       // const DataColumn(
+            //       //   label: Center(child: Text("Id")),
+            //       // ),
+            //       const DataColumn(
+            //         label: Center(child: Text("# Identificación")),
+            //       ),
+            //       const DataColumn(
+            //         label: Center(child: Text("Nombres del Socio")),
+            //       ),
+            //       const DataColumn(
+            //         label: Center(child: Text("Celular")),
+            //       ),
+            //       // const DataColumn(
+            //       //   label: Center(child: Text("Celular")),
+            //       // ),
+            //       // const DataColumn(
+            //       //   label: Center(child: Text("Horario")),
+            //       // ),
+            //       const DataColumn(
+            //         label: Center(child: Text("")),
+            //       ),
+            //     ],
+            //     rows: provInscripcion.detalles
+            //         .map(
+            //           (e) => DataRow(
+            //             //key: LocalKey(),
+            //             cells: <DataCell>[
+            //               DataCell(
+            //                 Text(e.socioSelect == null
+            //                     ? ""
+            //                     : e.socioSelect!.identificacion),
+            //               ),
+            //               DataCell(
+            //                 Text(e.socioSelect == null
+            //                     ? ""
+            //                     : e.socioSelect!.nombres),
+            //               ),
+            //               DataCell(
+            //                 Text(e.socioSelect == null
+            //                     ? ""
+            //                     : e.socioSelect!.celular),
+            //               ),
+            //               // DataCell(
+            //               //   Text(e.horariosSelect == null
+            //               //       ? ""
+            //               //       : e.horariosSelect!.nivel),
+            //               // ),
+            //               // DataCell(
+            //               //   Text(e.horariosSelect == null
+            //               //       ? ""
+            //               //       : e.horariosSelect!.horario),
+            //               // ),
+            //               DataCell(TextButton.icon(
+            //                   onPressed: () {
+            //                     provInscripcion.detalles.remove(e);
+            //                     setState(() {});
+            //                   },
+            //                   icon: Icon(Icons.delete),
+            //                   label: Text(""))),
+            //             ],
+            //           ),
+            //         )
+            //         .toList(),
+            //   ),
+            // ),
+
             SizedBox(
               height: 50,
             ),
@@ -289,8 +290,12 @@ class _InscripcionesMantenimientoState
                       UtilView.messageDanger("Seleccione Horario");
                       return;
                     }
-                    if (provInscripcion.detalles.count() == 0) {
-                      UtilView.messageDanger("Agrege al menos un Socio");
+                    // if (provInscripcion.detalles.count() == 0) {
+                    //   UtilView.messageDanger("Agrege al menos un Socio");
+                    //   return;
+                    // }
+                    if (provInscripcion.socioSelect == null) {
+                      UtilView.messageDanger("Seleccione un Socio");
                       return;
                     }
                     if (await provInscripcion.guardar()) {
