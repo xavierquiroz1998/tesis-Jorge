@@ -17,7 +17,7 @@ class _Formulario5State extends State<Formulario5> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    Provider.of<InscripcionProvider>(context, listen: false).getCursos();
+    Provider.of<InscripcionProvider>(context, listen: false).getInscripciones();
   }
 
   @override
@@ -70,7 +70,7 @@ class _Formulario5State extends State<Formulario5> {
                     label: Center(child: Text("")),
                   ),
                 ],
-                rows: provInscripcion.lisCursos
+                rows: provInscripcion.lisIncripciones
                     .map(
                       (e) => DataRow(
                         color:
@@ -100,7 +100,7 @@ class _Formulario5State extends State<Formulario5> {
                                     TextButton.icon(
                                       onPressed: () {
                                         provInscripcion.edit = true;
-                                        provInscripcion.cursoSelect = e;
+                                        provInscripcion.inscripcionSelect = e;
                                         NavigationService.navigateTo(Flurorouter
                                             .inscripcionMantenimiento);
                                       },
@@ -109,7 +109,7 @@ class _Formulario5State extends State<Formulario5> {
                                     ),
                                     TextButton.icon(
                                       onPressed: () async {
-                                        provInscripcion.cursoSelect = e;
+                                        provInscripcion.inscripcionSelect = e;
                                         var ass =
                                             await provInscripcion.anular();
                                         if (ass) {

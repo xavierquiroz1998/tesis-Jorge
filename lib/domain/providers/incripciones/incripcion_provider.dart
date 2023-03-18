@@ -15,7 +15,7 @@ class InscripcionProvider extends ChangeNotifier {
   ModelFamiliares? socioSelect;
   ModelViewHorarios? horariosSelect;
   List<ModelCursoDet> detalles = [];
-  List<ModelCurso> lisCursos = [];
+  List<ModelIncripcion> lisIncripciones = [];
   List<ModelFamiliares> listadoFamiliares = [];
   List<ModelViewHorarios> lisHorarios = [];
 
@@ -41,7 +41,7 @@ class InscripcionProvider extends ChangeNotifier {
     "Diciembre"
   ];
 
-  ModelCurso? cursoSelect;
+  ModelIncripcion? inscripcionSelect;
   bool edit = false;
 
   Future getFamiliares() async {
@@ -56,9 +56,9 @@ class InscripcionProvider extends ChangeNotifier {
     } catch (e) {}
   }
 
-  Future getCursos() async {
+  Future getInscripciones() async {
     try {
-      lisCursos = await _datasource.getCursos();
+      lisIncripciones = await _dataSourceInscripcion.getInscripcion();
       notifyListeners();
     } catch (e) {}
   }
@@ -66,13 +66,14 @@ class InscripcionProvider extends ChangeNotifier {
   Future inicilizar() async {
     try {
       if (edit) {
-        mesSelect = cursoSelect!.periodo;
-        ctrDescripcion = TextEditingController(text: cursoSelect!.descripcion);
+        mesSelect = inscripcionSelect!.periodo;
+        ctrDescripcion =
+            TextEditingController(text: inscripcionSelect!.descripcion);
         detalles = [];
         socioSelect = null;
         horariosSelect = null;
 
-        var cursoDet = await _datasource.getCursosDet(cursoSelect!.id);
+        var cursoDet = await _datasource.getCursosDet(inscripcionSelect!.id);
 
         await getFamiliares();
         await getHorarios();
@@ -123,27 +124,30 @@ class InscripcionProvider extends ChangeNotifier {
           periodo: mesSelect);
 
       if (await _dataSourceInscripcion.postApiInscripcion(insc)) {
+        var existeCurso =
+            await _datasource.getExisteCurso(mesSelect, horariosSelect!.id);
 
+        if (existeCurso == null) {
+          ModelCurso curso = ModelCurso(
+              id: inscripcionSelect == null ? 0 : inscripcionSelect!.id,
+              estado: "A",
+              periodo: mesSelect,
+              descripcion: ctrDescripcion.text,
+              id_horario: horariosSelect!.id);
+          existeCurso = await _datasource.postCursos(curso);
+        }
 
+        //
+        if (existeCurso.id != 0) {
+          ModelCursoDet det = ModelCursoDet(
+              id: 0,
+              idCab: existeCurso.id,
+              idHorario: horariosSelect!.id,
+              idSocio: socioSelect!.id);
+          detalles.add(det);
 
-
-
-        ModelCurso curso = ModelCurso(
-            id: cursoSelect == null ? 0 : cursoSelect!.id,
-            estado: "A",
-            periodo: mesSelect,
-            descripcion: ctrDescripcion.text,
-            id_horario: horariosSelect!.id);
-
-        if (edit) {
-          var result = await _datasource.postActualizarCursos(curso);
-        } else {
-          var result = await _datasource.postCursos(curso);
-          if (result.id != 0) {
-            for (var element in detalles) {
-              element.idCab = result.id;
-              await _datasource.postCursosDet(element);
-            }
+          for (var element in detalles) {
+            await _datasource.postCursosDet(element);
           }
         }
       }
@@ -156,9 +160,10 @@ class InscripcionProvider extends ChangeNotifier {
 
   Future<bool> anular() async {
     try {
-      var result = await _datasource.postAnularCursos(cursoSelect!);
-      if (result.id != 0) {
-        cursoSelect!.estado = "I";
+      var result = await _dataSourceInscripcion
+          .postAnularInscripcion(inscripcionSelect!);
+      if (result) {
+        inscripcionSelect!.estado = "I";
       }
 
       return true;

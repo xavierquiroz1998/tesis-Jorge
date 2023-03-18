@@ -22,6 +22,21 @@ class CursoDataSource {
     }
   }
 
+  Future<ModelCurso?> getExisteCurso(String periodo, int idHorario) async {
+    try {
+      String url = "${Url.urlBse}cursos/existCourse/$periodo/$idHorario";
+      var temp = await http.get(Uri.parse(url));
+
+      if (temp.statusCode == 200) {
+        return ModelCurso.fromMap(jsonDecode(temp.body));
+      }
+      return null;
+    } catch (e) {
+      print("Error en dataource horaios $e");
+      return null;
+    }
+  }
+
   Future<List<ModelCursoDet>> getCursosDet(int idCab) async {
     List<ModelCursoDet> lisTemp = [];
     try {

@@ -1,28 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tesis/domain/providers/cursos/cursos_provider.dart';
 import 'package:tesis/domain/providers/incripciones/incripcion_provider.dart';
 import 'package:tesis/ui/pages/widget/whiteCard.dart';
 
-class InscripcionesConsulta extends StatefulWidget {
-  const InscripcionesConsulta({Key? key}) : super(key: key);
+class CursosConsulta extends StatefulWidget {
+  const CursosConsulta({Key? key}) : super(key: key);
 
   @override
-  State<InscripcionesConsulta> createState() => _InscripcionesConsultaState();
+  State<CursosConsulta> createState() => _CursosConsultaState();
 }
 
-class _InscripcionesConsultaState extends State<InscripcionesConsulta> {
+class _CursosConsultaState extends State<CursosConsulta> {
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    Provider.of<InscripcionProvider>(context, listen: false).getInscripciones();
+    Provider.of<CurosProvider>(context, listen: false).getCursos();
   }
 
   @override
   Widget build(BuildContext context) {
-    var provInscripcion = Provider.of<InscripcionProvider>(context);
+    var provInscripcion = Provider.of<CurosProvider>(context);
     return WhiteCard(
-      title: "Inscripciones",
+      title: "Cursos",
       child: Column(
         children: [
           Row(
@@ -70,7 +71,7 @@ class _InscripcionesConsultaState extends State<InscripcionesConsulta> {
                   label: Center(child: Text("")),
                 ),
               ],
-              rows: provInscripcion.lisIncripciones
+              rows: provInscripcion.lisCursos
                   .map(
                     (e) => DataRow(
                       //key: LocalKey(),
