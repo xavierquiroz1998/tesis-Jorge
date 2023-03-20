@@ -3,6 +3,7 @@ import 'package:tesis/data/datasource/cursoDt.dart';
 import 'package:tesis/data/datasource/familiaresDT.dart';
 import 'package:tesis/data/datasource/horarios.dart';
 import 'package:tesis/data/datasource/inscripcionDT.dart';
+import 'package:tesis/data/datasource/reference/local_storage.dart';
 import 'package:tesis/data/model/curso.dart';
 import 'package:tesis/data/model/cursoDet.dart';
 import 'package:tesis/data/model/disciplinaModel.dart';
@@ -46,7 +47,14 @@ class InscripcionProvider extends ChangeNotifier {
 
   Future getFamiliares() async {
     try {
-      listadoFamiliares = await _dataSourceFamiliar.getFamiliares();
+      String? idUsuario = LocalStorage.prefs.getString('usuario');
+      String? tipoUsuario = LocalStorage.prefs.getString('Tipousuario');
+      if (idUsuario != null && tipoUsuario == "Socio") {
+        listadoFamiliares = await _dataSourceFamiliar
+            .getFamiliares_x_usuario(int.parse(idUsuario));
+      } else {
+        listadoFamiliares = await _dataSourceFamiliar.getFamiliares();
+      }
     } catch (e) {}
   }
 
@@ -58,7 +66,15 @@ class InscripcionProvider extends ChangeNotifier {
 
   Future getInscripciones() async {
     try {
-      lisIncripciones = await _dataSourceInscripcion.getInscripcion();
+      String? idUsuario = LocalStorage.prefs.getString('usuario');
+      String? tipoUsuario = LocalStorage.prefs.getString('Tipousuario');
+      if (idUsuario != null && tipoUsuario == "Socio") {
+        lisIncripciones = await _dataSourceInscripcion
+            .getInscripcion_porUsuario(int.parse(idUsuario));
+      } else {
+        lisIncripciones = await _dataSourceInscripcion.getInscripcion();
+      }
+
       notifyListeners();
     } catch (e) {}
   }
@@ -115,39 +131,43 @@ class InscripcionProvider extends ChangeNotifier {
     try {
 // primero que se cree la inscripcion y despues lo agrega al curso
 
-      ModelIncripcion insc = ModelIncripcion(
-          id: 0,
-          estado: "A",
-          descripcion: ctrDescripcion.text,
-          idFamiliar: socioSelect!.id,
-          idHorario: horariosSelect!.id,
-          periodo: mesSelect);
+      String? idUsuario = LocalStorage.prefs.getString('usuario');
+      if (idUsuario != null) {
+        ModelIncripcion insc = ModelIncripcion(
+            id: 0,
+            estado: "A",
+            descripcion: ctrDescripcion.text,
+            idFamiliar: socioSelect!.id,
+            idHorario: horariosSelect!.id,
+            periodo: mesSelect,
+            idUsuario: int.parse(idUsuario));
 
-      if (await _dataSourceInscripcion.postApiInscripcion(insc)) {
-        var existeCurso =
-            await _datasource.getExisteCurso(mesSelect, horariosSelect!.id);
+        if (await _dataSourceInscripcion.postApiInscripcion(insc)) {
+          var existeCurso =
+              await _datasource.getExisteCurso(mesSelect, horariosSelect!.id);
 
-        if (existeCurso == null) {
-          ModelCurso curso = ModelCurso(
-              id: inscripcionSelect == null ? 0 : inscripcionSelect!.id,
-              estado: "A",
-              periodo: mesSelect,
-              descripcion: ctrDescripcion.text,
-              id_horario: horariosSelect!.id);
-          existeCurso = await _datasource.postCursos(curso);
-        }
+          if (existeCurso == null) {
+            ModelCurso curso = ModelCurso(
+                id: inscripcionSelect == null ? 0 : inscripcionSelect!.id,
+                estado: "A",
+                periodo: mesSelect,
+                descripcion: ctrDescripcion.text,
+                id_horario: horariosSelect!.id);
+            existeCurso = await _datasource.postCursos(curso);
+          }
 
-        //
-        if (existeCurso.id != 0) {
-          ModelCursoDet det = ModelCursoDet(
-              id: 0,
-              idCab: existeCurso.id,
-              idHorario: horariosSelect!.id,
-              idSocio: socioSelect!.id);
-          detalles.add(det);
+          //
+          if (existeCurso.id != 0) {
+            ModelCursoDet det = ModelCursoDet(
+                id: 0,
+                idCab: existeCurso.id,
+                idHorario: horariosSelect!.id,
+                idSocio: socioSelect!.id);
+            detalles.add(det);
 
-          for (var element in detalles) {
-            await _datasource.postCursosDet(element);
+            for (var element in detalles) {
+              await _datasource.postCursosDet(element);
+            }
           }
         }
       }

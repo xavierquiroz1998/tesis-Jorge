@@ -21,6 +21,22 @@ class InscripcionDataSource {
     }
   }
 
+  Future<List<ModelIncripcion>> getInscripcion_porUsuario(int usuario) async {
+    List<ModelIncripcion> lisTemp = [];
+    try {
+      String url = "${Url.urlBse}inscripcion/$usuario";
+      var temp = await http.get(Uri.parse(url));  
+
+      if (temp.statusCode == 200) {
+        lisTemp = decodeInscripcion(utf8.decode(temp.bodyBytes));
+      }
+      return lisTemp;
+    } catch (e) {
+      print("Error en dataource horaios $e");
+      return [];
+    }
+  }
+
   Future<bool> postApiInscripcion(ModelIncripcion datos) async {
     var url = Uri.parse("${Url.urlBse}inscripcion");
     var data = datos.toJson();
