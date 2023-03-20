@@ -167,7 +167,7 @@ class _InscripcionesMantenimientoState
                           : provInscripcion.socioSelect!.nombres,
                       style: TextStyle(color: Colors.black),
                     ),
-                    items: provFamilia.listado
+                    items: provInscripcion.listadoFamiliares
                         .where((element) => element.estado == "A")
                         .map<DropdownMenuItem<ModelFamiliares>>(
                             (ModelFamiliares value) {
