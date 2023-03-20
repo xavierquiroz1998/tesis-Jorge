@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tesis/domain/Navigation/NavigationService.dart';
 import 'package:tesis/domain/providers/cursos/cursos_provider.dart';
 import 'package:tesis/domain/providers/incripciones/incripcion_provider.dart';
+import 'package:tesis/ui/Router/FluroRouter.dart';
 import 'package:tesis/ui/pages/widget/whiteCard.dart';
 
 class CursosConsulta extends StatefulWidget {
@@ -21,7 +23,7 @@ class _CursosConsultaState extends State<CursosConsulta> {
 
   @override
   Widget build(BuildContext context) {
-    var provInscripcion = Provider.of<CurosProvider>(context);
+    var provCurso = Provider.of<CurosProvider>(context); 
     return WhiteCard(
       title: "Cursos",
       child: Column(
@@ -31,8 +33,8 @@ class _CursosConsultaState extends State<CursosConsulta> {
             children: [
               TextButton(
                 onPressed: () {
-                  // NavigationService.navigateTo(
-                  //     Flurorouter.familiarMantenimiento);
+                  provCurso.cursoSelect = null;
+                  NavigationService.navigateTo(Flurorouter.cursosMant);
                 },
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -71,7 +73,7 @@ class _CursosConsultaState extends State<CursosConsulta> {
                   label: Center(child: Text("")),
                 ),
               ],
-              rows: provInscripcion.lisCursos
+              rows: provCurso.lisCursos
                   .map(
                     (e) => DataRow(
                       //key: LocalKey(),
@@ -92,12 +94,20 @@ class _CursosConsultaState extends State<CursosConsulta> {
                           Row(
                             children: [
                               TextButton.icon(
-                                onPressed: () {},
+                                onPressed: () {
+                                  provCurso.cursoSelect = e;
+                                  NavigationService.navigateTo(
+                                      Flurorouter.cursosMant);
+                                },
                                 icon: Icon(Icons.search),
                                 label: Text(""),
                               ),
                               TextButton.icon(
-                                onPressed: () {},
+                                onPressed: () {
+                                  provCurso.cursoSelect = e;
+                                  NavigationService.navigateTo(
+                                      Flurorouter.cursosMant);
+                                },
                                 icon: Icon(Icons.delete),
                                 label: Text(""),
                               ),

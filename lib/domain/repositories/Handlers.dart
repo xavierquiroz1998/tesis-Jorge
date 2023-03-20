@@ -21,6 +21,7 @@ import 'package:tesis/ui/pages/ProfesorMant/Profesor_Mant.dart';
 import 'package:tesis/ui/pages/ProfesorMant/profe_x_horario.dart';
 import 'package:tesis/ui/pages/asistencias/asistenciasSocios_Mant.dart';
 import 'package:tesis/ui/pages/cursos/Cursos.dart';
+import 'package:tesis/ui/pages/cursos/Cursos_mant.dart';
 import 'package:tesis/ui/pages/cursos/cursos_consult.dart';
 import 'package:tesis/ui/pages/enfermera/enfermera.dart';
 import 'package:tesis/ui/pages/enfermera/enfermeras.dart';
@@ -345,6 +346,18 @@ class Handlers {
         .setCurrentPageUrl(Flurorouter.cursos);
     if (logeo.authStatus == AuthStatus.authenticated) {
       return const CursosConsulta();
+    } else {
+      return const LoginView();
+    }
+  });
+
+  static Handler cursosMant = Handler(handlerFunc: (context, param) {
+    // validacion de sesion
+    final logeo = Provider.of<LoginProvider>(context!);
+    Provider.of<SideMenuProvider>(context, listen: false)
+        .setCurrentPageUrl(Flurorouter.cursosMant);
+    if (logeo.authStatus == AuthStatus.authenticated) {
+      return const CursosMantenimiento();
     } else {
       return const LoginView();
     }
